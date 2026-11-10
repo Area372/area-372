@@ -1,0 +1,26 @@
+# Cloudflare Pages / Netlify 通用响应头配置
+# 说明：这两个平台都支持 _headers 文件，按最具体的规则匹配。
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+
+# 字体：内容不变，长期强缓存
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 图片：同上
+/assets/img/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# 样式与脚本：文件名不带哈希，因此用短缓存 + revalidate
+/assets/css/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/assets/js/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+# 数据层：必须实时校验，避免改了档案看不到
+/data/*
+  Cache-Control: public, max-age=0, must-revalidate

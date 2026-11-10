@@ -1,0 +1,384 @@
+{
+  "site": {
+    "code": "AREA-372",
+    "nameZh": "塔卡尔地下综合区域",
+    "nameEn": "Takal Underground Complex",
+    "org": "SCP Foundation",
+    "motto": "SECURE. CONTAIN. PROTECT.",
+    "slogan": "我们向下掘进，我们向上守望。",
+    "sloganEn": "WE DIG DOWNWARD. WE STAND WATCH ABOVE.",
+    "statusZh": "临界 / 有限运作",
+    "statusEn": "CRITICAL / LIMITED OPERATION",
+    "version": "REV. 20██-██",
+    "build": "372.0.9",
+    "wiki": {
+      "href": "https://scp-wiki-cn.wikidot.com/",
+      "zh": "SCP 总站点资料库",
+      "en": "SCP WIKI-CN ARCHIVE",
+      "note": "外部链接 · 新窗口打开"
+    }
+  },
+  "levels": [
+    {
+      "lv": 0,
+      "code": "L-0",
+      "zh": "仅限公开信息",
+      "en": "PUBLIC",
+      "desc": "最低层级。授予无需接触任何异常信息的非核心人员，如部分后勤、文书或清洁岗。通常不会获得门禁卡，或仅能进入最基础的非异常区域。"
+    },
+    {
+      "lv": 1,
+      "code": "L-1",
+      "zh": "保密",
+      "en": "CONFIDENTIAL",
+      "desc": "基础保密级。授予工作地点接近异常，但不直接接触其信息或实体的员工。可以持有门禁卡，但权限非常有限。"
+    },
+    {
+      "lv": 2,
+      "code": "L-2",
+      "zh": "受限",
+      "en": "RESTRICTED",
+      "desc": "基础业务级。授予需要直接接触异常项目基本信息的研究员、外勤特工或安保人员。这是能够开始接触异常核心信息的起点。"
+    },
+    {
+      "lv": 3,
+      "code": "L-3",
+      "zh": "机密",
+      "en": "SECRET",
+      "desc": "资深专业级。授予需要深度了解异常来源、收容措施等敏感信息的高级研究人员、项目主管或机动特遣队成员。"
+    },
+    {
+      "lv": 4,
+      "code": "L-4",
+      "zh": "顶级机密",
+      "en": "TOP SECRET",
+      "desc": "站点指挥级。授予需要接触站点或区域级战略情报的高级管理层，通常是站点主管、安保主管或机动特遣队指挥官。"
+    },
+    {
+      "lv": 5,
+      "code": "L-5",
+      "zh": "Thaumiel／最高机密",
+      "en": "THAUMIEL",
+      "desc": "基金会最高权限。授予 O5 议会成员及极少数指定人员，理论上可访问所有战略与敏感数据。不过，即便拥有 5 级权限，也遵循「须知」原则，并非能随意查看所有文件。"
+    },
+    {
+      "lv": 6,
+      "code": "L-6",
+      "zh": "未登记权限",
+      "en": "UNREGISTERED",
+      "desc": "该等级不在基金会现行安保许可体系中。持有人事登记表无法核验，但可读取所有加密卷宗。"
+    }
+  ],
+  "nav": [
+    {
+      "id": "home",
+      "href": "home.html",
+      "zh": "终端主页",
+      "en": "TERMINAL",
+      "code": "00",
+      "lv": 0
+    },
+    {
+      "id": "overview",
+      "href": "overview.html",
+      "zh": "设施概览",
+      "en": "FACILITY",
+      "code": "01",
+      "lv": 0
+    },
+    {
+      "id": "scp",
+      "href": "scp.html",
+      "zh": "收容项目",
+      "en": "CONTAINMENT",
+      "code": "02",
+      "lv": 0
+    },
+    {
+      "id": "incidents",
+      "href": "incidents.html",
+      "zh": "事件档案",
+      "en": "INCIDENTS",
+      "code": "03",
+      "lv": 0
+    },
+    {
+      "id": "daily",
+      "href": "daily.html",
+      "zh": "日常记录",
+      "en": "DAILY LOGS",
+      "code": "04",
+      "lv": 0
+    },
+    {
+      "id": "tuc",
+      "href": "tuc.html",
+      "zh": "特遣分队",
+      "en": "TASK FORCES",
+      "code": "05",
+      "lv": 0
+    },
+    {
+      "id": "corruption",
+      "href": "corruption.html",
+      "zh": "内部调查",
+      "en": "INTERNAL",
+      "code": "06",
+      "lv": 5
+    },
+    {
+      "id": "finale",
+      "href": "finale.html",
+      "zh": "威胁评估",
+      "en": "THREAT",
+      "code": "07",
+      "lv": 5,
+      "hidden": true
+    },
+    {
+      "id": "search",
+      "href": "search.html",
+      "zh": "档案检索",
+      "en": "SEARCH",
+      "code": "08",
+      "lv": 0
+    }
+  ],
+  "accounts": [
+    {
+      "keys": [
+        "janitor",
+        "jan",
+        "清洁工",
+        "保洁",
+        "清洁"
+      ],
+      "display": "清洁工",
+      "displayEn": "JANITOR",
+      "dept": "后勤服务",
+      "deptEn": "LOGISTICS",
+      "clearance": 0,
+      "loadout": "standard",
+      "accent": "mono",
+      "note": "后勤服务人员。未取得门禁卡，仅开放最基础的非异常区域信息。"
+    },
+    {
+      "keys": [
+        "engineer",
+        "eng",
+        "工程师",
+        "工程",
+        "工程技术员"
+      ],
+      "display": "工程师",
+      "displayEn": "ENGINEER",
+      "dept": "工程部",
+      "deptEn": "ENGINEERING",
+      "clearance": 1,
+      "loadout": "standard",
+      "accent": "eng",
+      "note": "工程部常规人员。可持门禁卡进入技术通道，但不得接触异常核心档案。"
+    },
+    {
+      "keys": [
+        "mechanic",
+        "mec",
+        "repairman",
+        "修理工",
+        "维修",
+        "维修工"
+      ],
+      "display": "修理工",
+      "displayEn": "MECHANIC",
+      "dept": "工程部",
+      "deptEn": "ENGINEERING",
+      "clearance": 1,
+      "loadout": "standard",
+      "accent": "eng",
+      "note": "工程部现场维修人员。权限限于工单与设备记录。"
+    },
+    {
+      "keys": [
+        "researcher",
+        "res",
+        "scientist",
+        "科研人员",
+        "研究员",
+        "科研"
+      ],
+      "display": "科研人员",
+      "displayEn": "RESEARCHER",
+      "dept": "研究部",
+      "deptEn": "RESEARCH",
+      "clearance": 2,
+      "loadout": "standard",
+      "accent": "mono",
+      "note": "研究部人员。可接触项目基本信息；影像类项目仍受单独限制。"
+    },
+    {
+      "keys": [
+        "director",
+        "主管",
+        "设施主管",
+        "dr",
+        "site director"
+      ],
+      "display": "设施主管",
+      "displayEn": "SITE DIRECTOR",
+      "dept": "主管办公室",
+      "deptEn": "DIRECTOR OFFICE",
+      "clearance": 4,
+      "loadout": "restricted",
+      "accent": "warn",
+      "tab": {
+        "id": "chat-director",
+        "href": "chat-director.html",
+        "zh": "主管通讯",
+        "en": "DIRECTOR RELAY",
+        "code": "09"
+      },
+      "note": "站点指挥级授权。注意：本账号与部分未结调查卷宗存在关联，查阅范围已被系统标记。"
+    },
+    {
+      "keys": [
+        "security",
+        "sec",
+        "sec-02",
+        "安全主管",
+        "安保主管",
+        "安保"
+      ],
+      "display": "安全主管",
+      "displayEn": "SECURITY CHIEF",
+      "dept": "安保部门",
+      "deptEn": "SECURITY",
+      "clearance": 4,
+      "loadout": "restricted",
+      "accent": "warn",
+      "tab": {
+        "id": "chief-egg",
+        "href": "chief-egg.html",
+        "zh": "安全主管大声说话",
+        "en": "LOUD CHIEF",
+        "code": "09"
+      },
+      "note": "安保值班链负责人。部分门禁与巡查记录因调查需要已被冻结。"
+    },
+    {
+      "keys": [
+        "isa",
+        "is-12",
+        "is12",
+        "内部安全代理",
+        "安全代理",
+        "内部安全"
+      ],
+      "display": "内部安全代理",
+      "displayEn": "INTERNAL SECURITY AGENT",
+      "dept": "内部安全",
+      "deptEn": "INTERNAL SECURITY",
+      "clearance": 5,
+      "loadout": "isa",
+      "accent": "isa",
+      "tab": {
+        "id": "chat-isa",
+        "href": "chat-isa.html",
+        "zh": "内部通讯",
+        "en": "SECURE RELAY",
+        "code": "09"
+      },
+      "note": "IS-12。由 O5 直接指派的秘密调查员，持有不在公开许可阶梯上的特殊权限；负责独立证据保管链。",
+      "clearanceLabel": "L-█"
+    },
+    {
+      "keys": [
+        "o5",
+        "o5议会",
+        "o5 council",
+        "议会"
+      ],
+      "display": "O5 议会",
+      "displayEn": "O5 COUNCIL",
+      "dept": "O5 议会",
+      "deptEn": "O5 COUNCIL",
+      "clearance": 5,
+      "loadout": "o5",
+      "accent": "o5",
+      "tab": {
+        "id": "o5-panel",
+        "href": "o5-panel.html",
+        "zh": "议会控制台",
+        "en": "COUNCIL CONSOLE",
+        "code": "09"
+      },
+      "note": "最高授权层级。K-96 使用授权记录、EC-68G 与 K96-X 全卷已解密；威胁评估仅可读取起源部分。"
+    },
+    {
+      "keys": [
+        "律法左手",
+        "omega-1",
+        "omega1",
+        "o1",
+        "law's left hand",
+        "omega",
+        "law left hand"
+      ],
+      "display": "Omega-1 律法左手",
+      "displayEn": "OMEGA-1 / LAW'S LEFT HAND",
+      "dept": "伦理监督独立调查单位",
+      "deptEn": "ETHICS OVERSIGHT",
+      "clearance": 5,
+      "loadout": "omega",
+      "accent": "omega",
+      "note": "外部独立调查单位接入。站点内部安全部门不参与本会话审查。"
+    },
+    {
+      "keys": [
+        "律法左手调查员",
+        "调查员",
+        "investigator",
+        "omega-inv",
+        "o1-inv"
+      ],
+      "display": "律法左手调查员",
+      "displayEn": "OMEGA-1 INVESTIGATOR",
+      "dept": "伦理监督独立调查单位",
+      "deptEn": "ETHICS OVERSIGHT",
+      "clearance": 5,
+      "loadout": "omega",
+      "accent": "omega",
+      "note": "外勤调查员。可调阅 O1-A 至 O1-G 全部证据汇编。"
+    },
+    {
+      "keys": [
+        "darl",
+        "darl博士",
+        "dr darl",
+        "dral"
+      ],
+      "display": "DARL",
+      "displayEn": "DR. DARL",
+      "dept": "—",
+      "deptEn": "—",
+      "clearance": 6,
+      "loadout": "darl",
+      "accent": "finale",
+      "note": "身份核验异常。权限徽记不属于基金会现行人事登记表。"
+    }
+  ],
+  "guest": {
+    "display": "访客",
+    "displayEn": "VISITOR",
+    "dept": "未登记人员",
+    "deptEn": "UNREGISTERED",
+    "clearance": 0,
+    "loadout": "standard",
+    "accent": "mono",
+    "note": "未提交身份凭证。以访客身份继续，仅开放公开档案层。"
+  },
+  "permissions": {
+    "corruption": 5,
+    "finale": 5,
+    "finaleFull": 6
+  }
+}

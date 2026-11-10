@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AREA-372 · 终端接入 / Terminal Access</title>
+<meta name="description" content="AREA-372 塔卡尔地下综合区域 · 设施档案终端">
+<meta name="theme-color" content="#060607">
+<link rel="icon" href="assets/img/mark-white.png">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="index">
+
+<div class="boot" id="boot">
+  <div class="boot-bg"></div>
+  <pre class="boot-lines" id="bootLines"></pre>
+
+  <div class="boot-core">
+
+    <!-- ============ STAGE A · BOOT ============ -->
+    <div id="stageBoot">
+      <div class="boot-mark">
+        <img src="assets/img/mark-white.png" alt="AREA-372" draggable="false">
+      </div>
+      <h1 class="boot-h1">AREA-372</h1>
+      <div class="boot-sub">Takal Underground Complex</div>
+      <div class="boot-bar" id="bootBar"><i></i></div>
+      <div class="boot-pct" id="bootPct">000%</div>
+      <div id="stageHint" style="display:none;margin-top:26px;font-size:12.5px;line-height:1.9;
+           color:#b9b9b4;max-width:460px;margin-left:auto;margin-right:auto;text-align:left">
+        <div style="color:#f0a500;font-family:monospace;letter-spacing:.18em;font-size:10px;margin-bottom:8px">
+          载入时间异常 / LOADING STALLED
+        </div>
+        终端脚本没有正常启动。常见原因：<br>
+        ・文件被其它程序（压缩包预览、聊天窗口）打开，而不是真实文件<br>
+        ・浏览器版本过旧，建议用 <b>Chrome / Edge / Firefox</b> 打开<br>
+        ・文件没有完整下载（大小应为约 1.4 MB）<br>
+        <br>
+        试试：把文件解压／保存到桌面，右键 → 打开方式 → Chrome。
+      </div>
+    </div>
+
+    <!-- ============ 标语（淡入并停留） ============ -->
+    <div class="boot-slogan" id="bootSlogan">
+      <span class="bs-cn">我们向下掘进，我们向上守望。</span>
+      <span class="bs-en">WE DIG DOWNWARD. WE STAND WATCH ABOVE.</span>
+    </div>
+
+    <!-- ============ STAGE B · AUTH ============ -->
+    <div id="stageAuth" style="display:none">
+      <form class="auth" id="authForm" autocomplete="off" onsubmit="return false;">
+        <div class="birth-head">
+          <span class="bh-k">Personnel Verification</span>
+          <span class="bh-c">人员身份核验 · 请输入岗位或人员代号</span>
+        </div>
+
+        <div class="auth-field">
+          <span class="auth-prompt">&gt;</span>
+          <input id="authInput" type="text" placeholder="输入人员代号，或留空以访客身份继续"
+                 autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="人员代号">
+          <span class="auth-cursor"></span>
+        </div>
+
+        <div class="auth-actions">
+          <button class="btn primary" type="submit">验证凭证 / VERIFY</button>
+          <button class="btn ghost" type="button" id="skipBtn">以访客身份继续</button>
+        </div>
+
+        <div class="auth-hint">
+          <b>公开名册</b>：清洁工 / 工程师 / 修理工 / 科研人员<br>
+          部分岗位凭证不在公开名册中，须使用标准岗位代号。<br>
+          留空并以访客身份继续时，仅开放公开档案层。
+          <div class="auth-accounts" id="sessionNote"></div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ES5 级看门狗：即使主脚本完全没能运行，也要给出可读提示 */
+(function () {
+  window.setTimeout(function () {
+    if (window.__BOOT_OK__) return;
+    var el = document.getElementById('stageHint');
+    if (el) el.style.display = 'block';
+  }, 7000);
+})();
+</script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+  (function () {
+    try {
+      var raw = localStorage.getItem('area372.session');
+      if (!raw) return;
+      var s = JSON.parse(raw);
+      if (!s || !s.display) return;
+      var el = document.getElementById('sessionNote');
+      var lv = s.clearanceLabel || ('L-' + s.clearance);
+      if (el) el.innerHTML = '上次会话：<span>' + s.display + ' · ' + lv + '</span>　输入新凭证可切换身份。';
+    } catch (e) {}
+  })();
+</script>
+
+<noscript>
+  <div style="position:fixed;inset:0;z-index:99999;background:#060607;color:#e7e7e3;
+              font-family:system-ui,sans-serif;padding:14vh 24px;text-align:center">
+    <div style="font-family:monospace;letter-spacing:4px;font-size:13px;color:#f0a500">AREA-372</div>
+    <p style="margin-top:18px;font-size:14px;line-height:1.9;color:#b9b9b4">
+      本终端需要 JavaScript 才能运行。<br>请启用 JavaScript 后重新载入。
+    </p>
+  </div>
+</noscript>
+</body>
+</html>
