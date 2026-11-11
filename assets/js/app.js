@@ -1,5 +1,5 @@
 /* ============================================================
-   AREA-372 · app.js  (build 372.0.9)
+   AREA-372 · app.js  (build 372.1.0)
    shell + dynamic nav + level gating + page renderers
    ============================================================ */
 'use strict';
@@ -11,6 +11,8 @@
   let SESS = null;
 
   const LV = () => (SESS && SESS.clearance) || 0;
+  /* 统一的查询参数入口：兼容多文件版（search）与单文件版（hash） */
+  const QS = () => currentRoute().q;
   const can = lv => LV() >= (lv || 0);
 
   function lvLabel(lv) {
@@ -61,13 +63,19 @@
       </a>`;
     }).join('');
 
-    const tabHtml = sess.tab
-      ? `<div class="nav-sep"></div>
-         <a class="nav-item nav-tab ${sess.tab.id === page ? 'on' : ''}" href="${sess.tab.href}">
-           <span class="n">${esc(sess.tab.code || '09')}</span>
-           <span class="t">${esc(sess.tab.zh)}</span>
-           <span class="e">${esc(sess.tab.en)}</span>
-         </a>` : '';
+    const tabs = (sess.tabs || []).slice(0, 5);
+    const activeTabId = QS().get('id');
+    const tabHtml = tabs.length
+      ? '<div class="nav-sep"></div>' + tabs.map((t, i) => {
+          const on = (page === 'tab' && activeTabId === t.id) ||
+                     (page !== 'tab' && t.href.split('?')[0].replace('.html','') === page);
+          return `<a class="nav-item nav-tab ${on ? 'on' : ''}" href="${t.href}">
+            <span class="n">${esc(t.code || String(9 + i).padStart(2, '0'))}</span>
+            <span class="t">${esc(t.zh)}</span>
+            <span class="e">${esc(t.en)}</span>
+          </a>`;
+        }).join('')
+      : '';
 
     const wiki = SITE.site.wiki;
 
@@ -90,7 +98,7 @@
         </a>
         <div class="tier"><span class="dot"></span>${esc(sess.displayEn || sess.display)}</div>
         <b>${esc(ownLabel())}</b> · ${esc(sess.deptEn || sess.dept)}<br>
-        BUILD 372.0.9
+        BUILD 372.1.0
       </div>`;
     document.body.appendChild(side);
 
@@ -107,7 +115,8 @@
       'chat-isa': ['09', 'SECURE RELAY', '内部通讯'],
       'chat-director': ['09', 'DIRECTOR RELAY', '主管通讯'],
       'o5-panel': ['09', 'COUNCIL CONSOLE', '议会控制台'],
-      'chief-egg': ['09', 'LOUD CHIEF', '安全主管大声说话']
+      'chief-egg': ['09', 'LOUD CHIEF', '安全主管大声说话'],
+      tab: ['09', 'FACTION RELAY', '阵营档案']
     };
     const m = PAGE_META[page] || ['--', 'TERMINAL', '终端'];
 
@@ -151,6 +160,62 @@
       AREA.clearSession();
       if (window.__SINGLE__) { location.hash = '#index'; location.reload(); }
       else location.href = 'index.html';
+    });
+
+    mountCorners();
+  }
+
+  /* ============================================================
+     左上角更新公告 / 右上角致谢名单
+     ============================================================ */
+  function mountCorners() {
+    const mk = (cls, label, title, handler) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'corner-btn ' + cls;
+      b.title = title;
+      b.setAttribute('aria-label', title);
+      b.innerHTML = `<span class="cb-glyph">${esc(label)}</span>`;
+      b.addEventListener('click', handler);
+      document.body.appendChild(b);
+      return b;
+    };
+
+    mk('corner-help', '?', '更新公告', async () => {
+      try {
+        const d = await load('notice');
+        const n = d.announce;
+        modal('更新公告 / UPDATE LOG', n.title, n.badge + ' · ' + n.subtitle, `
+          <div style="display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;
+                      font-family:var(--f-mono);font-size:9px;letter-spacing:.2em;
+                      color:var(--dim-2);margin-bottom:18px">
+            <span style="color:var(--eng)">${esc(n.version)}</span>
+            <span>${esc(n.date)}</span>
+          </div>
+          <p class="mtext" style="margin:0 0 24px">${md(n.lead)}</p>
+          ${n.sections.map(sec => `
+            <div class="mlabel">${esc(sec.h)}</div>
+            <ul class="bullets">${sec.items.map(i => `<li>${md(i)}</li>`).join('')}</ul>
+          `).join('')}
+          <div class="note" style="margin-top:26px"><span class="lbl">说明</span>${esc(n.footer)}</div>
+        `, 'var(--eng)');
+      } catch (e) {
+        modal('更新公告', '更新公告读取失败', '', `<div class="locked-note">${esc(e && e.message)}</div>`);
+      }
+    });
+
+    mk('corner-credit', '谢', '致谢名单', async () => {
+      try {
+        const d = await load('notice');
+        const c = d.credits;
+        modal('致谢 / ACKNOWLEDGEMENTS', c.title, c.badge, `
+          <p class="mtext" style="margin:0 0 20px">${esc(c.lead)}</p>
+          ${c.body.map(t => `<p class="mtext" style="margin:0 0 .95em">${esc(t)}</p>`).join('')}
+          <div class="note" style="margin-top:24px"><span class="lbl">说明</span>${esc(c.note)}</div>
+        `, 'var(--adm)');
+      } catch (e) {
+        modal('致谢', '致谢名单读取失败', '', `<div class="locked-note">${esc(e && e.message)}</div>`);
+      }
     });
   }
 
@@ -347,11 +412,11 @@
                   <span class="ex">${locked ? '需 ' + esc(lvLabel(n.lv)) : esc(n.en)}</span>
                 </a></li>`;
               }).join('')}
-            ${SESS.tab ? `<li><a href="${SESS.tab.href}">
-                  <span class="no">${esc(SESS.tab.code || '09')}</span>
-                  <span class="tx">${esc(SESS.tab.zh)}</span>
-                  <span class="ex">${esc(SESS.tab.en)}</span>
-                </a></li>` : ''}
+            ${(SESS.tabs || []).map((t, i) => `<li><a href="${t.href}">
+                  <span class="no">${esc(t.code || String(9 + i).padStart(2, '0'))}</span>
+                  <span class="tx">${esc(t.zh)}</span>
+                  <span class="ex">${esc(t.en)}</span>
+                </a></li>`).join('')}
           </ul>
         </section>
 
@@ -845,7 +910,7 @@
   PAGES.corruption = async function () {
     const d = await load('corruption');
     if (!can(5)) {
-      const isTarget = (SESS.id === 'director' || SESS.id === 'security');
+      const isTarget = !SESS.grant && (SESS.id === 'director' || SESS.id === 'security');
       $('#app').innerHTML = gate({
         title: 'ACCESS DENIED',
         cn: '无权查看《贪腐调查卷（Omega-1 证据包）》',
@@ -1151,7 +1216,7 @@
 
   /* ---------- CHAT: IS-12 ---------- */
   PAGES['chat-isa'] = async function () {
-    if (SESS.id !== 'isa') {
+    if (SESS.id !== 'isa' && !SESS.grant) {
       $('#app').innerHTML = gate({
         title: 'ACCESS DENIED', cn: '内部安全代理专属通讯档案',
         msg: '本档案由内部安全代理独立维护，不经过站点行政服务器。仅该岗位本人的会话可读取。',
@@ -1232,7 +1297,7 @@
 
   /* ---------- CHAT: DIRECTOR ---------- */
   PAGES['chat-director'] = async function () {
-    if (SESS.id !== 'director') {
+    if (SESS.id !== 'director' && !SESS.grant) {
       $('#app').innerHTML = gate({
         title: 'ACCESS DENIED', cn: '主管办公室通讯留档',
         msg: '本档案由主管办公室终端自动留档，仅该办公室授权会话可读取。',
@@ -1289,7 +1354,7 @@
 
   /* ---------- O5 PANEL ---------- */
   PAGES['o5-panel'] = async function () {
-    if (SESS.id !== 'o5') {
+    if (SESS.id !== 'o5' && !SESS.grant) {
       $('#app').innerHTML = gate({
         title: 'ACCESS DENIED', cn: 'O5 议会控制台',
         msg: '本控制台仅对 O5 议会授权会话开放。',
@@ -1400,7 +1465,7 @@
 
   /* ---------- CHIEF EGG ---------- */
   PAGES['chief-egg'] = async function () {
-    if (SESS.id !== 'security') {
+    if (SESS.id !== 'security' && !SESS.grant) {
       $('#app').innerHTML = gate({
         title: 'ACCESS DENIED', cn: '该目录不对当前会话开放',
         msg: '本目录由安保值班链维护。条目名称为「安全主管大声说话」。',
@@ -1457,6 +1522,158 @@
         setTimeout(() => document.body.classList.remove('flicker'), 1400);
       }, 300);
     });
+  };
+
+  /* ---------- 通用阵营标签页 ---------- */
+  function renderBlocks(blocks) {
+    return (blocks || []).map(b => {
+      const t = b.t || 'p';
+      if (t === 'h') return `<div class="mlabel">${esc(b.x)}</div>`;
+      if (t === 'p') return `<p class="mtext" style="margin:0 0 .9em">${md(b.x)}</p>`;
+      if (t === 'list') return `<ul class="bullets">${(b.items || []).map(i => `<li>${md(i)}</li>`).join('')}</ul>`;
+      if (t === 'note') return `<div class="note ${b.tone === 'warn' ? 'warn' : ''}" style="margin:20px 0">
+          <span class="lbl">${esc(b.label || '附注')}</span>${md(b.x)}</div>`;
+      if (t === 'kv') return `<dl class="kv">${(b.rows || []).map(r =>
+          `<dt>${esc(r[0])}</dt><dd>${md(r[1])}</dd>`).join('')}</dl>`;
+      if (t === 'table') return `<div style="overflow-x:auto;margin:16px 0">
+          <table class="perm-table">
+            <thead><tr>${(b.head || []).map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead>
+            <tbody>${(b.rows || []).map(r => `<tr>${r.map(c => `<td>${md(c)}</td>`).join('')}</tr>`).join('')}</tbody>
+          </table></div>`;
+      if (t === 'log') return `<div class="tx">${(b.lines || []).map(l => `<div class="ln">
+          <span class="t">${esc(l.time || '')}</span>
+          <span class="x">${esc(l.x || '')}</span>
+          <span class="r s-${l.s || 'ok'}">${esc(l.n || (l.s === 'fail' ? 'FAIL' : 'OK'))}</span>
+        </div>`).join('')}</div>`;
+      if (t === 'chat') return `<div class="chat-wrap">${(b.msgs || []).map(m => msgHtml(m)).join('')}</div>`;
+      if (t === 'redacted') return `<div class="redacted-line">${redact(b.x)}</div>`;
+      return '';
+    }).join('');
+  }
+
+  /* 极简行内标记：**粗体** 与 `代码` */
+  function md(s) {
+    let out = esc(s == null ? '' : s);
+    out = out.replace(/\*\*(.+?)\*\*/g, '<strong style="color:var(--fg)">$1</strong>');
+    out = out.replace(/`([^`]+)`/g, '<code class="code" style="color:var(--dim);border:1px solid var(--line);padding:0 4px">$1</code>');
+    out = out.replace(/█/g, '<span class="redact">█</span>');
+    return out;
+  }
+  function redact(s) {
+    return esc(s == null ? '' : s).replace(/█/g, '<span class="redact">█</span>');
+  }
+
+  PAGES.tab = async function () {
+    const id = QS().get('id') || '';
+    const held = (SESS.tabs || []).map(t => t.id);
+    const here = (SESS.tabs || []).find(t => t.id === id);
+
+    if (!id || held.indexOf(id) < 0) {
+      $('#app').innerHTML = gate({
+        title: 'ACCESS DENIED', cn: '该标签页不属于当前身份',
+        msg: '每个阵营的档案只对本阵营的授权身份开放。当前会话未持有本条目的访问凭据。',
+        file: 'AREA-372/FACTION/' + (id || 'UNKNOWN').toUpperCase(),
+        need: '对应阵营身份'
+      });
+      return;
+    }
+
+    /* —— 特例：O5 的全部身份名册 —— */
+    if (id === 'roster') {
+      applyAccent('o5');
+      const groups = {};
+      (SITE.accounts || []).forEach(acc => {
+        const fid = acc.faction || 'scp';
+        (groups[fid] = groups[fid] || []).push(acc);
+      });
+      const fmeta = {};
+      (SITE.factions || []).forEach(f => fmeta[f.id] = f);
+      const order = (SITE.factions || []).map(f => f.id);
+
+      $('#app').innerHTML = `
+        <div class="wrap wide">
+          <div class="phead">
+            <div class="crumb">O5 <i>/</i> ALL IDENTITIES</div>
+            <h1>全部身份登记</h1>
+            <div class="h1-cn">Global Identity Registry · 全阵营</div>
+            <p class="lead">本页为 O5 议会专属视图，汇总全部 ${SITE.accounts.length} 个已登记身份的阵营归属、岗位与许可标记。
+            非基金会阵营的许可等级显示为「[数据删除]」——不是系统故障，是基金会确实不知道对方的权限边界。</p>
+            <div class="phead-bar"></div>
+          </div>
+
+          ${order.filter(fid => groups[fid]).map(fid => {
+            const f = fmeta[fid] || { zh: '未登记', en: '—', abbr: '—', accent: 'mono' };
+            return `<section class="sec">
+              <div class="sec-h"><span class="no">${esc(f.abbr || '—')}</span><h2>${esc(f.zh)}</h2>
+                <span class="en">${esc(f.en)} · ${groups[fid].length}</span></div>
+              <div style="overflow-x:auto">
+                <table class="perm-table">
+                  <thead><tr><th>身份</th><th>部门 / 序列</th><th>许可</th><th>标签页</th><th>备注</th></tr></thead>
+                  <tbody>
+                    ${groups[fid].map(acc => `<tr>
+                      <td style="color:var(--fg-soft)">${esc(acc.display)}</td>
+                      <td class="flag-cell">${esc(acc.dept)}</td>
+                      <td class="lv-cell">${esc(acc.clearanceLabel || ('L-' + acc.clearance))}</td>
+                      <td class="flag-cell">${(acc.tabs || []).length ? acc.tabs.map(t => esc(t.zh)).join(' · ') : '—'}</td>
+                      <td class="flag-cell">${esc(acc.note || '')}</td>
+                    </tr>`).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </section>`;
+          }).join('')}
+
+          <div class="note" style="border-left-color:var(--o5)">
+            <span class="lbl">议会批注</span>
+            名册中的最后一行不在任何阵营之下。它的权限徽记在档案设立之初即已被写入，写入人为空。
+            本控制台无法修改该条目，也无法删除。
+          </div>
+
+          ${footer()}
+        </div>`;
+      return;
+    }
+
+    /* —— 普通阵营标签页 —— */
+    const d = await load('factions');
+    let faction = null, tabData = null;
+    for (const f of d.factions) {
+      if (f.tabs && f.tabs[id]) { faction = f; tabData = f.tabs[id]; break; }
+    }
+    if (!tabData) {
+      $('#app').innerHTML = gate({
+        title: 'RECORD MISSING', cn: '该条目标签页暂无可读内容',
+        msg: '档案目录中存在该条目，但正文尚未归档。请联系对应阵营的资料管理员。',
+        file: 'AREA-372/FACTION/' + id.toUpperCase()
+      });
+      return;
+    }
+
+    applyAccent(tabData.accent || faction.accent || 'mono');
+
+    $('#app').innerHTML = `
+      <div class="wrap">
+        <div class="phead">
+          <div class="crumb">${esc(faction.abbr || '—')} <i>/</i> ${esc(faction.en)} <i>/</i> ${esc(tabData.zh)}</div>
+          <h1>${esc(tabData.zh)}</h1>
+          <div class="h1-cn">${esc(tabData.sub || tabData.en || '')}</div>
+          <p class="lead">${esc(faction.tagline || '')}</p>
+          <div class="phead-bar"></div>
+        </div>
+
+        <div class="note" style="margin-bottom:30px">
+          <span class="lbl">${esc(faction.zh)} · ${esc(faction.en)}</span>${esc(faction.desc || '')}
+        </div>
+
+        <div class="faction-body">${renderBlocks(tabData.blocks)}</div>
+
+        ${footer()}
+      </div>`;
+
+    // 深红王之子与终幕相关页面加抖动
+    if (faction.id === 'cotsk' || id === 'cotsk-whisper') {
+      setTimeout(() => AREA.jitter($('.faction-body'), 2), 900);
+    }
   };
 
   /* ---------- SEARCH ---------- */
@@ -1539,20 +1756,38 @@
           dc.body.join(' ') + ' ' + dc.verdict, 'finale.html'));
       }
 
-      if (SESS.tab && SESS.tab.id === 'chat-isa') {
+      const tabIds = (SESS.tabs || []).map(t => t.id);
+      if (tabIds.indexOf('chat-isa') >= 0) {
         const ch = await load('chat-isa');
         ch.threads.forEach(t => push('内部通讯', t.title, t.id + ' · ' + t.with,
           t.summary + ' ' + t.msgs.map(m => m.x).join(' '), 'chat-isa.html'));
       }
-      if (SESS.tab && SESS.tab.id === 'chat-director') {
+      if (tabIds.indexOf('chat-director') >= 0) {
         const ch = await load('chat-director');
         ch.threads.forEach(t => push('主管通讯', t.title, t.id + ' · ' + t.with,
           t.summary + ' ' + t.msgs.map(m => m.x).join(' '), 'chat-director.html'));
       }
-      if (SESS.tab && SESS.tab.id === 'chief-egg') {
+      if (tabIds.indexOf('chief-egg') >= 0) {
         push('安保目录', '安全主管大声说话', 'SEC-02 · BROADCAST CAPTURE',
           '安全主管 大声 说话 广播 截获 彩蛋', 'chief-egg.html');
       }
+
+      // 阵营标签页内容进入检索（仅当当前身份持有该标签页）
+      try {
+        const fac = await load('factions');
+        (SESS.tabs || []).forEach(t => {
+          fac.factions.forEach(f => {
+            const td = (f.tabs || {})[t.id];
+            if (!td) return;
+            const txt = (td.blocks || []).map(b =>
+              b.x || (b.items || []).join(' ') || (b.rows || []).map(r => r.join(' ')).join(' ') ||
+              (b.lines || []).map(l => l.x || '').join(' ') || (b.msgs || []).map(m => m.x || '').join(' ')
+            ).join(' ');
+            push('阵营档案 · ' + f.abbr, td.zh, f.zh + ' · ' + (td.sub || td.en || ''),
+              txt, 'tab.html?id=' + encodeURIComponent(t.id));
+          });
+        });
+      } catch (e) { /* 阵营数据缺失不影响主检索 */ }
 
       return index;
     }
@@ -1621,7 +1856,7 @@
   function footer() {
     const wiki = SITE.site.wiki;
     return `<div class="foot">
-      <div>AREA-372 · TAKAL UNDERGROUND COMPLEX · BUILD 372.0.9 · SESSION ${esc(SESS.displayEn || SESS.display)} · ${esc(ownLabel())}</div>
+      <div>AREA-372 · TAKAL UNDERGROUND COMPLEX · BUILD 372.1.0 · SESSION ${esc(SESS.displayEn || SESS.display)} · ${esc(ownLabel())}</div>
       <div class="fc">
         本页面为基于 SCP 基金会设定的原创同人作品，非官方站点。SCP 基金会设定内容遵循
         <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.zh" target="_blank" rel="noopener">CC BY-SA 3.0</a>
@@ -1673,14 +1908,91 @@
         const sess = AREA.guestSession(cfg);
         await AREA.runScene(sess, 'home.html');
       });
+
+      /* ── 永久授权：向上箭头 + 全员名册 ── */
+      const unlock = $('#authUnlock');
+      const panel  = $('#rosterPanel');
+      const body   = $('#rosterBody');
+      let built = false;
+
+      async function buildRoster() {
+        if (built) return;
+        const cfg = await AREA.site();
+        const fmeta = {};
+        (cfg.factions || []).forEach(f => fmeta[f.id] = f);
+        const order = (cfg.factions || []).map(f => f.id);
+        const groups = {};
+        (cfg.accounts || []).forEach(acc => {
+          (groups[acc.faction] = groups[acc.faction] || []).push(acc);
+        });
+
+        body.innerHTML = order.filter(fid => groups[fid]).map(fid => {
+          const f = fmeta[fid] || { zh: '未登记', abbr: '—' };
+          return `<div class="roster-group">
+            <div class="rg-head"><span class="rg-abbr">${esc(f.abbr || '—')}</span>${esc(f.zh)}</div>
+            ${groups[fid].map((acc, i) => {
+              const lv = acc.clearanceLabel || ('L-' + acc.clearance);
+              return `<button type="button" class="roster-item" data-f="${esc(fid)}" data-i="${i}">
+                <span class="ri-name">${esc(acc.display)}</span>
+                <span class="ri-dept">${esc(acc.dept)}</span>
+                <span class="ri-lv">${lv === '█' ? '<span class="redact">█</span>' : esc(lv)}</span>
+              </button>`;
+            }).join('')}
+          </div>`;
+        }).join('');
+
+        body.querySelectorAll('.roster-item').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const fid = btn.dataset.f, i = parseInt(btn.dataset.i, 10);
+            const acc = (cfg.accounts || []).filter(x => x.faction === fid)[i];
+            if (!acc) return;
+            const sess = AREA.commitPermanent(acc);
+            if (inp) inp.blur();
+            await AREA.runScene(sess, 'home.html');
+          });
+        });
+
+        built = true;
+      }
+
+      function syncUnlock() {
+        if (!unlock) return;
+        let g = false;
+        try { g = AREA.hasGrant(); } catch (e) { g = false; }
+        if (g) unlock.removeAttribute('hidden');
+        else unlock.setAttribute('hidden', '');
+      }
+
+      if (unlock && panel) {
+        syncUnlock();
+        unlock.addEventListener('click', async e => {
+          e.preventDefault();
+          if (panel.hidden) {
+            await buildRoster();
+            panel.hidden = false;
+            unlock.classList.add('open');
+          } else {
+            panel.hidden = true;
+            unlock.classList.remove('open');
+          }
+        });
+      }
+
+      if (form) {
+        form.addEventListener('submit', () => {
+          const v = String(inp && inp.value || '').trim().toLowerCase().replace(/\s+/g, ' ');
+          if (v === 'director grant') setTimeout(syncUnlock, 100);
+        });
+      }
+
       return;
     }
 
-    const sess = AREA.getSession();
+    let sess = AREA.getSession();
     if (!sess) {
       /* 兜底：若会话无法持久化（隐私模式 / 存储被策略禁用），
          index 与当前页会互相重定向。用 URL 计数阻断死循环并给出可读提示。 */
-      const b = parseInt(new URLSearchParams(location.search).get('b') || '0', 10) || 0;
+      const b = parseInt(QS().get('b') || '0', 10) || 0;
       if (b >= 1) {
         document.body.innerHTML = `
           <div style="max-width:620px;margin:14vh auto;padding:0 24px;font-family:var(--f-cn);color:#e7e7e3">
@@ -1707,6 +2019,23 @@
       location.href = 'index.html?b=1';
       return;
     }
+
+    /* 会话自动对齐：若 site.json 中的账号定义有更新（标签页、等级、部门），
+       用最新定义刷新本会话，避免用户必须重新登录才能看到改动。 */
+    try {
+      const acc = (SITE.accounts || []).find(x => x.keys && x.keys[0] === sess.id);
+      if (acc) {
+        sess = AREA.setSession(Object.assign({}, sess, {
+          display: acc.display, displayEn: acc.displayEn,
+          dept: acc.dept, deptEn: acc.deptEn,
+          clearance: acc.clearance,
+          clearanceLabel: acc.clearanceLabel || null,
+          loadout: acc.loadout, accent: acc.accent,
+          tabFaction: acc.faction,
+          tabs: acc.tabs || []
+        }));
+      }
+    } catch (e) { /* 对齐失败不影响既有会话 */ }
 
     shell(sess, page);
     AREA.consoleInit(sess);

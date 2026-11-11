@@ -1,5 +1,5 @@
 /* ============================================================
-   AREA-372 · core.js  (build 372.0.9)
+   AREA-372 · core.js  (build 372.1.0)
    session / auth / boot sequence / load scenes / fx / console
    ============================================================ */
 'use strict';
@@ -73,7 +73,7 @@ const AREA = (function () {
     } catch (e) { s = null; }
     if (!s || !s.display) s = _mem;
     if (!s || !s.display) return null;
-    if (s.at && Date.now() - s.at > 1000 * 60 * 60 * 12) return null;
+    if (!s.permanent && s.at && Date.now() - s.at > 1000 * 60 * 60 * 12) return null;
     return s;
   }
 
@@ -87,6 +87,27 @@ const AREA = (function () {
     _mem = s;
     try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) { /* 内存副本已生效 */ }
     return s;
+  }
+
+  /* ---------- 永久授权（director grant） ----------
+     独立于会话的本地标记：登出、换身份、重开浏览器都不会丢失，
+     只有清除站点数据才会重置。 */
+  const GKEY = 'area372.grant';
+
+  function hasGrant() {
+    try { if (localStorage.getItem(GKEY) === '1') return true; } catch (e) {}
+    return _grantMem;
+  }
+  let _grantMem = false;
+
+  function setGrant() {
+    _grantMem = true;
+    try { localStorage.setItem(GKEY, '1'); } catch (e) {}
+  }
+
+  function clearGrant() {
+    _grantMem = false;
+    try { localStorage.removeItem(GKEY); } catch (e) {}
   }
 
   function clearSession() {
@@ -106,7 +127,7 @@ const AREA = (function () {
       id: 'guest', display: g.display, displayEn: g.displayEn,
       dept: g.dept, deptEn: g.deptEn, clearance: g.clearance,
       loadout: g.loadout, accent: g.accent, note: g.note,
-      tab: null, denied: ''
+      tabs: [], denied: ''
     });
   }
 
@@ -118,6 +139,34 @@ const AREA = (function () {
       (a.keys || []).some(k => String(k).toLowerCase() === inp)
     );
     return acc ? { type: 'account', acc } : { type: 'unknown' };
+  }
+
+  /* 万能授权会话：director grant */
+  function grantSession(cfg) {
+    return setSession({
+      id: '__grant__',
+      display: '授权指令', displayEn: 'DIRECTOR GRANT',
+      dept: '不受限授权', deptEn: 'UNRESTRICTED GRANT',
+      clearance: 6, clearanceLabel: '∞',
+      loadout: 'grant', accent: 'o5',
+      grant: true, permanent: true,
+      tabs: [
+        { id: 'roster', zh: '全部身份', en: 'ALL IDENTITIES', code: '10', href: 'tab.html?id=roster' },
+        { id: 'o5-panel', zh: '议会控制台', en: 'COUNCIL CONSOLE', code: '09', href: 'o5-panel.html' },
+        { id: 'chat-isa', zh: '内部通讯', en: 'SECURE RELAY', code: '11', href: 'chat-isa.html' },
+        { id: 'chat-director', zh: '主管通讯', en: 'DIRECTOR RELAY', code: '12', href: 'chat-director.html' },
+        { id: 'chief-egg', zh: '安全主管大声说话', en: 'LOUD CHIEF', code: '13', href: 'chief-egg.html' }
+      ],
+      note: '万能授权。全部档案、全部阵营标签页、全部加密内容对本会话开放。该授权不可撤销，除非清除站点数据。'
+    });
+  }
+
+  /* 通过名册直接登录某个身份（永久会话） */
+  function commitPermanent(acc) {
+    const s = commit(acc);
+    s.permanent = true;      // 永久生效
+    s.grant = false;         // 但仍按该身份自身的权限行事，不继承万能授权
+    return setSession(s);
   }
 
   function commit(acc) {
@@ -132,7 +181,7 @@ const AREA = (function () {
       loadout: acc.loadout,
       accent: acc.accent,
       note: acc.note,
-      tab: acc.tab || null,
+      tabs: acc.tabs || [],
       denied: ''
     });
   }
@@ -140,7 +189,7 @@ const AREA = (function () {
   /* ---------- boot lines（总时长约 2.5 秒） ---------- */
   const BOOT = [
     'SCP FOUNDATION · FACILITY INTRANET TERMINAL',
-    'BUILD 372.0.9 / REV 20██-██      CHANNEL TAKAL-0372',
+    'BUILD 372.1.0 / REV 20██-██      CHANNEL TAKAL-0372',
     '',
     '> power-on self test ............. <em>OK</em>',
     '> mount  /dev/vein572-monitor .... <em>OK</em>',
@@ -209,6 +258,89 @@ const AREA = (function () {
         '> 载入威胁评估 · 起源部分 …… <b>就绪</b>',
         '> 内部章节 …… <b>不可读</b>',
         '> 本会话不计入站点管理链审计 …… <b>例外批准</b>'
+      ]
+    },
+    goc: {
+      title: 'GLOBAL OCCULT COALITION', sub: 'HEOF / COALITION AUTHORITY',
+      log: [
+        '> 校验联盟身份码 …… <b>通过</b>',
+        '> 载入 HEOF 作战条令 …… <b>完成</b>',
+        '> 核对摧毁授权书状态 …… <b>未启用</b>',
+        '> 联署人字段 …… <b>不可读</b>',
+        '> 联盟不承认基金会的收容权 …… <b>已知悉</b>'
+      ]
+    },
+    uiu: {
+      title: 'UNUSUAL INCIDENTS UNIT', sub: 'FBI / CASE ACCESS',
+      log: [
+        '> 校验联邦探员证件 …… <b>通过</b>',
+        '> 载入 TRK-372 系列案卷 …… <b>完成</b>',
+        '> 窃听转录合法性 …… <b>存疑</b>',
+        '> 上级归档指令 …… <b>已忽略</b>'
+      ]
+    },
+    ci: {
+      title: 'CHAOS INSURGENCY', sub: 'CELL AUTHORIZATION',
+      log: [
+        '> 校验细胞编号 …… <b>通过</b>',
+        '> 基金会记录中本组织状态 …… <b>敌对</b>',
+        '> 招募令散布情况 …… <b>27 份</b>',
+        '> 第四列车 …… <b>成了</b>'
+      ]
+    },
+    sh: {
+      title: "SERPENT'S HAND", sub: 'LIBRARY GATE',
+      log: [
+        '> 确认门户节点 …… <b>塔卡尔支线</b>',
+        '> 载入图书馆索引 …… <b>完成</b>',
+        '> 深层节点 …… <b>条目已抹除</b>',
+        '> 它们不是收藏品。'
+      ]
+    },
+    cotsk: {
+      title: 'CHILDREN OF THE SCARLET KING', sub: 'RITUAL IN PROGRESS',
+      log: [
+        '> 校验教众身份 …… <b>█</b>',
+        '> 仪式阶段 …… <b>第三阶段</b>',
+        '> 剩余所需 …… <b>████</b>',
+        '> 不要让「主」失望。'
+      ]
+    },
+    ar: {
+      title: 'ANDERSON ROBOTICS', sub: 'CLIENT SESSION',
+      log: [
+        '> 校验产品序列号 …… <b>通过</b>',
+        '> 载入客户档案 …… <b>完成</b>',
+        '> 模拟型行为样本 …… <b>61 小时</b>',
+        '> 本司不承担行为后果。'
+      ]
+    },
+    grup: {
+      title: 'DIVISION «P»', sub: 'OPERATION STEEL',
+      log: [
+        '> 校验政治委员授权 …… <b>通过</b>',
+        '> 载入行动简报 …… <b>完成</b>',
+        '> 密码本条目「钢铁-4」 …… <b>已作废</b>',
+        '> 我们不能输。'
+      ]
+    },
+    skp: {
+      title: 'SKP C-GROUP', sub: 'CROSS-DIMENSION INSERTION',
+      log: [
+        '> 纬度锚定 …… <b>稳定</b>',
+        '> 黑箱状态 …… <b>开启 41%</b>',
+        '> 晶体 C-03 …… <b>未回收</b>',
+        '> 它会看着你。'
+      ]
+    },
+    grant: {
+      title: 'DIRECTOR GRANT', sub: 'UNRESTRICTED / PERMANENT',
+      log: [
+        '> 校验授权口令 …… <b>通过</b>',
+        '> 解除全部等级限制 …… <b>完成</b>',
+        '> 开放全部阵营标签页 …… <b>完成</b>',
+        '> 开放加密卷宗 …… <b>完成</b>',
+        '> 授权有效期 …… <b>永久</b>'
       ]
     },
     darl: {
@@ -288,6 +420,14 @@ const AREA = (function () {
 
   async function submitAuth(raw) {
     const cfg = await site();
+
+    /* 万能授权口令 */
+    const code = String(raw || '').trim().toLowerCase().replace(/\s+/g, ' ');
+    if (code === 'director grant') {
+      setGrant();
+      return grantSession(cfg);
+    }
+
     const res = resolve(raw, cfg);
     let sess;
     if (res.type === 'account') {
@@ -422,6 +562,8 @@ const AREA = (function () {
         console.log('  area372.slogan()      设施标语');
         console.log('  area372.sudo()        提权尝试');
         console.log('  area372.logout()      结束会话');
+        console.log('  area372.grant()       查看永久授权状态');
+        console.log('  area372.grant()       查看永久授权状态');
         return 'ok';
       },
       status: () => {
@@ -455,6 +597,17 @@ const AREA = (function () {
         clearSession();
         if (window.__SINGLE__) { location.hash = '#index'; location.reload(); }
         else location.href = 'index.html';
+      },
+      grant: () => {
+        const on = hasGrant();
+        console.log('%c永久授权状态：' + (on ? '已启用' : '未启用'), style);
+        console.log('  area372.revokeGrant()  撤销永久授权（不影响当前会话）');
+        return on;
+      },
+      revokeGrant: () => {
+        clearGrant();
+        console.log('%c永久授权已撤销。', 'color:#e2542b;font-family:monospace');
+        return 'revoked';
       }
     };
   }
@@ -462,6 +615,7 @@ const AREA = (function () {
   return {
     $, $$, sleep, esc, load, mark, MARK_FINALE, MARK_IMG,
     site, getSession, setSession, clearSession, hasSession,
+    hasGrant, setGrant, clearGrant, grantSession, commitPermanent,
     boot, submitAuth, runScene,
     fxInit, sweep, jitter, toast, consoleInit,
     resolve, guestSession, commit

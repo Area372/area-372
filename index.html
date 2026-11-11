@@ -58,7 +58,17 @@
           <span class="auth-prompt">&gt;</span>
           <input id="authInput" type="text" placeholder="输入人员代号，或留空以访客身份继续"
                  autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="人员代号">
+          <button type="button" class="auth-unlock" id="authUnlock"
+                  title="查看全部身份" aria-label="查看全部身份" hidden>▲</button>
           <span class="auth-cursor"></span>
+        </div>
+
+        <div class="roster" id="rosterPanel" hidden>
+          <div class="roster-head">
+            <span class="roster-title">全部身份登记</span>
+            <span class="roster-hint">点击任一身份即以该身份接入，授权长期有效</span>
+          </div>
+          <div class="roster-body" id="rosterBody"></div>
         </div>
 
         <div class="auth-actions">
@@ -100,6 +110,14 @@
       var el = document.getElementById('sessionNote');
       var lv = s.clearanceLabel || ('L-' + s.clearance);
       if (el) el.innerHTML = '上次会话：<span>' + s.display + ' · ' + lv + '</span>　输入新凭证可切换身份。';
+    } catch (e) {}
+
+    // 永久授权：只要本地存在授权标记，身份框里就显示向上箭头（同步判断，不等脚本）
+    try {
+      if (localStorage.getItem('area372.grant') === '1') {
+        var u = document.getElementById('authUnlock');
+        if (u) u.hidden = false;
+      }
     } catch (e) {}
   })();
 </script>

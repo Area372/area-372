@@ -10,7 +10,7 @@
     "statusZh": "临界 / 有限运作",
     "statusEn": "CRITICAL / LIMITED OPERATION",
     "version": "REV. 20██-██",
-    "build": "372.0.9",
+    "build": "372.1.0",
     "wiki": {
       "href": "https://scp-wiki-cn.wikidot.com/",
       "zh": "SCP 总站点资料库",
@@ -146,6 +146,7 @@
   ],
   "accounts": [
     {
+      "faction": "scp",
       "keys": [
         "janitor",
         "jan",
@@ -155,14 +156,17 @@
       ],
       "display": "清洁工",
       "displayEn": "JANITOR",
-      "dept": "后勤服务",
-      "deptEn": "LOGISTICS",
+      "dept": "科研部 · 后勤",
+      "deptEn": "SCIENCE / JANITORIAL",
       "clearance": 0,
+      "clearanceLabel": null,
       "loadout": "standard",
       "accent": "mono",
-      "note": "后勤服务人员。未取得门禁卡，仅开放最基础的非异常区域信息。"
+      "tabs": [],
+      "note": "科研部门编内的清洁岗。未取得门禁卡，仅能进入最基础的非异常区域。"
     },
     {
+      "faction": "scp",
       "keys": [
         "engineer",
         "eng",
@@ -175,11 +179,14 @@
       "dept": "工程部",
       "deptEn": "ENGINEERING",
       "clearance": 1,
+      "clearanceLabel": null,
       "loadout": "standard",
       "accent": "eng",
+      "tabs": [],
       "note": "工程部常规人员。可持门禁卡进入技术通道，但不得接触异常核心档案。"
     },
     {
+      "faction": "scp",
       "keys": [
         "mechanic",
         "mec",
@@ -190,14 +197,17 @@
       ],
       "display": "修理工",
       "displayEn": "MECHANIC",
-      "dept": "工程部",
-      "deptEn": "ENGINEERING",
+      "dept": "工程部 · 现场维修",
+      "deptEn": "ENGINEERING / FIELD",
       "clearance": 1,
+      "clearanceLabel": null,
       "loadout": "standard",
       "accent": "eng",
+      "tabs": [],
       "note": "工程部现场维修人员。权限限于工单与设备记录。"
     },
     {
+      "faction": "scp",
       "keys": [
         "researcher",
         "res",
@@ -208,14 +218,110 @@
       ],
       "display": "科研人员",
       "displayEn": "RESEARCHER",
-      "dept": "研究部",
-      "deptEn": "RESEARCH",
+      "dept": "科研部",
+      "deptEn": "SCIENCE",
       "clearance": 2,
+      "clearanceLabel": null,
       "loadout": "standard",
       "accent": "mono",
-      "note": "研究部人员。可接触项目基本信息；影像类项目仍受单独限制。"
+      "tabs": [],
+      "note": "科研部人员。可接触项目基本信息；影像类项目仍受单独限制。"
     },
     {
+      "faction": "scp",
+      "keys": [
+        "senior-researcher",
+        "senior",
+        "高级科研员",
+        "资深研究员"
+      ],
+      "display": "高级科研员",
+      "displayEn": "SENIOR RESEARCHER",
+      "dept": "科研部 · 资深",
+      "deptEn": "SCIENCE / SENIOR",
+      "clearance": 3,
+      "clearanceLabel": null,
+      "loadout": "standard",
+      "accent": "mono",
+      "tabs": [],
+      "note": "科研部资深研究员。可深度了解异常来源与收容措施的设计依据。"
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "ethics",
+        "伦理",
+        "道德伦理检察官",
+        "检察官"
+      ],
+      "display": "道德伦理检察官",
+      "displayEn": "ETHICS INSPECTOR",
+      "dept": "伦理委员会",
+      "deptEn": "ETHICS COMMITTEE",
+      "clearance": 3,
+      "clearanceLabel": null,
+      "loadout": "restricted",
+      "accent": "omega",
+      "tabs": [],
+      "note": "伦理委员会派驻本站点的检察官。有权调动 D 级人员、传唤任何层级人员。"
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "personal",
+        "人事主管",
+        "人事"
+      ],
+      "display": "人事主管",
+      "displayEn": "PERSONNEL DIRECTOR",
+      "dept": "人事部",
+      "deptEn": "PERSONNEL",
+      "clearance": 3,
+      "clearanceLabel": null,
+      "loadout": "restricted",
+      "accent": "adm",
+      "tabs": [],
+      "note": "负责人事登记、等级变更与处分记录。ENG-02 的降级记录由本部门系统生成。"
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "matilda",
+        "特殊科研",
+        "特科",
+        "matilda特科"
+      ],
+      "display": "特殊科研「Matilda」",
+      "displayEn": "SPECIAL SCIENCE",
+      "dept": "特殊科研 · 医疗特科",
+      "deptEn": "SPECIAL SCIENCE",
+      "clearance": 3,
+      "clearanceLabel": null,
+      "loadout": "standard",
+      "accent": "isa",
+      "tabs": [],
+      "note": "特殊科研序列。全站仅八人，代号固定、姓氏随机，无法被伪装替代。"
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "captain",
+        "安保上尉",
+        "上尉"
+      ],
+      "display": "安保上尉",
+      "displayEn": "SECURITY CAPTAIN",
+      "dept": "安保部门",
+      "deptEn": "SECURITY",
+      "clearance": 3,
+      "clearanceLabel": null,
+      "loadout": "restricted",
+      "accent": "warn",
+      "tabs": [],
+      "note": "安保部门指挥层。可持更高等级装备，进入军械库后并入 MTF 指挥体系。"
+    },
+    {
+      "faction": "scp",
       "keys": [
         "director",
         "主管",
@@ -225,21 +331,25 @@
       ],
       "display": "设施主管",
       "displayEn": "SITE DIRECTOR",
-      "dept": "主管办公室",
-      "deptEn": "DIRECTOR OFFICE",
+      "dept": "战术应对一部 · 指挥",
+      "deptEn": "TRD-I / COMMAND",
       "clearance": 4,
+      "clearanceLabel": null,
       "loadout": "restricted",
       "accent": "warn",
-      "tab": {
-        "id": "chat-director",
-        "href": "chat-director.html",
-        "zh": "主管通讯",
-        "en": "DIRECTOR RELAY",
-        "code": "09"
-      },
+      "tabs": [
+        {
+          "id": "chat-director",
+          "zh": "主管通讯",
+          "en": "DIRECTOR RELAY",
+          "code": "09",
+          "href": "chat-director.html"
+        }
+      ],
       "note": "站点指挥级授权。注意：本账号与部分未结调查卷宗存在关联，查阅范围已被系统标记。"
     },
     {
+      "faction": "scp",
       "keys": [
         "security",
         "sec",
@@ -250,21 +360,81 @@
       ],
       "display": "安全主管",
       "displayEn": "SECURITY CHIEF",
-      "dept": "安保部门",
-      "deptEn": "SECURITY",
+      "dept": "战术应对一部 · 指挥",
+      "deptEn": "TRD-I / COMMAND",
       "clearance": 4,
+      "clearanceLabel": null,
       "loadout": "restricted",
       "accent": "warn",
-      "tab": {
-        "id": "chief-egg",
-        "href": "chief-egg.html",
-        "zh": "安全主管大声说话",
-        "en": "LOUD CHIEF",
-        "code": "09"
-      },
+      "tabs": [
+        {
+          "id": "chief-egg",
+          "zh": "安全主管大声说话",
+          "en": "LOUD CHIEF",
+          "code": "09",
+          "href": "chief-egg.html"
+        }
+      ],
       "note": "安保值班链负责人。部分门禁与巡查记录因调查需要已被冻结。"
     },
     {
+      "faction": "scp",
+      "keys": [
+        "e11",
+        "九尾狐",
+        "九尾狐指挥官",
+        "epsilon-11"
+      ],
+      "display": "九尾狐指挥官",
+      "displayEn": "EPSILON-11 COMMANDER",
+      "dept": "机动特遣队 Epsilon-11",
+      "deptEn": "MTF EPSILON-11",
+      "clearance": 4,
+      "clearanceLabel": null,
+      "loadout": "restricted",
+      "accent": "warn",
+      "tabs": [],
+      "note": "Epsilon-11「九尾狐」指挥官。仅听命于本队指挥链，不受设施指挥单位调动。"
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "nu7",
+        "落锤",
+        "落锤指挥官",
+        "nu-7"
+      ],
+      "display": "落锤 A 连指挥官",
+      "displayEn": "NU-7 COMMANDER",
+      "dept": "机动特遣队 Nu-7",
+      "deptEn": "MTF NU-7",
+      "clearance": 4,
+      "clearanceLabel": null,
+      "loadout": "restricted",
+      "accent": "warn",
+      "tabs": [],
+      "note": "Nu-7「落锤」A 连指挥官。营级规模特遣队，负责设施级武力增援。"
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "qrt",
+        "快反",
+        "快反指挥官"
+      ],
+      "display": "快反指挥官",
+      "displayEn": "QRT COMMANDER",
+      "dept": "快速反应小组",
+      "deptEn": "QUICK REACTION TEAM",
+      "clearance": 4,
+      "clearanceLabel": null,
+      "loadout": "restricted",
+      "accent": "warn",
+      "tabs": [],
+      "note": "QRT 指挥官。出动需设施主管授权，或执行红色代码。"
+    },
+    {
+      "faction": "scp",
       "keys": [
         "isa",
         "is-12",
@@ -278,19 +448,22 @@
       "dept": "内部安全",
       "deptEn": "INTERNAL SECURITY",
       "clearance": 5,
+      "clearanceLabel": "L-█",
       "loadout": "isa",
       "accent": "isa",
-      "tab": {
-        "id": "chat-isa",
-        "href": "chat-isa.html",
-        "zh": "内部通讯",
-        "en": "SECURE RELAY",
-        "code": "09"
-      },
-      "note": "IS-12。由 O5 直接指派的秘密调查员，持有不在公开许可阶梯上的特殊权限；负责独立证据保管链。",
-      "clearanceLabel": "L-█"
+      "tabs": [
+        {
+          "id": "chat-isa",
+          "zh": "内部通讯",
+          "en": "SECURE RELAY",
+          "code": "09",
+          "href": "chat-isa.html"
+        }
+      ],
+      "note": "IS-12。由 O5 直接指派的秘密调查员，持有不在公开许可阶梯上的特殊权限；负责独立证据保管链。"
     },
     {
+      "faction": "scp",
       "keys": [
         "o5",
         "o5议会",
@@ -302,18 +475,29 @@
       "dept": "O5 议会",
       "deptEn": "O5 COUNCIL",
       "clearance": 5,
+      "clearanceLabel": null,
       "loadout": "o5",
       "accent": "o5",
-      "tab": {
-        "id": "o5-panel",
-        "href": "o5-panel.html",
-        "zh": "议会控制台",
-        "en": "COUNCIL CONSOLE",
-        "code": "09"
-      },
-      "note": "最高授权层级。K-96 使用授权记录、EC-68G 与 K96-X 全卷已解密；威胁评估仅可读取起源部分。"
+      "tabs": [
+        {
+          "id": "o5-panel",
+          "zh": "议会控制台",
+          "en": "COUNCIL CONSOLE",
+          "code": "09",
+          "href": "o5-panel.html"
+        },
+        {
+          "id": "roster",
+          "zh": "全部身份",
+          "en": "ALL IDENTITIES",
+          "code": "10",
+          "href": "tab.html?id=roster"
+        }
+      ],
+      "note": "最高授权层级。本会话不计入站点管理链审计。可调阅全部阵营的身份登记。"
     },
     {
+      "faction": "scp",
       "keys": [
         "律法左手",
         "omega-1",
@@ -325,14 +509,17 @@
       ],
       "display": "Omega-1 律法左手",
       "displayEn": "OMEGA-1 / LAW'S LEFT HAND",
-      "dept": "伦理监督独立调查单位",
-      "deptEn": "ETHICS OVERSIGHT",
+      "dept": "机动特遣队 Omega-1",
+      "deptEn": "MTF OMEGA-1",
       "clearance": 5,
+      "clearanceLabel": null,
       "loadout": "omega",
       "accent": "omega",
-      "note": "外部独立调查单位接入。站点内部安全部门不参与本会话审查。"
+      "tabs": [],
+      "note": "伦理委员会直属执法队，对应 O5 的「红右手」。执行法律行动而非收容行动。"
     },
     {
+      "faction": "scp",
       "keys": [
         "律法左手调查员",
         "调查员",
@@ -342,14 +529,849 @@
       ],
       "display": "律法左手调查员",
       "displayEn": "OMEGA-1 INVESTIGATOR",
-      "dept": "伦理监督独立调查单位",
-      "deptEn": "ETHICS OVERSIGHT",
+      "dept": "机动特遣队 Omega-1 · 外勤",
+      "deptEn": "MTF OMEGA-1 / FIELD",
       "clearance": 5,
+      "clearanceLabel": null,
       "loadout": "omega",
       "accent": "omega",
-      "note": "外勤调查员。可调阅 O1-A 至 O1-G 全部证据汇编。"
+      "tabs": [],
+      "note": "Omega-1 外勤调查员。负责在设施内部建立证据链并呼叫执法小队。"
     },
     {
+      "faction": "goc",
+      "keys": [
+        "goc",
+        "全球超自然联盟",
+        "goc指挥官",
+        "goc commander"
+      ],
+      "display": "GOC 指挥官",
+      "displayEn": "GOC COMMANDER",
+      "dept": "危险环境作战部队",
+      "deptEn": "HEOF",
+      "clearance": 5,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "goc",
+      "accent": "eng",
+      "tabs": [
+        {
+          "id": "goc-doctrine",
+          "zh": "作战条令",
+          "en": "DOCTRINE",
+          "code": null,
+          "href": "tab.html?id=goc-doctrine"
+        },
+        {
+          "id": "goc-auth",
+          "zh": "摧毁授权书",
+          "en": "TERMINATION",
+          "code": null,
+          "href": "tab.html?id=goc-auth"
+        },
+        {
+          "id": "goc-liaison",
+          "zh": "对基金会联络处",
+          "en": "LIAISON",
+          "code": null,
+          "href": "tab.html?id=goc-liaison"
+        }
+      ],
+      "note": "HEOF 现场指挥官。有权申请启用战术级现实中和授权，须完成双向语音确认。"
+    },
+    {
+      "faction": "goc",
+      "keys": [
+        "goc-combat",
+        "goc战斗专家"
+      ],
+      "display": "GOC 战斗专家",
+      "displayEn": "GOC COMBAT SPECIALIST",
+      "dept": "危险环境作战部队",
+      "deptEn": "HEOF",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "goc",
+      "accent": "eng",
+      "tabs": [
+        {
+          "id": "goc-doctrine",
+          "zh": "作战条令",
+          "en": "DOCTRINE",
+          "code": null,
+          "href": "tab.html?id=goc-doctrine"
+        },
+        {
+          "id": "goc-auth",
+          "zh": "摧毁授权书",
+          "en": "TERMINATION",
+          "code": null,
+          "href": "tab.html?id=goc-auth"
+        },
+        {
+          "id": "goc-liaison",
+          "zh": "对基金会联络处",
+          "en": "LIAISON",
+          "code": null,
+          "href": "tab.html?id=goc-liaison"
+        }
+      ],
+      "note": "HEOF 战斗专家。装备优于常规部队，对异常实体无交火限制。"
+    },
+    {
+      "faction": "goc",
+      "keys": [
+        "goc-assess",
+        "实地评估特工",
+        "评估特工"
+      ],
+      "display": "GOC 实地评估特工",
+      "displayEn": "GOC ASSESSMENT AGENT",
+      "dept": "联盟评估处",
+      "deptEn": "COALITION ASSESSMENT",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "goc",
+      "accent": "eng",
+      "tabs": [
+        {
+          "id": "goc-doctrine",
+          "zh": "作战条令",
+          "en": "DOCTRINE",
+          "code": null,
+          "href": "tab.html?id=goc-doctrine"
+        },
+        {
+          "id": "goc-auth",
+          "zh": "摧毁授权书",
+          "en": "TERMINATION",
+          "code": null,
+          "href": "tab.html?id=goc-auth"
+        },
+        {
+          "id": "goc-liaison",
+          "zh": "对基金会联络处",
+          "en": "LIAISON",
+          "code": null,
+          "href": "tab.html?id=goc-liaison"
+        }
+      ],
+      "note": "实地评估特工。以 D 级人员身份潜伏，负责评估设施是否已丧失控制。"
+    },
+    {
+      "faction": "uiu",
+      "keys": [
+        "uiu",
+        "特异事故处",
+        "uiu组长",
+        "uiu commander"
+      ],
+      "display": "UIU 特工组长",
+      "displayEn": "UIU AGENT-IN-CHARGE",
+      "dept": "特异事故处 · 特工组",
+      "deptEn": "UIU / FIELD",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "uiu",
+      "accent": "adm",
+      "tabs": [
+        {
+          "id": "uiu-cases",
+          "zh": "案件档案",
+          "en": "CASE FILES",
+          "code": null,
+          "href": "tab.html?id=uiu-cases"
+        },
+        {
+          "id": "uiu-wiretap",
+          "zh": "窃听转录",
+          "en": "WIRETAP",
+          "code": null,
+          "href": "tab.html?id=uiu-wiretap"
+        }
+      ],
+      "note": "特异事故处外勤组长。任务是骇入设施电脑并回传资料，不是收容异常。"
+    },
+    {
+      "faction": "uiu",
+      "keys": [
+        "雷击",
+        "uiu雷击",
+        "thunderbolt"
+      ],
+      "display": "UIU 特种干员「雷击」",
+      "displayEn": "UIU SPECIALIST",
+      "dept": "特异事故处 · 特种干员",
+      "deptEn": "UIU / SPECIALIST",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "uiu",
+      "accent": "adm",
+      "tabs": [
+        {
+          "id": "uiu-cases",
+          "zh": "案件档案",
+          "en": "CASE FILES",
+          "code": null,
+          "href": "tab.html?id=uiu-cases"
+        },
+        {
+          "id": "uiu-wiretap",
+          "zh": "窃听转录",
+          "en": "WIRETAP",
+          "code": null,
+          "href": "tab.html?id=uiu-wiretap"
+        }
+      ],
+      "note": "万里挑一的精英特工，装备更先进。可通过支援平台换装柜转职获得。"
+    },
+    {
+      "faction": "uiu",
+      "keys": [
+        "uiu陆军",
+        "uiu指挥官",
+        "uiu army"
+      ],
+      "display": "UIU 陆军指挥官",
+      "displayEn": "UIU ARMY COMMANDER",
+      "dept": "特异事故处 · 陆军部",
+      "deptEn": "UIU / ARMY",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "uiu",
+      "accent": "adm",
+      "tabs": [
+        {
+          "id": "uiu-cases",
+          "zh": "案件档案",
+          "en": "CASE FILES",
+          "code": null,
+          "href": "tab.html?id=uiu-cases"
+        },
+        {
+          "id": "uiu-wiretap",
+          "zh": "窃听转录",
+          "en": "WIRETAP",
+          "code": null,
+          "href": "tab.html?id=uiu-wiretap"
+        }
+      ],
+      "note": "陆军部指挥官。由 UIU 间谍骇入基金会特殊电脑后呼叫刷新，负责接管现场。"
+    },
+    {
+      "faction": "ci",
+      "keys": [
+        "ci",
+        "混沌分裂者",
+        "ci指挥官",
+        "分裂者"
+      ],
+      "display": "混沌分裂者指挥官",
+      "displayEn": "CI COMMANDER",
+      "dept": "混沌分裂者 · 侵入部队",
+      "deptEn": "CHAOS INSURGENCY",
+      "clearance": 5,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "ci",
+      "accent": "finale",
+      "tabs": [
+        {
+          "id": "ci-recruit",
+          "zh": "招募令",
+          "en": "RECRUITMENT",
+          "code": null,
+          "href": "tab.html?id=ci-recruit"
+        },
+        {
+          "id": "ci-loot",
+          "zh": "赃物清单",
+          "en": "MANIFEST",
+          "code": null,
+          "href": "tab.html?id=ci-loot"
+        },
+        {
+          "id": "ci-maynard",
+          "zh": "梅纳德博士频道",
+          "en": "DR. MAYNARD",
+          "code": null,
+          "href": "tab.html?id=ci-maynard"
+        }
+      ],
+      "note": "侵入部队指挥官。核心目标是救援 D 级人员、摧毁 SCP-006 与广播室。"
+    },
+    {
+      "faction": "ci",
+      "keys": [
+        "梅纳德",
+        "maynard",
+        "梅纳德博士"
+      ],
+      "display": "梅纳德博士",
+      "displayEn": "DR. MAYNARD",
+      "dept": "混沌分裂者 · 中层",
+      "deptEn": "CHAOS INSURGENCY",
+      "clearance": 5,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "ci",
+      "accent": "finale",
+      "tabs": [
+        {
+          "id": "ci-recruit",
+          "zh": "招募令",
+          "en": "RECRUITMENT",
+          "code": null,
+          "href": "tab.html?id=ci-recruit"
+        },
+        {
+          "id": "ci-loot",
+          "zh": "赃物清单",
+          "en": "MANIFEST",
+          "code": null,
+          "href": "tab.html?id=ci-loot"
+        },
+        {
+          "id": "ci-maynard",
+          "zh": "梅纳德博士频道",
+          "en": "DR. MAYNARD",
+          "code": null,
+          "href": "tab.html?id=ci-maynard"
+        }
+      ],
+      "note": "分裂者少数公开身份的中层成员。掌握设施附近的可用撤离通道。"
+    },
+    {
+      "faction": "ci",
+      "keys": [
+        "ci重装",
+        "ci heavy"
+      ],
+      "display": "混沌分裂者重装",
+      "displayEn": "CI HEAVY TROOPER",
+      "dept": "混沌分裂者 · 侵入部队",
+      "deptEn": "CHAOS INSURGENCY",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "ci",
+      "accent": "finale",
+      "tabs": [
+        {
+          "id": "ci-recruit",
+          "zh": "招募令",
+          "en": "RECRUITMENT",
+          "code": null,
+          "href": "tab.html?id=ci-recruit"
+        },
+        {
+          "id": "ci-loot",
+          "zh": "赃物清单",
+          "en": "MANIFEST",
+          "code": null,
+          "href": "tab.html?id=ci-loot"
+        },
+        {
+          "id": "ci-maynard",
+          "zh": "梅纳德博士频道",
+          "en": "DR. MAYNARD",
+          "code": null,
+          "href": "tab.html?id=ci-maynard"
+        }
+      ],
+      "note": "重装单位。携带实验型护甲，对基金会武装单位无谈判程序。"
+    },
+    {
+      "faction": "sh",
+      "keys": [
+        "蛇之手",
+        "sh",
+        "serpent"
+      ],
+      "display": "蛇之手指挥官",
+      "displayEn": "SERPENT'S HAND COMMANDER",
+      "dept": "蛇之手 · 行动组",
+      "deptEn": "SERPENT'S HAND",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "sh",
+      "accent": "isa",
+      "tabs": [
+        {
+          "id": "sh-library",
+          "zh": "被放逐者图书馆索引",
+          "en": "LIBRARY INDEX",
+          "code": null,
+          "href": "tab.html?id=sh-library"
+        },
+        {
+          "id": "sh-rescue",
+          "zh": "营救名单",
+          "en": "RESCUE LIST",
+          "code": null,
+          "href": "tab.html?id=sh-rescue"
+        }
+      ],
+      "note": "行动组指挥官。可与有意识的 SCP 直接交流，负责规划传送路线。"
+    },
+    {
+      "faction": "sh",
+      "keys": [
+        "sh探员",
+        "sh specialist",
+        "蛇之手探员"
+      ],
+      "display": "蛇之手特种探员",
+      "displayEn": "SERPENT'S HAND SPECIALIST",
+      "dept": "蛇之手 · 行动组",
+      "deptEn": "SERPENT'S HAND",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "sh",
+      "accent": "isa",
+      "tabs": [
+        {
+          "id": "sh-library",
+          "zh": "被放逐者图书馆索引",
+          "en": "LIBRARY INDEX",
+          "code": null,
+          "href": "tab.html?id=sh-library"
+        },
+        {
+          "id": "sh-rescue",
+          "zh": "营救名单",
+          "en": "RESCUE LIST",
+          "code": null,
+          "href": "tab.html?id=sh-rescue"
+        }
+      ],
+      "note": "特种探员。熟悉塔卡尔支线的全部已知节点。"
+    },
+    {
+      "faction": "sh",
+      "keys": [
+        "sh士兵",
+        "蛇之手士兵"
+      ],
+      "display": "蛇之手士兵",
+      "displayEn": "SERPENT'S HAND SOLDIER",
+      "dept": "蛇之手 · 行动组",
+      "deptEn": "SERPENT'S HAND",
+      "clearance": 3,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "sh",
+      "accent": "isa",
+      "tabs": [
+        {
+          "id": "sh-library",
+          "zh": "被放逐者图书馆索引",
+          "en": "LIBRARY INDEX",
+          "code": null,
+          "href": "tab.html?id=sh-library"
+        },
+        {
+          "id": "sh-rescue",
+          "zh": "营救名单",
+          "en": "RESCUE LIST",
+          "code": null,
+          "href": "tab.html?id=sh-rescue"
+        }
+      ],
+      "note": "普通成员。多为前基金会人员或被放逐者之图书馆的读者。"
+    },
+    {
+      "faction": "cotsk",
+      "keys": [
+        "深红王之子",
+        "cotsk",
+        "猩红之子",
+        "深红之子"
+      ],
+      "display": "深红王之子 助祭",
+      "displayEn": "COTSK ACOLYTE",
+      "dept": "深红王之子 · 仪式核心",
+      "deptEn": "COTSK / RITUAL",
+      "clearance": 5,
+      "clearanceLabel": "█",
+      "loadout": "cotsk",
+      "accent": "finale",
+      "tabs": [
+        {
+          "id": "cotsk-ritual",
+          "zh": "仪式进度",
+          "en": "RITUAL PROGRESS",
+          "code": null,
+          "href": "tab.html?id=cotsk-ritual"
+        },
+        {
+          "id": "cotsk-whisper",
+          "zh": "「主」的低语",
+          "en": "WHISPERS",
+          "code": null,
+          "href": "tab.html?id=cotsk-whisper"
+        }
+      ],
+      "note": "仪式第三阶段的核心执行者。可被击杀，但仪式不会因此终止。"
+    },
+    {
+      "faction": "cotsk",
+      "keys": [
+        "祭祀",
+        "cotsk高祭司",
+        "high priest"
+      ],
+      "display": "深红王之子 祭祀",
+      "displayEn": "COTSK HIGH PRIEST",
+      "dept": "深红王之子 · 仪式核心",
+      "deptEn": "COTSK / RITUAL",
+      "clearance": 5,
+      "clearanceLabel": "█",
+      "loadout": "cotsk",
+      "accent": "finale",
+      "tabs": [
+        {
+          "id": "cotsk-ritual",
+          "zh": "仪式进度",
+          "en": "RITUAL PROGRESS",
+          "code": null,
+          "href": "tab.html?id=cotsk-ritual"
+        },
+        {
+          "id": "cotsk-whisper",
+          "zh": "「主」的低语",
+          "en": "WHISPERS",
+          "code": null,
+          "href": "tab.html?id=cotsk-whisper"
+        }
+      ],
+      "note": "负责诵读「书」的第一章。其遗体同样可作为仪式的接续材料。"
+    },
+    {
+      "faction": "cotsk",
+      "keys": [
+        "深红铁骑",
+        "cavalry",
+        "cotsk铁骑"
+      ],
+      "display": "深红铁骑",
+      "displayEn": "SCARLET CAVALRY",
+      "dept": "深红王之子 · 战斗序列",
+      "deptEn": "COTSK / COMBAT",
+      "clearance": 4,
+      "clearanceLabel": "█",
+      "loadout": "cotsk",
+      "accent": "finale",
+      "tabs": [
+        {
+          "id": "cotsk-ritual",
+          "zh": "仪式进度",
+          "en": "RITUAL PROGRESS",
+          "code": null,
+          "href": "tab.html?id=cotsk-ritual"
+        },
+        {
+          "id": "cotsk-whisper",
+          "zh": "「主」的低语",
+          "en": "WHISPERS",
+          "code": null,
+          "href": "tab.html?id=cotsk-whisper"
+        }
+      ],
+      "note": "组织的武装序列。对一切非本组织人员采取无条件敌对。"
+    },
+    {
+      "faction": "ar",
+      "keys": [
+        "安德森",
+        "ar",
+        "anderson"
+      ],
+      "display": "AR 员工",
+      "displayEn": "AR EMPLOYEE",
+      "dept": "安德森机器人",
+      "deptEn": "ANDERSON ROBOTICS",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "ar",
+      "accent": "o5",
+      "tabs": [
+        {
+          "id": "ar-catalog",
+          "zh": "产品目录",
+          "en": "CATALOG",
+          "code": null,
+          "href": "tab.html?id=ar-catalog"
+        },
+        {
+          "id": "ar-recovery",
+          "zh": "资产回收单",
+          "en": "RECOVERY",
+          "code": null,
+          "href": "tab.html?id=ar-recovery"
+        }
+      ],
+      "note": "以普通员工身份潜伏于设施内。任务是活着离开，并带回客户的资产。"
+    },
+    {
+      "faction": "ar",
+      "keys": [
+        "ar潜伏机器人",
+        "潜伏机器人",
+        "stealth robot"
+      ],
+      "display": "AR 潜伏机器人",
+      "displayEn": "AR STEALTH UNIT",
+      "dept": "安德森机器人 · 渗透型",
+      "deptEn": "ANDERSON ROBOTICS",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "ar",
+      "accent": "o5",
+      "tabs": [
+        {
+          "id": "ar-catalog",
+          "zh": "产品目录",
+          "en": "CATALOG",
+          "code": null,
+          "href": "tab.html?id=ar-catalog"
+        },
+        {
+          "id": "ar-recovery",
+          "zh": "资产回收单",
+          "en": "RECOVERY",
+          "code": null,
+          "href": "tab.html?id=ar-recovery"
+        }
+      ],
+      "note": "模拟型产品。可冒充除特殊科研与伦理检察官外的任何科研人员，包括科研主管。"
+    },
+    {
+      "faction": "ar",
+      "keys": [
+        "游隼",
+        "ar游隼",
+        "saker"
+      ],
+      "display": "AR 游隼-战斗机器人",
+      "displayEn": "AR SAKER-CLASS",
+      "dept": "安德森机器人 · 回收小组",
+      "deptEn": "ANDERSON ROBOTICS",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "ar",
+      "accent": "o5",
+      "tabs": [
+        {
+          "id": "ar-catalog",
+          "zh": "产品目录",
+          "en": "CATALOG",
+          "code": null,
+          "href": "tab.html?id=ar-catalog"
+        },
+        {
+          "id": "ar-recovery",
+          "zh": "资产回收单",
+          "en": "RECOVERY",
+          "code": null,
+          "href": "tab.html?id=ar-recovery"
+        }
+      ],
+      "note": "设施外回收小组的战斗单位。不参与谈判，只负责把东西带出去。"
+    },
+    {
+      "faction": "grup",
+      "keys": [
+        "gru-p",
+        "p部门",
+        "钢铁指挥官",
+        "p-055"
+      ],
+      "display": "P-055「钢铁」指挥官",
+      "displayEn": "DIVISION P COMMANDER",
+      "dept": "P-055「钢铁」",
+      "deptEn": "DIVISION P",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "grup",
+      "accent": "warn",
+      "tabs": [
+        {
+          "id": "gru-brief",
+          "zh": "行动简报",
+          "en": "BRIEF",
+          "code": null,
+          "href": "tab.html?id=gru-brief"
+        },
+        {
+          "id": "gru-codebook",
+          "zh": "密码本",
+          "en": "CODEBOOK",
+          "code": null,
+          "href": "tab.html?id=gru-codebook"
+        }
+      ],
+      "note": "加强排指挥官。任务是夺取机密文件并篡改权限以提前启动疏散。"
+    },
+    {
+      "faction": "grup",
+      "keys": [
+        "护卫队长",
+        "p-035"
+      ],
+      "display": "P-035「护卫」队长",
+      "displayEn": "DIVISION P GUARD CAPTAIN",
+      "dept": "P-035「护卫」",
+      "deptEn": "DIVISION P",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "grup",
+      "accent": "warn",
+      "tabs": [
+        {
+          "id": "gru-brief",
+          "zh": "行动简报",
+          "en": "BRIEF",
+          "code": null,
+          "href": "tab.html?id=gru-brief"
+        },
+        {
+          "id": "gru-codebook",
+          "zh": "密码本",
+          "en": "CODEBOOK",
+          "code": null,
+          "href": "tab.html?id=gru-codebook"
+        }
+      ],
+      "note": "接应部队队长。负责在 B 门直升机撤离点接应 P-055 部队。"
+    },
+    {
+      "faction": "grup",
+      "keys": [
+        "传送石",
+        "p-422"
+      ],
+      "display": "P-422「传送石」士兵",
+      "displayEn": "DIVISION P TELEPORTER",
+      "dept": "P-422「传送石」",
+      "deptEn": "DIVISION P",
+      "clearance": 3,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "grup",
+      "accent": "warn",
+      "tabs": [
+        {
+          "id": "gru-brief",
+          "zh": "行动简报",
+          "en": "BRIEF",
+          "code": null,
+          "href": "tab.html?id=gru-brief"
+        },
+        {
+          "id": "gru-codebook",
+          "zh": "密码本",
+          "en": "CODEBOOK",
+          "code": null,
+          "href": "tab.html?id=gru-codebook"
+        }
+      ],
+      "note": "传送分遣队成员。刷新后 B 门将出现可撤离的 BTR 支援。"
+    },
+    {
+      "faction": "skp",
+      "keys": [
+        "skp",
+        "异界探险队",
+        "skp指挥官"
+      ],
+      "display": "异界探险 C 组指挥官",
+      "displayEn": "SKP C-GROUP COMMANDER",
+      "dept": "异界探索部队 C 组",
+      "deptEn": "SKP C-GROUP",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "skp",
+      "accent": "mono",
+      "tabs": [
+        {
+          "id": "skp-crystal",
+          "zh": "晶体清单",
+          "en": "CRYSTAL MANIFEST",
+          "code": null,
+          "href": "tab.html?id=skp-crystal"
+        },
+        {
+          "id": "skp-blackbox",
+          "zh": "黑箱状态",
+          "en": "BLACK BOX",
+          "code": null,
+          "href": "tab.html?id=skp-blackbox"
+        }
+      ],
+      "note": "C 组指挥官。负责采集晶体、装载黑箱，并在窗口关闭前完成任务。"
+    },
+    {
+      "faction": "skp",
+      "keys": [
+        "skp特工",
+        "异界特工"
+      ],
+      "display": "异界探险 C 组特工",
+      "displayEn": "SKP AGENT",
+      "dept": "异界探索部队 C 组",
+      "deptEn": "SKP C-GROUP",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "skp",
+      "accent": "mono",
+      "tabs": [
+        {
+          "id": "skp-crystal",
+          "zh": "晶体清单",
+          "en": "CRYSTAL MANIFEST",
+          "code": null,
+          "href": "tab.html?id=skp-crystal"
+        },
+        {
+          "id": "skp-blackbox",
+          "zh": "黑箱状态",
+          "en": "BLACK BOX",
+          "code": null,
+          "href": "tab.html?id=skp-blackbox"
+        }
+      ],
+      "note": "特工。获准招募本世界的科研与 D 级人员，招募标准由帝国定义。"
+    },
+    {
+      "faction": "skp",
+      "keys": [
+        "skp士兵",
+        "异界士兵"
+      ],
+      "display": "异界探险 C 组士兵",
+      "displayEn": "SKP SOLDIER",
+      "dept": "异界探索部队 C 组",
+      "deptEn": "SKP C-GROUP",
+      "clearance": 3,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "skp",
+      "accent": "mono",
+      "tabs": [
+        {
+          "id": "skp-crystal",
+          "zh": "晶体清单",
+          "en": "CRYSTAL MANIFEST",
+          "code": null,
+          "href": "tab.html?id=skp-crystal"
+        },
+        {
+          "id": "skp-blackbox",
+          "zh": "黑箱状态",
+          "en": "BLACK BOX",
+          "code": null,
+          "href": "tab.html?id=skp-blackbox"
+        }
+      ],
+      "note": "士兵。不具备晶体用途的相关权限，也不需要知道。"
+    },
+    {
+      "faction": "unreg",
       "keys": [
         "darl",
         "darl博士",
@@ -361,9 +1383,29 @@
       "dept": "—",
       "deptEn": "—",
       "clearance": 6,
+      "clearanceLabel": "█",
       "loadout": "darl",
       "accent": "finale",
-      "note": "身份核验异常。权限徽记不属于基金会现行人事登记表。"
+      "tabs": [],
+      "note": "身份核验异常。权限徽记在档案设立之初即已被写入，写入人为空。"
+    },
+    {
+      "faction": "unreg",
+      "keys": [
+        "观察者",
+        "observer",
+        "observe"
+      ],
+      "display": "观察者",
+      "displayEn": "OBSERVER",
+      "dept": "—",
+      "deptEn": "—",
+      "clearance": 0,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "standard",
+      "accent": "mono",
+      "tabs": [],
+      "note": "已阵亡或在回合开始后加入的人员。无权访问任何档案，只能等待。"
     }
   ],
   "guest": {
@@ -380,5 +1422,77 @@
     "corruption": 5,
     "finale": 5,
     "finaleFull": 6
-  }
+  },
+  "factions": [
+    {
+      "id": "scp",
+      "zh": "SCP 基金会",
+      "en": "SCP FOUNDATION",
+      "abbr": "SCP",
+      "accent": "mono"
+    },
+    {
+      "id": "goc",
+      "zh": "全球超自然联盟",
+      "en": "GLOBAL OCCULT COALITION",
+      "abbr": "GOC",
+      "accent": "eng"
+    },
+    {
+      "id": "uiu",
+      "zh": "特异事故处",
+      "en": "UNUSUAL INCIDENTS UNIT",
+      "abbr": "UIU",
+      "accent": "adm"
+    },
+    {
+      "id": "ci",
+      "zh": "混沌分裂者",
+      "en": "CHAOS INSURGENCY",
+      "abbr": "CI",
+      "accent": "finale"
+    },
+    {
+      "id": "sh",
+      "zh": "蛇之手",
+      "en": "SERPENT'S HAND",
+      "abbr": "SH",
+      "accent": "isa"
+    },
+    {
+      "id": "cotsk",
+      "zh": "深红王之子",
+      "en": "CHILDREN OF THE SCARLET KING",
+      "abbr": "COTSK",
+      "accent": "finale"
+    },
+    {
+      "id": "ar",
+      "zh": "安德森机器人",
+      "en": "ANDERSON ROBOTICS",
+      "abbr": "AR",
+      "accent": "o5"
+    },
+    {
+      "id": "grup",
+      "zh": "GRU-P「P」部门",
+      "en": "DIVISION P",
+      "abbr": "GRU-P",
+      "accent": "warn"
+    },
+    {
+      "id": "skp",
+      "zh": "SKP 异界探险队",
+      "en": "SONDERKOMMANDO FÜR PARANORMALES",
+      "abbr": "SKP",
+      "accent": "mono"
+    },
+    {
+      "id": "unreg",
+      "zh": "未登记",
+      "en": "UNREGISTERED",
+      "abbr": "—",
+      "accent": "finale"
+    }
+  ]
 }
