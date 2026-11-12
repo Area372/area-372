@@ -1722,3 +1722,242 @@ button.sc-card:hover .sc-t { color: #fff; }
   .boot-lines, .boot-slogan, .boot-bg { opacity: 1 !important; }
   .txt-glitch { animation: none !important; }
 }
+
+/* ============================================================
+   剧本目录：独立页面（不套站点外壳）
+   ============================================================ */
+body.solo-page { background: #060607; }
+body.solo-page .solo {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+.solo-bar {
+  flex: 0 0 auto;
+  height: 58px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 26px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(8,8,9,.92);
+}
+.sb-left { display: flex; align-items: baseline; gap: 12px; }
+.sb-title { font-family: var(--f-cn); font-size: 15px; letter-spacing: .12em; color: var(--fg); }
+.sb-sub { font-family: var(--f-mono); font-size: 9px; letter-spacing: .26em; color: var(--dim-2); }
+.sb-right { display: flex; align-items: center; gap: 14px; }
+.sb-lv { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .18em; color: var(--dim-2); }
+.sb-x {
+  background: none; border: 0; padding: 4px 6px;
+  color: var(--dim); font-size: 14px; line-height: 1; cursor: pointer;
+  transition: color .18s;
+}
+.sb-x:hover { color: var(--fg); }
+
+.solo-main {
+  flex: 1 1 auto;
+  width: 100%; max-width: 1180px;
+  margin: 0 auto;
+  padding: 64px 40px 96px;
+}
+.solo-head { margin-bottom: 40px; }
+.solo-head h1 {
+  font-family: var(--f-cn); font-size: 44px; font-weight: 400;
+  letter-spacing: .06em; line-height: 1.1; color: var(--fg);
+  margin: 0 0 10px;
+}
+.solo-cn {
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: .26em;
+  color: var(--eng); margin-bottom: 20px;
+}
+.solo-lead {
+  font-size: 14px; line-height: 1.95; color: var(--dim);
+  max-width: 62ch; margin: 0;
+}
+
+/* 拒绝访问 */
+.solo-deny { max-width: 560px; padding-top: 40px; }
+.sd-k {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: .28em;
+  color: #e2542b; margin-bottom: 18px;
+}
+.solo-deny h1 {
+  font-family: var(--f-cn); font-size: 26px; font-weight: 400;
+  letter-spacing: .04em; margin: 0 0 16px; color: var(--fg);
+}
+.solo-deny p { font-size: 13.5px; line-height: 1.95; color: var(--dim); margin: 0 0 10px; }
+.sd-need {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: .2em;
+  color: var(--dim-2); margin: 22px 0 26px;
+}
+.sd-back {
+  display: inline-block; border: 1px solid var(--line); padding: 11px 20px;
+  font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .18em;
+  color: var(--fg); text-decoration: none; transition: border-color .18s, color .18s;
+}
+.sd-back:hover { border-color: var(--eng); color: var(--eng); }
+
+@media (max-width: 720px) {
+  .solo-bar { padding: 0 16px; height: 52px; }
+  .solo-main { padding: 40px 18px 72px; }
+  .solo-head h1 { font-size: 32px; }
+}
+
+/* ============================================================
+   启动加载器（参考 AREA-53 的进入动画排版）
+   ============================================================ */
+.ldr {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 3vw, 34px);
+  width: min(820px, 88vw);
+  margin: 0 auto;
+  transform: translateX(-1.5vw);
+}
+
+/* --- 符号：描边绘制 --- */
+.ldr-mark {
+  flex: 0 0 clamp(84px, 13vw, 138px);
+  width: clamp(84px, 13vw, 138px);
+  height: clamp(84px, 13vw, 138px);
+  overflow: visible;
+  opacity: 0;
+  transform: translateY(16px) scale(.88);
+  animation: ldr-mark-in 800ms cubic-bezier(.2,.8,.2,1) 80ms forwards;
+  filter: drop-shadow(0 0 14px rgba(255,255,255,.22));
+}
+.ldr-outer, .ldr-inner, .ldr-slash {
+  fill: none;
+  stroke: #f3f3f3;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+.ldr-outer { stroke-width: 6;      stroke-dasharray: 400; stroke-dashoffset: 400; animation: ldr-draw 950ms cubic-bezier(.65,0,.35,1) 200ms forwards; }
+.ldr-inner { stroke-width: 3.2;    stroke-dasharray: 240; stroke-dashoffset: 240; animation: ldr-draw 900ms cubic-bezier(.65,0,.35,1) 380ms forwards; }
+.ldr-slash { stroke-width: 3.2;    stroke-dasharray: 90;  stroke-dashoffset: 90;  animation: ldr-draw 520ms ease-out 90ms forwards; }
+
+/* --- 竖分隔线 --- */
+.ldr-divider {
+  align-self: stretch;
+  width: 2px;
+  min-height: 104px;
+  background: #d8d8d8;
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: ldr-div-in 430ms ease-out 420ms forwards;
+}
+
+/* --- 文字块 --- */
+.ldr-copy {
+  flex: 1; min-width: 0;
+  opacity: 0;
+  transform: translateX(20px);
+  animation: ldr-copy-in 600ms cubic-bezier(.2,.8,.2,1) 470ms forwards;
+}
+.ldr-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 14px; margin: 0 0 14px;
+}
+.ldr-title {
+  font-family: var(--f-cn);
+  font-size: clamp(20px, 3.4vw, 30px);
+  font-weight: 400;
+  letter-spacing: .14em;
+  line-height: 1;
+  color: var(--fg);
+  white-space: nowrap;
+}
+.ldr-code {
+  font-family: var(--f-mono);
+  font-size: clamp(9px, 1.15vw, 11px);
+  letter-spacing: .12em;
+  color: #8b8b8b;
+  white-space: nowrap;
+}
+
+/* --- 条纹进度条 --- */
+.ldr-track {
+  position: relative;
+  height: 34px;
+  padding: 3px;
+  border: 2px solid #d6d6d6;
+  background: rgba(255,255,255,.015);
+  box-shadow: 0 0 12px rgba(255,255,255,.07), inset 0 0 8px rgba(255,255,255,.04);
+}
+.ldr-fill {
+  width: 0;
+  height: 100%;
+  background: repeating-linear-gradient(90deg, #f2f2f2 0 11px, #555 11px 15px);
+  box-shadow: 0 0 9px rgba(255,255,255,.22);
+  transition: width .16s linear;
+}
+
+/* --- 底部状态行 --- */
+.ldr-foot {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 14px;
+  margin-top: 9px;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: .06em;
+  color: #818181;
+}
+.ldr-foot > span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ldr-foot > span:last-child { color: #d8d8d8; flex: 0 0 auto; }
+.ldr-cursor { color: #eee; font-style: normal; animation: ldr-blink 700ms steps(1,end) infinite; }
+
+/* --- 退场 --- */
+.ldr.is-exiting .ldr-copy,
+.ldr.is-exiting .ldr-track,
+.ldr.is-exiting .ldr-foot { opacity: 0; transition: opacity 380ms ease, transform 560ms ease; }
+.ldr.is-exiting .ldr-track { transform: scaleX(.86); transform-origin: right center; }
+.ldr.is-exiting .ldr-foot  { transform: translateY(8px); transition-delay: 80ms; }
+.ldr.is-exiting .ldr-head  { opacity: 0; transform: translateX(18px); transition: opacity 360ms ease, transform 520ms ease; transition-delay: 160ms; }
+.ldr.is-exiting .ldr-divider { transform: scaleY(0); transform-origin: bottom; transition: transform 420ms cubic-bezier(.7,0,.84,0); transition-delay: 260ms; }
+.ldr.is-exiting .ldr-mark { opacity: 0; transform: translateY(10px) scale(.92); transition: opacity 420ms ease, transform 560ms ease; transition-delay: 120ms; }
+.ldr.is-exiting .ldr-outer,
+.ldr.is-exiting .ldr-inner,
+.ldr.is-exiting .ldr-slash { animation: none; transition: stroke-dashoffset 520ms cubic-bezier(.7,0,.84,0); }
+.ldr.is-exiting .ldr-outer { stroke-dashoffset: 400; }
+.ldr.is-exiting .ldr-inner { stroke-dashoffset: 240; }
+.ldr.is-exiting .ldr-slash { stroke-dashoffset: 90; }
+
+@keyframes ldr-mark-in { to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes ldr-draw    { to { stroke-dashoffset: 0; } }
+@keyframes ldr-div-in  { to { transform: scaleY(1); } }
+@keyframes ldr-copy-in { to { opacity: 1; transform: translateX(0); } }
+@keyframes ldr-blink   { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+@media (max-width: 620px) {
+  .ldr { gap: 14px; transform: none; }
+  .ldr-mark { flex-basis: 62px; width: 62px; height: 62px; }
+  .ldr-divider { min-height: 84px; }
+  .ldr-track { height: 28px; }
+  .ldr-foot { font-size: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ldr-mark, .ldr-outer, .ldr-inner, .ldr-slash,
+  .ldr-divider, .ldr-copy, .ldr-cursor { animation: none !important; }
+  .ldr-mark, .ldr-copy { opacity: 1; transform: none; }
+  .ldr-divider { transform: scaleY(1); }
+  .ldr-outer, .ldr-inner, .ldr-slash { stroke-dashoffset: 0; }
+}
+
+/* 加载器阶段：不让欢迎图的大字透出来干扰排版 */
+.boot-bg.loading-bg { opacity: .12; filter: grayscale(1); }
+.boot:not(.done) .ldr-track { display: block; }
+
+/* --- 加载器图标改用位图：保留淡入+发光 --- */
+img.ldr-mark {
+  object-fit: contain;
+  image-rendering: auto;
+  filter: drop-shadow(0 0 18px rgba(255,255,255,.26)) drop-shadow(0 0 40px rgba(255,255,255,.10));
+}
+.ldr.is-exiting img.ldr-mark {
+  opacity: 0;
+  transform: translateY(10px) scale(.92);
+  transition: opacity 420ms ease, transform 560ms ease;
+  transition-delay: 120ms;
+}

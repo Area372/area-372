@@ -414,11 +414,15 @@ const AREA = (function () {
     window.__BOOT_OK__ = true;      // 告诉外围看门狗：主脚本已正常运行
 
     const linesEl = $('#bootLines');
-    const bar = $('#bootBar > i');
+    const bar = $('#bootBar');
     const pctEl = $('#bootPct');
+    const footEl = $('#bootFoot');
+    const ldr = $('#ldr');
     const stageA = $('#stageBoot');
     const stageB = $('#stageAuth');
     const slogan = $('#bootSlogan');
+    /* 状态行文本：取启动日志的纯文本（去掉标签与提示符） */
+    const ticker = BOOT.map(s => s.replace(/<[^>]+>/g, '').replace(/^>\s*/, '').trim());
 
     // 看门狗：无论发生什么，2.9s 后一定露出身份核验界面
     let done = false;
@@ -442,7 +446,19 @@ const AREA = (function () {
       await sleep(BOOT_STEP);
       const p = Math.round(((i + 1) / steps) * 100);
       if (bar) bar.style.width = p + '%';
-      if (pctEl) pctEl.textContent = String(p).padStart(3, '0') + '%';
+      if (pctEl) pctEl.textContent = String(p).padStart(2, '0') + '%';
+      const track = $('.ldr-track');
+      if (track) track.setAttribute('aria-valuenow', String(p));
+
+      /* 状态行滚动显示当前日志行，末尾保留闪烁光标 */
+      if (footEl && ticker[i]) {
+        footEl.textContent = ticker[i] + ' ';
+        const cur = document.createElement('i');
+        cur.className = 'ldr-cursor';
+        cur.textContent = '_';
+        footEl.appendChild(cur);
+      }
+
       if (i === Math.floor(steps * 0.55) && slogan) slogan.classList.add('in');
     }
 
@@ -451,16 +467,27 @@ const AREA = (function () {
     clearTimeout(watchdog);
 
     if (slogan) slogan.classList.add('in');
-    await sleep(180);
+    if (bar) bar.style.width = '100%';
+    if (pctEl) pctEl.textContent = '100%';
+    if (ldr) ldr.classList.add('is-exiting');
+    await sleep(380);
     showAuth(stageA, stageB, linesEl);
   }
 
-  async function submitAuth(raw) {
+  const GPASS = '114514';
+
+  async function submitAuth(raw, pass) {
     const cfg = await site();
 
-    /* 万能授权口令 */
+    /* 万能授权口令：除口令本身，还需要二级密码 */
     const code = String(raw || '').trim().toLowerCase().replace(/\s+/g, ' ');
     if (code === 'director grant') {
+      if (!hasGrant()) {
+        const need = (cfg && cfg.site && cfg.site.grantPass) || GPASS;
+        if (String(pass == null ? '' : pass) !== need) {
+          return { needPass: true, bad: pass != null };
+        }
+      }
       setGrant();
       return grantSession(cfg);
     }

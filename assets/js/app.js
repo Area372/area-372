@@ -292,7 +292,7 @@
         </a>
         <div class="tier">${factionIcon(sess.faction || 'unreg')}<span class="dot"></span>${esc(sess.displayEn || sess.display)}</div>
         <b>${esc(ownLabel())}</b> · ${esc(sess.deptEn || sess.dept)}<br>
-        BUILD 372.1.11
+        BUILD 372.1.19
       </div>`;
     document.body.appendChild(side);
 
@@ -1808,16 +1808,52 @@
 
   /* ---------- CHIEF EGG ---------- */
   /* ---------- SCRIPT ---------- */
-  PAGES.script = async function () {
-    if (!AREA.hasGrant()) {
-      $('#app').innerHTML = gate({
-        title: 'ACCESS DENIED', cn: '该目录不对当前会话开放',
-        msg: '剧本目录属不公开内容，未纳入站点正式档案编号体系。',
-        file: 'AREA-372/SCR/00', need: '授权指令'
-      });
+  /* ============================================================
+     剧本目录（独立页面：不套站点外壳）
+     ============================================================ */
+  function renderScriptSolo(sess) {
+    let lv = (sess && (sess.clearanceLabel || ('L-' + sess.clearance))) || 'L-∞';
+    if (lv && lv[0] !== 'L') lv = 'L-' + lv;
+    const ok = AREA.hasGrant();
+
+    document.body.className = 'solo-page';
+
+    const solo = document.createElement('div');
+    solo.className = 'solo';
+    solo.innerHTML = `
+      <header class="solo-bar">
+        <div class="sb-left">
+          <span class="sb-title">剧本</span>
+          <span class="sb-sub">SCREENPLAY</span>
+        </div>
+        <div class="sb-right">
+          <span class="sb-lv">${esc(lv)}</span>
+          <button type="button" class="sb-x" id="soloOut" title="退出" aria-label="退出">✕</button>
+        </div>
+      </header>
+      <main class="solo-main" id="soloMain"></main>
+    `;
+    document.body.appendChild(solo);
+
+    const out = document.getElementById('soloOut');
+    if (out) out.addEventListener('click', () => {
+      AREA.clearSession();
+      location.href = 'index.html';
+    });
+
+    const main = document.getElementById('soloMain');
+
+    if (!ok) {
+      main.innerHTML = `
+        <div class="solo-deny">
+          <div class="sd-k">ACCESS DENIED</div>
+          <h1>该目录不对当前会话开放</h1>
+          <p>剧本目录属不公开内容，未纳入站点正式档案编号体系。</p>
+          <div class="sd-need">需要：授权指令</div>
+          <a class="sd-back" href="index.html">返回身份核验 / RETURN</a>
+        </div>`;
       return;
     }
-    applyAccent('eng');
 
     const items = [
       { no: '01', t: '5K 剧本', sub: 'FIVE-K · ALT-CANON', state: '待撰写', live: true },
@@ -1825,43 +1861,38 @@
       { no: '03', t: '未添加', sub: 'EMPTY SLOT', state: '' },
       { no: '04', t: '未添加', sub: 'EMPTY SLOT', state: '' }
     ];
-
     const filled = items.filter(x => x.live).length;
 
-    $('#app').innerHTML = `
-      <div class="wrap">
-        <div class="phead">
-          <div class="crumb">AREA-372 <i>/</i> SCREENPLAY <i>/</i> 剧本</div>
-          <h1>剧本</h1>
-          <div class="h1-cn">SCREENPLAY ARCHIVE · ${filled} / ${items.length}</div>
-          <p class="lead">影像与广播脚本的存放目录。条目正文尚未接入，当前仅登记标题与编号。</p>
-          <div class="phead-bar"></div>
-        </div>
+    main.innerHTML = `
+      <div class="solo-head">
+        <h1>剧本</h1>
+        <div class="solo-cn">SCREENPLAY ARCHIVE · ${filled} / ${items.length}</div>
+        <p class="solo-lead">影像与广播脚本的存放目录。条目正文尚未接入，当前仅登记标题与编号。</p>
+      </div>
+      <div class="sc-list">
+        ${items.map(it => it.live ? `
+          <button type="button" class="sc-card" data-id="5k">
+            <span class="sc-no">${it.no}</span>
+            <span class="sc-main">
+              <span class="sc-t">${esc(it.t)}</span>
+              <span class="sc-sub">${esc(it.sub)}</span>
+            </span>
+            <span class="sc-state">${esc(it.state)}</span>
+          </button>
+        ` : `
+          <div class="sc-card is-empty">
+            <span class="sc-no">${it.no}</span>
+            <span class="sc-main">
+              <span class="sc-t">${it.t}</span>
+              <span class="sc-sub">${it.sub}</span>
+            </span>
+            <span class="sc-state"></span>
+          </div>
+        `).join('')}
+      </div>
+    `;
 
-        <div class="sc-list">
-          ${items.map(it => it.live ? `
-            <button type="button" class="sc-card" data-id="5k">
-              <span class="sc-no">${it.no}</span>
-              <span class="sc-main">
-                <span class="sc-t">${esc(it.t)}</span>
-                <span class="sc-sub">${esc(it.sub)}</span>
-              </span>
-              <span class="sc-state">${esc(it.state)}</span>
-            </button>
-          ` : `
-            <div class="sc-card is-empty">
-              <span class="sc-no">${it.no}</span>
-              <span class="sc-main">
-                <span class="sc-t">${esc(it.t)}</span>
-                <span class="sc-sub">${esc(it.sub)}</span>
-              </span>
-              <span class="sc-state"></span>
-            </div>
-          `).join('')}
-        </div>
-      </div>`;
-
-    const btn = $('.sc-card[data-id="5k"]');
+    const btn = main.querySelector('.sc-card[data-id="5k"]');
     if (btn) btn.addEventListener('click', () => {
       modal('剧本 / SCREENPLAY', '5K 剧本', 'FIVE-K · ALT-CANON', `
         <div class="mlabel">当前状态</div>
@@ -1870,7 +1901,7 @@
         <p class="mtext" style="margin:0">该条目在正文接入前不提供阅读。此处的占位卡片是为了先把目录结构定下来。</p>
       `, 'var(--eng)');
     });
-  };
+  }
 
   PAGES['chief-egg'] = async function () {
     if (SESS.id !== 'security' && !SESS.grant) {
@@ -2264,7 +2295,7 @@
   function footer() {
     const wiki = SITE.site.wiki;
     return `<div class="foot">
-      <div>AREA-372 · TAKAL UNDERGROUND COMPLEX · BUILD 372.1.11 · SESSION ${esc(SESS.displayEn || SESS.display)} · ${esc(ownLabel())}</div>
+      <div>AREA-372 · TAKAL UNDERGROUND COMPLEX · BUILD 372.1.19 · SESSION ${esc(SESS.displayEn || SESS.display)} · ${esc(ownLabel())}</div>
       <div class="fc">
         本页面为基于 SCP 基金会设定的原创同人作品，非官方站点。SCP 基金会设定内容遵循
         <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.zh" target="_blank" rel="noopener">CC BY-SA 3.0</a>
@@ -2304,10 +2335,37 @@
       initDomSelect();
       const form = $('#authForm');
       const inp = $('#authInput');
+      let passMode = false;
+
+      function showPassHint(bad) {
+        let h = document.getElementById('passHint');
+        if (!h) {
+          h = document.createElement('div');
+          h.id = 'passHint';
+          h.style.cssText = 'margin-top:16px;font-family:var(--f-mono);font-size:10px;' +
+                            'letter-spacing:.16em;transition:color .2s';
+          form.appendChild(h);
+        }
+        h.style.color = bad ? '#e2542b' : 'var(--dim-2)';
+        h.textContent = bad ? '口令不正确，请重新输入。' : '该凭证需要二级口令。';
+      }
+
       if (form) {
         form.addEventListener('submit', async e => {
           e.preventDefault();
-          const sess = await AREA.submitAuth(inp ? inp.value : '');
+          const val = inp ? inp.value : '';
+          const sess = passMode
+            ? await AREA.submitAuth('director grant', val)
+            : await AREA.submitAuth(val);
+
+          if (sess && sess.needPass) {
+            passMode = true;
+            if (inp) { inp.value = ''; inp.placeholder = '输入二级口令'; inp.focus(); }
+            showPassHint(!!sess.bad);
+            return;
+          }
+
+          passMode = false;
           if (inp) inp.blur();
           await AREA.runScene(sess, 'home.html');
         });
@@ -2447,6 +2505,13 @@
       }
     } catch (e) { /* 对齐失败不影响既有会话 */ }
 
+    /* 剧本目录是独立页面：不套站点外壳，只有自己的顶栏 */
+    if (page === 'script') {
+      AREA.consoleInit(sess);
+      renderScriptSolo(sess);
+      return;
+    }
+
     shell(sess, page);
     AREA.consoleInit(sess);
     AREA.fxInit();
@@ -2532,10 +2597,15 @@
     const form = $('#authForm');
     const inp = $('#authInput');
     /* 无论中间哪一步出错，最终都一定渲染出页面——绝不停在加载界面 */
-    async function enter(raw) {
+    async function enter(raw, pass) {
       let sess = null;
       try {
-        sess = await AREA.submitAuth(raw || '');
+        sess = await AREA.submitAuth(raw || '', pass);
+        if (sess && sess.needPass) {
+          const p = window.prompt('该凭证需要二级口令：');
+          if (p === null) return;
+          return enter('director grant', p);
+        }
         if (inp) inp.blur();
         await AREA.runScene(sess, null);
       } catch (err) {

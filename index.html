@@ -12,20 +12,34 @@
 <body data-page="index">
 
 <div class="boot" id="boot">
-  <div class="boot-bg"></div>
-  <pre class="boot-lines" id="bootLines"></pre>
 
   <div class="boot-core">
 
     <!-- ============ STAGE A · BOOT ============ -->
     <div id="stageBoot">
-      <div class="boot-mark">
-        <img src="assets/img/mark-white.png" alt="AREA-372" draggable="false">
+      <!-- 参考「加载器」排版：符号描边 + 竖分隔线 + 标题/进度/状态行 -->
+      <div class="ldr" id="ldr">
+        <img class="ldr-mark" src="assets/img/mark-loader.png" alt="" width="512" height="512">
+
+        <div class="ldr-divider" aria-hidden="true"></div>
+
+        <div class="ldr-copy">
+          <div class="ldr-head">
+            <span class="ldr-title">页面加载中</span>
+            <span class="ldr-code">SYS://372</span>
+          </div>
+          <div class="ldr-track" role="progressbar" aria-label="加载进度"
+               aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="ldr-fill" id="bootBar"></div>
+          </div>
+          <div class="ldr-foot">
+            <span id="bootFoot">正在建立安全连接 <i class="ldr-cursor">_</i></span>
+            <span id="bootPct">00%</span>
+          </div>
+        </div>
       </div>
-      <h1 class="boot-h1">AREA-372</h1>
-      <div class="boot-sub">Takal Underground Complex</div>
-      <div class="boot-bar" id="bootBar"><i></i></div>
-      <div class="boot-pct" id="bootPct">000%</div>
+
+
       <div id="stageHint" style="display:none;margin-top:26px;font-size:12.5px;line-height:1.9;
            color:#b9b9b4;max-width:460px;margin-left:auto;margin-right:auto;text-align:left">
         <div style="color:#f0a500;font-family:monospace;letter-spacing:.18em;font-size:10px;margin-bottom:8px">
@@ -109,8 +123,8 @@
   }, 7000);
 })();
 </script>
-<script src="assets/js/core.js?v=372.1.11"></script>
-<script src="assets/js/app.js?v=372.1.11"></script>
+<script src="assets/js/core.js?v=372.1.19"></script>
+<script src="assets/js/app.js?v=372.1.19"></script>
 <script>
   (function () {
     try {
