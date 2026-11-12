@@ -19,17 +19,52 @@ const AREA = (function () {
 
   /* ---------- data ---------- */
   const _cache = {};
+
+  /* ---------- 界面语言 ---------- */
+  const LKEY = 'area372.lang';
+  let _lang = null;
+
+  function getLang() {
+    // 内测门禁：英文模式仅对 director grant 授权者开放，其他人强制中文
+    if (!hasGrant()) return 'zh';
+    if (_lang) return _lang;
+    let v = 'zh';
+    try { v = localStorage.getItem(LKEY) || 'zh'; } catch (e) {}
+    _lang = (v === 'en') ? 'en' : 'zh';
+    return _lang;
+  }
+
+  function setLang(l) {
+    if (!hasGrant()) { _lang = 'zh'; return; }   // 内测门禁：仅授权会话可切换语言
+
+    _lang = (l === 'en') ? 'en' : 'zh';
+    try { localStorage.setItem(LKEY, _lang); } catch (e) {}
+    Object.keys(_cache).forEach(k => { delete _cache[k]; });  // 清缓存，强制按新语言重载
+    return _lang;
+  }
+
   async function load(name) {
-    if (_cache[name]) return _cache[name];
-    // 单文件版：全部数据已内联在 window.__DB__，无需网络请求
+    const lang = getLang();
+    const ck = lang + ':' + name;
+    if (_cache[ck]) return _cache[ck];
+
+    // 单文件版：全部数据已内联
     if (window.__DB__ && window.__DB__[name]) {
-      _cache[name] = window.__DB__[name];
-      return _cache[name];
+      const en = window.__DB_EN__ && window.__DB_EN__[name];
+      _cache[ck] = (lang === 'en' && en) ? en : window.__DB__[name];
+      return _cache[ck];
     }
-    const r = await fetch('data/' + name + '.json', { cache: 'no-cache' });
+
+    // 英文版放在 data/en/，没有则回退中文
+    let url = 'data/' + (lang === 'en' ? 'en/' : '') + name + '.json';
+    let r = await fetch(url, { cache: 'no-cache' });
+    if (!r.ok && lang === 'en') {
+      url = 'data/' + name + '.json';
+      r = await fetch(url, { cache: 'no-cache' });
+    }
     if (!r.ok) throw new Error('DATA ' + name + ' ' + r.status);
     const d = await r.json();
-    _cache[name] = d;
+    _cache[ck] = d;
     return d;
   }
 
@@ -150,6 +185,7 @@ const AREA = (function () {
       clearance: 6, clearanceLabel: '∞',
       loadout: 'grant', accent: 'o5',
       grant: true, permanent: true,
+      faction: 'unreg',
       tabs: [
         { id: 'roster', zh: '全部身份', en: 'ALL IDENTITIES', code: '10', href: 'tab.html?id=roster' },
         { id: 'o5-panel', zh: '议会控制台', en: 'COUNCIL CONSOLE', code: '09', href: 'o5-panel.html' },
@@ -181,6 +217,7 @@ const AREA = (function () {
       loadout: acc.loadout,
       accent: acc.accent,
       note: acc.note,
+      faction: acc.faction || 'unreg',
       tabs: acc.tabs || [],
       denied: ''
     });
@@ -615,6 +652,7 @@ const AREA = (function () {
   return {
     $, $$, sleep, esc, load, mark, MARK_FINALE, MARK_IMG,
     site, getSession, setSession, clearSession, hasSession,
+    getLang, setLang,
     hasGrant, setGrant, clearGrant, grantSession, commitPermanent,
     boot, submitAuth, runScene,
     fxInit, sweep, jitter, toast, consoleInit,

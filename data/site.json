@@ -10,7 +10,7 @@
     "statusZh": "临界 / 有限运作",
     "statusEn": "CRITICAL / LIMITED OPERATION",
     "version": "REV. 20██-██",
-    "build": "372.1.0",
+    "build": "372.1.11",
     "wiki": {
       "href": "https://scp-wiki-cn.wikidot.com/",
       "zh": "SCP 总站点资料库",
@@ -757,6 +757,40 @@
         }
       ],
       "note": "陆军部指挥官。由 UIU 间谍骇入基金会特殊电脑后呼叫刷新，负责接管现场。"
+    },
+    {
+      "faction": "uiu",
+      "keys": [
+        "uiu渗透者",
+        "渗透者",
+        "uiu spy",
+        "uiu间谍",
+        "潜伏特工",
+        "uiu infiltrator"
+      ],
+      "display": "UIU 渗透者",
+      "displayEn": "UIU INFILTRATOR",
+      "dept": "特异事故处 · 潜伏",
+      "deptEn": "UIU / DEEP COVER",
+      "clearance": 4,
+      "clearanceLabel": "[数据删除]",
+      "loadout": "uiu",
+      "accent": "adm",
+      "tabs": [
+        {
+          "id": "uiu-cases",
+          "zh": "案件档案",
+          "en": "CASE FILES",
+          "href": "tab.html?id=uiu-cases"
+        },
+        {
+          "id": "uiu-wiretap",
+          "zh": "窃听转录",
+          "en": "WIRETAP",
+          "href": "tab.html?id=uiu-wiretap"
+        }
+      ],
+      "note": "以基金会人员身份潜伏在 AREA-372 内部的特异事故处特工。任务是收集中收容项目情报并回传，不参与正面交火。其真实身份不在任何基金会名册上。"
     },
     {
       "faction": "ci",

@@ -1,0 +1,1532 @@
+{
+  "site": {
+    "code": "AREA-372",
+    "nameZh": "Takal Underground Complex",
+    "nameEn": "Takal Underground Complex",
+    "org": "SCP Foundation",
+    "motto": "SECURE. CONTAIN. PROTECT.",
+    "slogan": "WE DIG DOWNWARD. WE STAND WATCH ABOVE.",
+    "sloganEn": "",
+    "statusZh": "CRITICAL / LIMITED OPERATION",
+    "statusEn": "CRITICAL / LIMITED OPERATION",
+    "version": "REV. 20██-██",
+    "build": "372.1.2",
+    "wiki": {
+      "href": "https://scp-wiki-cn.wikidot.com/",
+      "zh": "SCP WIKI-CN ARCHIVE",
+      "en": "SCP WIKI-CN ARCHIVE",
+      "note": "External link · opens in a new window"
+    }
+  },
+  "levels": [
+    {
+      "lv": 0,
+      "code": "L-0",
+      "zh": "PUBLIC",
+      "en": "PUBLIC",
+      "desc": "Lowest tier. Granted to non-essential staff who need no contact with anomalous information — some logistics, clerical or janitorial posts. Usually no access card, or entry only to the most basic non-anomalous areas."
+    },
+    {
+      "lv": 1,
+      "code": "L-1",
+      "zh": "CONFIDENTIAL",
+      "en": "CONFIDENTIAL",
+      "desc": "Basic confidentiality. Granted to employees whose workplace is near anomalies but who do not directly handle anomalous information or entities. May hold an access card, with a very limited scope."
+    },
+    {
+      "lv": 2,
+      "code": "L-2",
+      "zh": "RESTRICTED",
+      "en": "RESTRICTED",
+      "desc": "Basic operational. Granted to researchers, field agents or security staff who need direct access to basic anomaly project information. This is where contact with core anomaly information begins."
+    },
+    {
+      "lv": 3,
+      "code": "L-3",
+      "zh": "SECRET",
+      "en": "SECRET",
+      "desc": "Senior professional. Granted to senior researchers, project leads or MTF members who need deep knowledge of anomaly origins and the reasoning behind containment measures."
+    },
+    {
+      "lv": 4,
+      "code": "L-4",
+      "zh": "TOP SECRET",
+      "en": "TOP SECRET",
+      "desc": "Site command. Granted to senior management requiring site- or region-level strategic intelligence — typically site directors, security chiefs or MTF commanders."
+    },
+    {
+      "lv": 5,
+      "code": "L-5",
+      "zh": "THAUMIEL",
+      "en": "THAUMIEL",
+      "desc": "Foundation top authority. Granted to O5 Council members and a very few designated individuals; theoretically access to all strategic and sensitive data. Even at Level 5 the need-to-know principle still applies — not every file may be read at will."
+    },
+    {
+      "lv": 6,
+      "code": "L-6",
+      "zh": "UNREGISTERED",
+      "en": "UNREGISTERED",
+      "desc": "This tier does not exist in the Foundation's current security clearance system. The personnel record cannot be verified, yet every encrypted dossier may be read."
+    }
+  ],
+  "nav": [
+    {
+      "id": "home",
+      "href": "home.html",
+      "zh": "TERMINAL",
+      "en": "",
+      "code": "00",
+      "lv": 0
+    },
+    {
+      "id": "overview",
+      "href": "overview.html",
+      "zh": "FACILITY",
+      "en": "",
+      "code": "01",
+      "lv": 0
+    },
+    {
+      "id": "scp",
+      "href": "scp.html",
+      "zh": "CONTAINMENT",
+      "en": "",
+      "code": "02",
+      "lv": 0
+    },
+    {
+      "id": "incidents",
+      "href": "incidents.html",
+      "zh": "INCIDENTS",
+      "en": "",
+      "code": "03",
+      "lv": 0
+    },
+    {
+      "id": "daily",
+      "href": "daily.html",
+      "zh": "DAILY LOGS",
+      "en": "",
+      "code": "04",
+      "lv": 0
+    },
+    {
+      "id": "tuc",
+      "href": "tuc.html",
+      "zh": "TASK FORCES",
+      "en": "",
+      "code": "05",
+      "lv": 0
+    },
+    {
+      "id": "corruption",
+      "href": "corruption.html",
+      "zh": "INTERNAL",
+      "en": "",
+      "code": "06",
+      "lv": 5
+    },
+    {
+      "id": "finale",
+      "href": "finale.html",
+      "zh": "THREAT",
+      "en": "",
+      "code": "07",
+      "lv": 5,
+      "hidden": true
+    },
+    {
+      "id": "search",
+      "href": "search.html",
+      "zh": "SEARCH",
+      "en": "",
+      "code": "08",
+      "lv": 0
+    }
+  ],
+  "accounts": [
+    {
+      "faction": "scp",
+      "keys": [
+        "janitor",
+        "jan",
+        "清洁工",
+        "保洁",
+        "清洁"
+      ],
+      "display": "JANITOR",
+      "displayEn": "JANITOR",
+      "dept": "SCIENCE / JANITORIAL",
+      "deptEn": "SCIENCE / JANITORIAL",
+      "clearance": 0,
+      "clearanceLabel": null,
+      "loadout": "standard",
+      "accent": "mono",
+      "tabs": [],
+      "note": "Janitorial post within the Science Department roster. Holds no access card; limited to the most basic non-anomalous areas."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "engineer",
+        "eng",
+        "工程师",
+        "工程",
+        "工程技术员"
+      ],
+      "display": "ENGINEER",
+      "displayEn": "ENGINEER",
+      "dept": "ENGINEERING",
+      "deptEn": "ENGINEERING",
+      "clearance": 1,
+      "clearanceLabel": null,
+      "loadout": "standard",
+      "accent": "eng",
+      "tabs": [],
+      "note": "Standard Engineering Department personnel. May carry an access card into technical corridors, but must not touch core anomaly files."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "mechanic",
+        "mec",
+        "repairman",
+        "修理工",
+        "维修",
+        "维修工"
+      ],
+      "display": "MECHANIC",
+      "displayEn": "MECHANIC",
+      "dept": "ENGINEERING / FIELD",
+      "deptEn": "ENGINEERING / FIELD",
+      "clearance": 1,
+      "clearanceLabel": null,
+      "loadout": "standard",
+      "accent": "eng",
+      "tabs": [],
+      "note": "Field maintenance staff, Engineering. Access limited to work orders and equipment records."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "researcher",
+        "res",
+        "scientist",
+        "科研人员",
+        "研究员",
+        "科研"
+      ],
+      "display": "RESEARCHER",
+      "displayEn": "RESEARCHER",
+      "dept": "SCIENCE",
+      "deptEn": "SCIENCE",
+      "clearance": 2,
+      "clearanceLabel": null,
+      "loadout": "standard",
+      "accent": "mono",
+      "tabs": [],
+      "note": "Science Department staff. May access basic project information; visual/imaging anomalies remain separately restricted."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "senior-researcher",
+        "senior",
+        "高级科研员",
+        "资深研究员"
+      ],
+      "display": "SENIOR RESEARCHER",
+      "displayEn": "SENIOR RESEARCHER",
+      "dept": "SCIENCE / SENIOR",
+      "deptEn": "SCIENCE / SENIOR",
+      "clearance": 3,
+      "clearanceLabel": null,
+      "loadout": "standard",
+      "accent": "mono",
+      "tabs": [],
+      "note": "Senior researcher, Science Department. May study anomaly origins and the design rationale behind containment measures in depth."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "ethics",
+        "伦理",
+        "道德伦理检察官",
+        "检察官"
+      ],
+      "display": "ETHICS INSPECTOR",
+      "displayEn": "ETHICS INSPECTOR",
+      "dept": "ETHICS COMMITTEE",
+      "deptEn": "ETHICS COMMITTEE",
+      "clearance": 3,
+      "clearanceLabel": null,
+      "loadout": "restricted",
+      "accent": "omega",
+      "tabs": [],
+      "note": "Ethics Committee inspector assigned to this site. Authorized to requisition Class-D personnel and to summon staff of any level."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "personal",
+        "人事主管",
+        "人事"
+      ],
+      "display": "PERSONNEL DIRECTOR",
+      "displayEn": "PERSONNEL DIRECTOR",
+      "dept": "PERSONNEL",
+      "deptEn": "PERSONNEL",
+      "clearance": 3,
+      "clearanceLabel": null,
+      "loadout": "restricted",
+      "accent": "adm",
+      "tabs": [],
+      "note": "Maintains personnel records, clearance changes and disciplinary entries. ENG-02's demotion record was generated by this department."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "matilda",
+        "特殊科研",
+        "特科",
+        "matilda特科"
+      ],
+      "display": "SPECIAL SCIENCE",
+      "displayEn": "SPECIAL SCIENCE",
+      "dept": "SPECIAL SCIENCE",
+      "deptEn": "SPECIAL SCIENCE",
+      "clearance": 3,
+      "clearanceLabel": null,
+      "loadout": "standard",
+      "accent": "isa",
+      "tabs": [],
+      "note": "Special Science sequence. Only eight exist site-wide; designations are fixed and surnames randomised. Cannot be impersonated."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "captain",
+        "安保上尉",
+        "上尉"
+      ],
+      "display": "SECURITY CAPTAIN",
+      "displayEn": "SECURITY CAPTAIN",
+      "dept": "SECURITY",
+      "deptEn": "SECURITY",
+      "clearance": 3,
+      "clearanceLabel": null,
+      "loadout": "restricted",
+      "accent": "warn",
+      "tabs": [],
+      "note": "Security Department command tier. May draw higher-grade equipment and, once inside the armoury, merges into MTF command."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "director",
+        "主管",
+        "设施主管",
+        "dr",
+        "site director"
+      ],
+      "display": "SITE DIRECTOR",
+      "displayEn": "SITE DIRECTOR",
+      "dept": "TRD-I / COMMAND",
+      "deptEn": "TRD-I / COMMAND",
+      "clearance": 4,
+      "clearanceLabel": null,
+      "loadout": "restricted",
+      "accent": "warn",
+      "tabs": [
+        {
+          "id": "chat-director",
+          "zh": "DIRECTOR RELAY",
+          "en": "DIRECTOR RELAY",
+          "code": "09",
+          "href": "chat-director.html"
+        }
+      ],
+      "note": "Site command-level authorization. Note: this account is linked to several open investigation dossiers; its read scope has been flagged by the system."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "security",
+        "sec",
+        "sec-02",
+        "安全主管",
+        "安保主管",
+        "安保"
+      ],
+      "display": "SECURITY CHIEF",
+      "displayEn": "SECURITY CHIEF",
+      "dept": "TRD-I / COMMAND",
+      "deptEn": "TRD-I / COMMAND",
+      "clearance": 4,
+      "clearanceLabel": null,
+      "loadout": "restricted",
+      "accent": "warn",
+      "tabs": [
+        {
+          "id": "chief-egg",
+          "zh": "LOUD CHIEF",
+          "en": "LOUD CHIEF",
+          "code": "09",
+          "href": "chief-egg.html"
+        }
+      ],
+      "note": "Head of the security duty chain. Certain access and patrol records have been frozen pending investigation."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "e11",
+        "九尾狐",
+        "九尾狐指挥官",
+        "epsilon-11"
+      ],
+      "display": "EPSILON-11 COMMANDER",
+      "displayEn": "EPSILON-11 COMMANDER",
+      "dept": "MTF EPSILON-11",
+      "deptEn": "MTF EPSILON-11",
+      "clearance": 4,
+      "clearanceLabel": null,
+      "loadout": "restricted",
+      "accent": "warn",
+      "tabs": [],
+      "note": "Commander of Epsilon-11 'Nine-Tailed Fox'. Answers only to its own chain of command, not to site command."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "nu7",
+        "落锤",
+        "落锤指挥官",
+        "nu-7"
+      ],
+      "display": "NU-7 COMMANDER",
+      "displayEn": "NU-7 COMMANDER",
+      "dept": "MTF NU-7",
+      "deptEn": "MTF NU-7",
+      "clearance": 4,
+      "clearanceLabel": null,
+      "loadout": "restricted",
+      "accent": "warn",
+      "tabs": [],
+      "note": "Commander, Nu-7 'Hammer Down' Company A. Battalion-scale task force responsible for site-level armed reinforcement."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "qrt",
+        "快反",
+        "快反指挥官"
+      ],
+      "display": "QRT COMMANDER",
+      "displayEn": "QRT COMMANDER",
+      "dept": "QUICK REACTION TEAM",
+      "deptEn": "QUICK REACTION TEAM",
+      "clearance": 4,
+      "clearanceLabel": null,
+      "loadout": "restricted",
+      "accent": "warn",
+      "tabs": [],
+      "note": "QRT Commander. Deployment requires Site Director authorization, or the execution of Red Code."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "isa",
+        "is-12",
+        "is12",
+        "内部安全代理",
+        "安全代理",
+        "内部安全"
+      ],
+      "display": "INTERNAL SECURITY AGENT",
+      "displayEn": "INTERNAL SECURITY AGENT",
+      "dept": "INTERNAL SECURITY",
+      "deptEn": "INTERNAL SECURITY",
+      "clearance": 5,
+      "clearanceLabel": "L-█",
+      "loadout": "isa",
+      "accent": "isa",
+      "tabs": [
+        {
+          "id": "chat-isa",
+          "zh": "SECURE RELAY",
+          "en": "SECURE RELAY",
+          "code": "09",
+          "href": "chat-isa.html"
+        }
+      ],
+      "note": "IS-12. A covert investigator assigned directly by the O5 Council, holding special clearance outside the public ladder; custodian of the independent chain of evidence."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "o5",
+        "o5议会",
+        "o5 council",
+        "议会"
+      ],
+      "display": "O5 COUNCIL",
+      "displayEn": "O5 COUNCIL",
+      "dept": "O5 COUNCIL",
+      "deptEn": "O5 COUNCIL",
+      "clearance": 5,
+      "clearanceLabel": null,
+      "loadout": "o5",
+      "accent": "o5",
+      "tabs": [
+        {
+          "id": "o5-panel",
+          "zh": "COUNCIL CONSOLE",
+          "en": "COUNCIL CONSOLE",
+          "code": "09",
+          "href": "o5-panel.html"
+        },
+        {
+          "id": "roster",
+          "zh": "ALL IDENTITIES",
+          "en": "ALL IDENTITIES",
+          "code": "10",
+          "href": "tab.html?id=roster"
+        }
+      ],
+      "note": "Highest authorization tier. This session is excluded from site command-chain audit. May review the identity registry of all factions."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "律法左手",
+        "omega-1",
+        "omega1",
+        "o1",
+        "law's left hand",
+        "omega",
+        "law left hand"
+      ],
+      "display": "OMEGA-1 / LAW'S LEFT HAND",
+      "displayEn": "OMEGA-1 / LAW'S LEFT HAND",
+      "dept": "MTF OMEGA-1",
+      "deptEn": "MTF OMEGA-1",
+      "clearance": 5,
+      "clearanceLabel": null,
+      "loadout": "omega",
+      "accent": "omega",
+      "tabs": [],
+      "note": "The Ethics Committee's direct enforcement arm, counterpart to O5's 'Red Right Hand'. Executes legal action, not containment."
+    },
+    {
+      "faction": "scp",
+      "keys": [
+        "律法左手调查员",
+        "调查员",
+        "investigator",
+        "omega-inv",
+        "o1-inv"
+      ],
+      "display": "OMEGA-1 INVESTIGATOR",
+      "displayEn": "OMEGA-1 INVESTIGATOR",
+      "dept": "MTF OMEGA-1 / FIELD",
+      "deptEn": "MTF OMEGA-1 / FIELD",
+      "clearance": 5,
+      "clearanceLabel": null,
+      "loadout": "omega",
+      "accent": "omega",
+      "tabs": [],
+      "note": "Omega-1 field investigator. Builds the evidentiary chain inside the facility and calls in the enforcement squad."
+    },
+    {
+      "faction": "goc",
+      "keys": [
+        "goc",
+        "全球超自然联盟",
+        "goc指挥官",
+        "goc commander"
+      ],
+      "display": "GOC COMMANDER",
+      "displayEn": "GOC COMMANDER",
+      "dept": "HEOF",
+      "deptEn": "HEOF",
+      "clearance": 5,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "goc",
+      "accent": "eng",
+      "tabs": [
+        {
+          "id": "goc-doctrine",
+          "zh": "DOCTRINE",
+          "en": "DOCTRINE",
+          "code": null,
+          "href": "tab.html?id=goc-doctrine"
+        },
+        {
+          "id": "goc-auth",
+          "zh": "TERMINATION",
+          "en": "TERMINATION",
+          "code": null,
+          "href": "tab.html?id=goc-auth"
+        },
+        {
+          "id": "goc-liaison",
+          "zh": "LIAISON",
+          "en": "LIAISON",
+          "code": null,
+          "href": "tab.html?id=goc-liaison"
+        }
+      ],
+      "note": "HEOF field commander. Authorized to request tactical-grade reality neutralisation, subject to bidirectional voice confirmation."
+    },
+    {
+      "faction": "goc",
+      "keys": [
+        "goc-combat",
+        "goc战斗专家"
+      ],
+      "display": "GOC COMBAT SPECIALIST",
+      "displayEn": "GOC COMBAT SPECIALIST",
+      "dept": "HEOF",
+      "deptEn": "HEOF",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "goc",
+      "accent": "eng",
+      "tabs": [
+        {
+          "id": "goc-doctrine",
+          "zh": "DOCTRINE",
+          "en": "DOCTRINE",
+          "code": null,
+          "href": "tab.html?id=goc-doctrine"
+        },
+        {
+          "id": "goc-auth",
+          "zh": "TERMINATION",
+          "en": "TERMINATION",
+          "code": null,
+          "href": "tab.html?id=goc-auth"
+        },
+        {
+          "id": "goc-liaison",
+          "zh": "LIAISON",
+          "en": "LIAISON",
+          "code": null,
+          "href": "tab.html?id=goc-liaison"
+        }
+      ],
+      "note": "HEOF combat specialist. Better equipped than line troops; no fire restrictions against anomalous entities."
+    },
+    {
+      "faction": "goc",
+      "keys": [
+        "goc-assess",
+        "实地评估特工",
+        "评估特工"
+      ],
+      "display": "GOC ASSESSMENT AGENT",
+      "displayEn": "GOC ASSESSMENT AGENT",
+      "dept": "COALITION ASSESSMENT",
+      "deptEn": "COALITION ASSESSMENT",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "goc",
+      "accent": "eng",
+      "tabs": [
+        {
+          "id": "goc-doctrine",
+          "zh": "DOCTRINE",
+          "en": "DOCTRINE",
+          "code": null,
+          "href": "tab.html?id=goc-doctrine"
+        },
+        {
+          "id": "goc-auth",
+          "zh": "TERMINATION",
+          "en": "TERMINATION",
+          "code": null,
+          "href": "tab.html?id=goc-auth"
+        },
+        {
+          "id": "goc-liaison",
+          "zh": "LIAISON",
+          "en": "LIAISON",
+          "code": null,
+          "href": "tab.html?id=goc-liaison"
+        }
+      ],
+      "note": "Field assessment agent. Infiltrates as Class-D personnel to determine whether the facility has lost control."
+    },
+    {
+      "faction": "uiu",
+      "keys": [
+        "uiu",
+        "特异事故处",
+        "uiu组长",
+        "uiu commander"
+      ],
+      "display": "UIU AGENT-IN-CHARGE",
+      "displayEn": "UIU AGENT-IN-CHARGE",
+      "dept": "UIU / FIELD",
+      "deptEn": "UIU / FIELD",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "uiu",
+      "accent": "adm",
+      "tabs": [
+        {
+          "id": "uiu-cases",
+          "zh": "CASE FILES",
+          "en": "CASE FILES",
+          "code": null,
+          "href": "tab.html?id=uiu-cases"
+        },
+        {
+          "id": "uiu-wiretap",
+          "zh": "WIRETAP",
+          "en": "WIRETAP",
+          "code": null,
+          "href": "tab.html?id=uiu-wiretap"
+        }
+      ],
+      "note": "UIU field team lead. The mission is to breach facility computers and exfiltrate data, not to contain anomalies."
+    },
+    {
+      "faction": "uiu",
+      "keys": [
+        "雷击",
+        "uiu雷击",
+        "thunderbolt"
+      ],
+      "display": "UIU SPECIALIST",
+      "displayEn": "UIU SPECIALIST",
+      "dept": "UIU / SPECIALIST",
+      "deptEn": "UIU / SPECIALIST",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "uiu",
+      "accent": "adm",
+      "tabs": [
+        {
+          "id": "uiu-cases",
+          "zh": "CASE FILES",
+          "en": "CASE FILES",
+          "code": null,
+          "href": "tab.html?id=uiu-cases"
+        },
+        {
+          "id": "uiu-wiretap",
+          "zh": "WIRETAP",
+          "en": "WIRETAP",
+          "code": null,
+          "href": "tab.html?id=uiu-wiretap"
+        }
+      ],
+      "note": "One-in-ten-thousand elite operative with superior equipment. Obtained by role change through the support platform's locker."
+    },
+    {
+      "faction": "uiu",
+      "keys": [
+        "uiu陆军",
+        "uiu指挥官",
+        "uiu army"
+      ],
+      "display": "UIU ARMY COMMANDER",
+      "displayEn": "UIU ARMY COMMANDER",
+      "dept": "UIU / ARMY",
+      "deptEn": "UIU / ARMY",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "uiu",
+      "accent": "adm",
+      "tabs": [
+        {
+          "id": "uiu-cases",
+          "zh": "CASE FILES",
+          "en": "CASE FILES",
+          "code": null,
+          "href": "tab.html?id=uiu-cases"
+        },
+        {
+          "id": "uiu-wiretap",
+          "zh": "WIRETAP",
+          "en": "WIRETAP",
+          "code": null,
+          "href": "tab.html?id=uiu-wiretap"
+        }
+      ],
+      "note": "Army Division commander. Spawned after a UIU spy breaches a Foundation special computer; takes over the scene."
+    },
+    {
+      "faction": "uiu",
+      "keys": [
+        "uiu渗透者",
+        "渗透者",
+        "uiu spy",
+        "uiu间谍",
+        "潜伏特工",
+        "uiu infiltrator"
+      ],
+      "display": "UIU INFILTRATOR",
+      "displayEn": "UIU INFILTRATOR",
+      "dept": "UIU / DEEP COVER",
+      "deptEn": "UIU / DEEP COVER",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "uiu",
+      "accent": "adm",
+      "tabs": [
+        {
+          "id": "uiu-cases",
+          "zh": "CASE FILES",
+          "en": "CASE FILES",
+          "href": "tab.html?id=uiu-cases"
+        },
+        {
+          "id": "uiu-wiretap",
+          "zh": "WIRETAP",
+          "en": "WIRETAP",
+          "href": "tab.html?id=uiu-wiretap"
+        }
+      ],
+      "note": "A UIU operative embedded inside AREA-372 under a Foundation identity. Tasked with collecting containment intelligence and relaying it out; avoids direct engagement. Their true identity appears on no Foundation roster."
+    },
+    {
+      "faction": "ci",
+      "keys": [
+        "ci",
+        "混沌分裂者",
+        "ci指挥官",
+        "分裂者"
+      ],
+      "display": "CI COMMANDER",
+      "displayEn": "CI COMMANDER",
+      "dept": "CHAOS INSURGENCY",
+      "deptEn": "CHAOS INSURGENCY",
+      "clearance": 5,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "ci",
+      "accent": "finale",
+      "tabs": [
+        {
+          "id": "ci-recruit",
+          "zh": "RECRUITMENT",
+          "en": "RECRUITMENT",
+          "code": null,
+          "href": "tab.html?id=ci-recruit"
+        },
+        {
+          "id": "ci-loot",
+          "zh": "MANIFEST",
+          "en": "MANIFEST",
+          "code": null,
+          "href": "tab.html?id=ci-loot"
+        },
+        {
+          "id": "ci-maynard",
+          "zh": "DR. MAYNARD",
+          "en": "DR. MAYNARD",
+          "code": null,
+          "href": "tab.html?id=ci-maynard"
+        }
+      ],
+      "note": "Insurgency assault commander. Core objectives: rescue Class-D personnel, destroy SCP-006 and the broadcast room."
+    },
+    {
+      "faction": "ci",
+      "keys": [
+        "梅纳德",
+        "maynard",
+        "梅纳德博士"
+      ],
+      "display": "DR. MAYNARD",
+      "displayEn": "DR. MAYNARD",
+      "dept": "CHAOS INSURGENCY",
+      "deptEn": "CHAOS INSURGENCY",
+      "clearance": 5,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "ci",
+      "accent": "finale",
+      "tabs": [
+        {
+          "id": "ci-recruit",
+          "zh": "RECRUITMENT",
+          "en": "RECRUITMENT",
+          "code": null,
+          "href": "tab.html?id=ci-recruit"
+        },
+        {
+          "id": "ci-loot",
+          "zh": "MANIFEST",
+          "en": "MANIFEST",
+          "code": null,
+          "href": "tab.html?id=ci-loot"
+        },
+        {
+          "id": "ci-maynard",
+          "zh": "DR. MAYNARD",
+          "en": "DR. MAYNARD",
+          "code": null,
+          "href": "tab.html?id=ci-maynard"
+        }
+      ],
+      "note": "One of the few publicly identified mid-tier Insurgency members. Knows the usable exfiltration routes near the facility."
+    },
+    {
+      "faction": "ci",
+      "keys": [
+        "ci重装",
+        "ci heavy"
+      ],
+      "display": "CI HEAVY TROOPER",
+      "displayEn": "CI HEAVY TROOPER",
+      "dept": "CHAOS INSURGENCY",
+      "deptEn": "CHAOS INSURGENCY",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "ci",
+      "accent": "finale",
+      "tabs": [
+        {
+          "id": "ci-recruit",
+          "zh": "RECRUITMENT",
+          "en": "RECRUITMENT",
+          "code": null,
+          "href": "tab.html?id=ci-recruit"
+        },
+        {
+          "id": "ci-loot",
+          "zh": "MANIFEST",
+          "en": "MANIFEST",
+          "code": null,
+          "href": "tab.html?id=ci-loot"
+        },
+        {
+          "id": "ci-maynard",
+          "zh": "DR. MAYNARD",
+          "en": "DR. MAYNARD",
+          "code": null,
+          "href": "tab.html?id=ci-maynard"
+        }
+      ],
+      "note": "Heavy unit. Carries experimental armour; no negotiation protocol with Foundation armed units."
+    },
+    {
+      "faction": "sh",
+      "keys": [
+        "蛇之手",
+        "sh",
+        "serpent"
+      ],
+      "display": "SERPENT'S HAND COMMANDER",
+      "displayEn": "SERPENT'S HAND COMMANDER",
+      "dept": "SERPENT'S HAND",
+      "deptEn": "SERPENT'S HAND",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "sh",
+      "accent": "isa",
+      "tabs": [
+        {
+          "id": "sh-library",
+          "zh": "LIBRARY INDEX",
+          "en": "LIBRARY INDEX",
+          "code": null,
+          "href": "tab.html?id=sh-library"
+        },
+        {
+          "id": "sh-rescue",
+          "zh": "RESCUE LIST",
+          "en": "RESCUE LIST",
+          "code": null,
+          "href": "tab.html?id=sh-rescue"
+        }
+      ],
+      "note": "Operations commander. Can communicate directly with sapient SCPs and plans the translocation routes."
+    },
+    {
+      "faction": "sh",
+      "keys": [
+        "sh探员",
+        "sh specialist",
+        "蛇之手探员"
+      ],
+      "display": "SERPENT'S HAND SPECIALIST",
+      "displayEn": "SERPENT'S HAND SPECIALIST",
+      "dept": "SERPENT'S HAND",
+      "deptEn": "SERPENT'S HAND",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "sh",
+      "accent": "isa",
+      "tabs": [
+        {
+          "id": "sh-library",
+          "zh": "LIBRARY INDEX",
+          "en": "LIBRARY INDEX",
+          "code": null,
+          "href": "tab.html?id=sh-library"
+        },
+        {
+          "id": "sh-rescue",
+          "zh": "RESCUE LIST",
+          "en": "RESCUE LIST",
+          "code": null,
+          "href": "tab.html?id=sh-rescue"
+        }
+      ],
+      "note": "Special operative. Familiar with every known node of the Takal branch line."
+    },
+    {
+      "faction": "sh",
+      "keys": [
+        "sh士兵",
+        "蛇之手士兵"
+      ],
+      "display": "SERPENT'S HAND SOLDIER",
+      "displayEn": "SERPENT'S HAND SOLDIER",
+      "dept": "SERPENT'S HAND",
+      "deptEn": "SERPENT'S HAND",
+      "clearance": 3,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "sh",
+      "accent": "isa",
+      "tabs": [
+        {
+          "id": "sh-library",
+          "zh": "LIBRARY INDEX",
+          "en": "LIBRARY INDEX",
+          "code": null,
+          "href": "tab.html?id=sh-library"
+        },
+        {
+          "id": "sh-rescue",
+          "zh": "RESCUE LIST",
+          "en": "RESCUE LIST",
+          "code": null,
+          "href": "tab.html?id=sh-rescue"
+        }
+      ],
+      "note": "Rank-and-file member. Mostly former Foundation staff, or readers of the Wanderers' Library."
+    },
+    {
+      "faction": "cotsk",
+      "keys": [
+        "深红王之子",
+        "cotsk",
+        "猩红之子",
+        "深红之子"
+      ],
+      "display": "COTSK ACOLYTE",
+      "displayEn": "COTSK ACOLYTE",
+      "dept": "COTSK / RITUAL",
+      "deptEn": "COTSK / RITUAL",
+      "clearance": 5,
+      "clearanceLabel": "█",
+      "loadout": "cotsk",
+      "accent": "finale",
+      "tabs": [
+        {
+          "id": "cotsk-ritual",
+          "zh": "RITUAL PROGRESS",
+          "en": "RITUAL PROGRESS",
+          "code": null,
+          "href": "tab.html?id=cotsk-ritual"
+        },
+        {
+          "id": "cotsk-whisper",
+          "zh": "WHISPERS",
+          "en": "WHISPERS",
+          "code": null,
+          "href": "tab.html?id=cotsk-whisper"
+        }
+      ],
+      "note": "Core executor of the ritual's third stage. Can be killed, but that does not end the ritual."
+    },
+    {
+      "faction": "cotsk",
+      "keys": [
+        "祭祀",
+        "cotsk高祭司",
+        "high priest"
+      ],
+      "display": "COTSK HIGH PRIEST",
+      "displayEn": "COTSK HIGH PRIEST",
+      "dept": "COTSK / RITUAL",
+      "deptEn": "COTSK / RITUAL",
+      "clearance": 5,
+      "clearanceLabel": "█",
+      "loadout": "cotsk",
+      "accent": "finale",
+      "tabs": [
+        {
+          "id": "cotsk-ritual",
+          "zh": "RITUAL PROGRESS",
+          "en": "RITUAL PROGRESS",
+          "code": null,
+          "href": "tab.html?id=cotsk-ritual"
+        },
+        {
+          "id": "cotsk-whisper",
+          "zh": "WHISPERS",
+          "en": "WHISPERS",
+          "code": null,
+          "href": "tab.html?id=cotsk-whisper"
+        }
+      ],
+      "note": "Recites the first chapter of the Book. Their remains also serve as continuation material for the ritual."
+    },
+    {
+      "faction": "cotsk",
+      "keys": [
+        "深红铁骑",
+        "cavalry",
+        "cotsk铁骑"
+      ],
+      "display": "SCARLET CAVALRY",
+      "displayEn": "SCARLET CAVALRY",
+      "dept": "COTSK / COMBAT",
+      "deptEn": "COTSK / COMBAT",
+      "clearance": 4,
+      "clearanceLabel": "█",
+      "loadout": "cotsk",
+      "accent": "finale",
+      "tabs": [
+        {
+          "id": "cotsk-ritual",
+          "zh": "RITUAL PROGRESS",
+          "en": "RITUAL PROGRESS",
+          "code": null,
+          "href": "tab.html?id=cotsk-ritual"
+        },
+        {
+          "id": "cotsk-whisper",
+          "zh": "WHISPERS",
+          "en": "WHISPERS",
+          "code": null,
+          "href": "tab.html?id=cotsk-whisper"
+        }
+      ],
+      "note": "The organisation's armed sequence. Unconditionally hostile to everyone outside the organisation."
+    },
+    {
+      "faction": "ar",
+      "keys": [
+        "安德森",
+        "ar",
+        "anderson"
+      ],
+      "display": "AR EMPLOYEE",
+      "displayEn": "AR EMPLOYEE",
+      "dept": "ANDERSON ROBOTICS",
+      "deptEn": "ANDERSON ROBOTICS",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "ar",
+      "accent": "o5",
+      "tabs": [
+        {
+          "id": "ar-catalog",
+          "zh": "CATALOG",
+          "en": "CATALOG",
+          "code": null,
+          "href": "tab.html?id=ar-catalog"
+        },
+        {
+          "id": "ar-recovery",
+          "zh": "RECOVERY",
+          "en": "RECOVERY",
+          "code": null,
+          "href": "tab.html?id=ar-recovery"
+        }
+      ],
+      "note": "Embedded in the facility as an ordinary employee. The mission is to leave alive, with the client's assets."
+    },
+    {
+      "faction": "ar",
+      "keys": [
+        "ar潜伏机器人",
+        "潜伏机器人",
+        "stealth robot"
+      ],
+      "display": "AR STEALTH UNIT",
+      "displayEn": "AR STEALTH UNIT",
+      "dept": "ANDERSON ROBOTICS",
+      "deptEn": "ANDERSON ROBOTICS",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "ar",
+      "accent": "o5",
+      "tabs": [
+        {
+          "id": "ar-catalog",
+          "zh": "CATALOG",
+          "en": "CATALOG",
+          "code": null,
+          "href": "tab.html?id=ar-catalog"
+        },
+        {
+          "id": "ar-recovery",
+          "zh": "RECOVERY",
+          "en": "RECOVERY",
+          "code": null,
+          "href": "tab.html?id=ar-recovery"
+        }
+      ],
+      "note": "Simulation-type product. Can impersonate any researcher except Special Science and Ethics inspectors, up to and including research directors."
+    },
+    {
+      "faction": "ar",
+      "keys": [
+        "游隼",
+        "ar游隼",
+        "saker"
+      ],
+      "display": "AR SAKER-CLASS",
+      "displayEn": "AR SAKER-CLASS",
+      "dept": "ANDERSON ROBOTICS",
+      "deptEn": "ANDERSON ROBOTICS",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "ar",
+      "accent": "o5",
+      "tabs": [
+        {
+          "id": "ar-catalog",
+          "zh": "CATALOG",
+          "en": "CATALOG",
+          "code": null,
+          "href": "tab.html?id=ar-catalog"
+        },
+        {
+          "id": "ar-recovery",
+          "zh": "RECOVERY",
+          "en": "RECOVERY",
+          "code": null,
+          "href": "tab.html?id=ar-recovery"
+        }
+      ],
+      "note": "Combat unit of the external recovery team. Does not negotiate; only extracts."
+    },
+    {
+      "faction": "grup",
+      "keys": [
+        "gru-p",
+        "p部门",
+        "钢铁指挥官",
+        "p-055"
+      ],
+      "display": "DIVISION P COMMANDER",
+      "displayEn": "DIVISION P COMMANDER",
+      "dept": "DIVISION P",
+      "deptEn": "DIVISION P",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "grup",
+      "accent": "warn",
+      "tabs": [
+        {
+          "id": "gru-brief",
+          "zh": "BRIEF",
+          "en": "BRIEF",
+          "code": null,
+          "href": "tab.html?id=gru-brief"
+        },
+        {
+          "id": "gru-codebook",
+          "zh": "CODEBOOK",
+          "en": "CODEBOOK",
+          "code": null,
+          "href": "tab.html?id=gru-codebook"
+        }
+      ],
+      "note": "Reinforced platoon commander. Tasked with seizing classified documents and altering permissions to trigger an early evacuation."
+    },
+    {
+      "faction": "grup",
+      "keys": [
+        "护卫队长",
+        "p-035"
+      ],
+      "display": "DIVISION P GUARD CAPTAIN",
+      "displayEn": "DIVISION P GUARD CAPTAIN",
+      "dept": "DIVISION P",
+      "deptEn": "DIVISION P",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "grup",
+      "accent": "warn",
+      "tabs": [
+        {
+          "id": "gru-brief",
+          "zh": "BRIEF",
+          "en": "BRIEF",
+          "code": null,
+          "href": "tab.html?id=gru-brief"
+        },
+        {
+          "id": "gru-codebook",
+          "zh": "CODEBOOK",
+          "en": "CODEBOOK",
+          "code": null,
+          "href": "tab.html?id=gru-codebook"
+        }
+      ],
+      "note": "Reception force commander. Meets the P-055 element at the Gate B helicopter extraction point."
+    },
+    {
+      "faction": "grup",
+      "keys": [
+        "传送石",
+        "p-422"
+      ],
+      "display": "DIVISION P TELEPORTER",
+      "displayEn": "DIVISION P TELEPORTER",
+      "dept": "DIVISION P",
+      "deptEn": "DIVISION P",
+      "clearance": 3,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "grup",
+      "accent": "warn",
+      "tabs": [
+        {
+          "id": "gru-brief",
+          "zh": "BRIEF",
+          "en": "BRIEF",
+          "code": null,
+          "href": "tab.html?id=gru-brief"
+        },
+        {
+          "id": "gru-codebook",
+          "zh": "CODEBOOK",
+          "en": "CODEBOOK",
+          "code": null,
+          "href": "tab.html?id=gru-codebook"
+        }
+      ],
+      "note": "Teleport detachment member. After spawning, a BTR extract appears at Gate B."
+    },
+    {
+      "faction": "skp",
+      "keys": [
+        "skp",
+        "异界探险队",
+        "skp指挥官"
+      ],
+      "display": "SKP C-GROUP COMMANDER",
+      "displayEn": "SKP C-GROUP COMMANDER",
+      "dept": "SKP C-GROUP",
+      "deptEn": "SKP C-GROUP",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "skp",
+      "accent": "mono",
+      "tabs": [
+        {
+          "id": "skp-crystal",
+          "zh": "CRYSTAL MANIFEST",
+          "en": "CRYSTAL MANIFEST",
+          "code": null,
+          "href": "tab.html?id=skp-crystal"
+        },
+        {
+          "id": "skp-blackbox",
+          "zh": "BLACK BOX",
+          "en": "BLACK BOX",
+          "code": null,
+          "href": "tab.html?id=skp-blackbox"
+        }
+      ],
+      "note": "C-Group commander. Responsible for harvesting crystals, loading the black box, and finishing before the window closes."
+    },
+    {
+      "faction": "skp",
+      "keys": [
+        "skp特工",
+        "异界特工"
+      ],
+      "display": "SKP AGENT",
+      "displayEn": "SKP AGENT",
+      "dept": "SKP C-GROUP",
+      "deptEn": "SKP C-GROUP",
+      "clearance": 4,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "skp",
+      "accent": "mono",
+      "tabs": [
+        {
+          "id": "skp-crystal",
+          "zh": "CRYSTAL MANIFEST",
+          "en": "CRYSTAL MANIFEST",
+          "code": null,
+          "href": "tab.html?id=skp-crystal"
+        },
+        {
+          "id": "skp-blackbox",
+          "zh": "BLACK BOX",
+          "en": "BLACK BOX",
+          "code": null,
+          "href": "tab.html?id=skp-blackbox"
+        }
+      ],
+      "note": "Agent. Authorised to recruit this world's researchers and Class-D personnel; recruitment criteria are set by the Empire."
+    },
+    {
+      "faction": "skp",
+      "keys": [
+        "skp士兵",
+        "异界士兵"
+      ],
+      "display": "SKP SOLDIER",
+      "displayEn": "SKP SOLDIER",
+      "dept": "SKP C-GROUP",
+      "deptEn": "SKP C-GROUP",
+      "clearance": 3,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "skp",
+      "accent": "mono",
+      "tabs": [
+        {
+          "id": "skp-crystal",
+          "zh": "CRYSTAL MANIFEST",
+          "en": "CRYSTAL MANIFEST",
+          "code": null,
+          "href": "tab.html?id=skp-crystal"
+        },
+        {
+          "id": "skp-blackbox",
+          "zh": "BLACK BOX",
+          "en": "BLACK BOX",
+          "code": null,
+          "href": "tab.html?id=skp-blackbox"
+        }
+      ],
+      "note": "Soldier. Holds no clearance regarding crystal usage, and does not need to know."
+    },
+    {
+      "faction": "unreg",
+      "keys": [
+        "darl",
+        "darl博士",
+        "dr darl",
+        "dral"
+      ],
+      "display": "DR. DARL",
+      "displayEn": "DR. DARL",
+      "dept": "—",
+      "deptEn": "—",
+      "clearance": 6,
+      "clearanceLabel": "█",
+      "loadout": "darl",
+      "accent": "finale",
+      "tabs": [],
+      "note": "Identity verification anomaly. The clearance emblem was written at the archive's creation; the author field is empty."
+    },
+    {
+      "faction": "unreg",
+      "keys": [
+        "观察者",
+        "observer",
+        "observe"
+      ],
+      "display": "OBSERVER",
+      "displayEn": "OBSERVER",
+      "dept": "—",
+      "deptEn": "—",
+      "clearance": 0,
+      "clearanceLabel": "[REDACTED]",
+      "loadout": "standard",
+      "accent": "mono",
+      "tabs": [],
+      "note": "Personnel who died, or who joined after the round began. No archive access; only waiting."
+    }
+  ],
+  "guest": {
+    "display": "VISITOR",
+    "displayEn": "VISITOR",
+    "dept": "UNREGISTERED",
+    "deptEn": "UNREGISTERED",
+    "clearance": 0,
+    "loadout": "standard",
+    "accent": "mono",
+    "note": "No credentials submitted. Continuing as a visitor opens only the public archive tier."
+  },
+  "permissions": {
+    "corruption": 5,
+    "finale": 5,
+    "finaleFull": 6
+  },
+  "factions": [
+    {
+      "id": "scp",
+      "zh": "SCP FOUNDATION",
+      "en": "SCP FOUNDATION",
+      "abbr": "SCP",
+      "accent": "mono"
+    },
+    {
+      "id": "goc",
+      "zh": "GLOBAL OCCULT COALITION",
+      "en": "GLOBAL OCCULT COALITION",
+      "abbr": "GOC",
+      "accent": "eng"
+    },
+    {
+      "id": "uiu",
+      "zh": "UNUSUAL INCIDENTS UNIT",
+      "en": "UNUSUAL INCIDENTS UNIT",
+      "abbr": "UIU",
+      "accent": "adm"
+    },
+    {
+      "id": "ci",
+      "zh": "CHAOS INSURGENCY",
+      "en": "CHAOS INSURGENCY",
+      "abbr": "CI",
+      "accent": "finale"
+    },
+    {
+      "id": "sh",
+      "zh": "SERPENT'S HAND",
+      "en": "SERPENT'S HAND",
+      "abbr": "SH",
+      "accent": "isa"
+    },
+    {
+      "id": "cotsk",
+      "zh": "CHILDREN OF THE SCARLET KING",
+      "en": "CHILDREN OF THE SCARLET KING",
+      "abbr": "COTSK",
+      "accent": "finale"
+    },
+    {
+      "id": "ar",
+      "zh": "ANDERSON ROBOTICS",
+      "en": "ANDERSON ROBOTICS",
+      "abbr": "AR",
+      "accent": "o5"
+    },
+    {
+      "id": "grup",
+      "zh": "DIVISION P",
+      "en": "DIVISION P",
+      "abbr": "GRU-P",
+      "accent": "warn"
+    },
+    {
+      "id": "skp",
+      "zh": "SONDERKOMMANDO FÜR PARANORMALES",
+      "en": "SONDERKOMMANDO FÜR PARANORMALES",
+      "abbr": "SKP",
+      "accent": "mono"
+    },
+    {
+      "id": "unreg",
+      "zh": "UNREGISTERED",
+      "en": "UNREGISTERED",
+      "abbr": "—",
+      "accent": "finale"
+    }
+  ]
+}

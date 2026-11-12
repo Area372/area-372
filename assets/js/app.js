@@ -26,6 +26,200 @@
   /* 当前会话自身的等级显示：内部安全代理等特殊权限可自定义（如 L-█） */
   const ownLabel = () => (SESS && SESS.clearanceLabel) || lvLabel(LV());
 
+  /* ============================================================
+     界面文案词典（中文 → 英文）
+     只覆盖"界面壳"文字；档案正文由 data/en/*.json 提供。
+     ============================================================ */
+  const UI_DICT = {
+    // 页面标题
+    '塔卡尔地下综合区域': 'Takal Underground Complex',
+    '收容项目规划表': 'Containment Registry',
+    '重大事件记录': 'Major Incident Records',
+    '日常事件记录': 'Daily Incident Logs',
+    'TUC 系列分队档案': 'Task Force Records',
+    '贪腐调查卷 · Omega-1 证据包': 'Corruption Dossier · Omega-1 Evidence Package',
+    '威胁评估 · 终幕计划': 'Threat Assessment · Project Finale',
+    '议会控制台': 'Council Console',
+    '全部身份登记': 'Global Identity Registry',
+    '档案检索': 'Archive Search',
+    '安全主管大声说话': 'The Security Chief Speaks Loudly',
+    '设施总览': 'Facility Overview',
+    // 副标题
+    'Takal Underground Complex · 设施总档案': 'Takal Underground Complex · Site Master File',
+    'Containment Registry · 修订版': 'Containment Registry · Revised Edition',
+    'Incident Archive · 时间线': 'Incident Archive · Timeline',
+    'Daily Incident Logs · DLY 系列': 'Daily Incident Logs · DLY Series',
+    'Global Identity Registry · 全阵营': 'Global Identity Registry · All Factions',
+    'LOUD CHIEF · 1 个项目': 'LOUD CHIEF · 1 ITEM',
+    'Project Final Dawn（标志标注 Finale Plan）': 'Project Final Dawn (marked Finale Plan)',
+    // 章节标签
+    '事件摘要 / Summary': 'Summary',
+    '事项 / Metadata': 'Metadata',
+    '人员编制 / Personnel': 'Personnel',
+    '关联事件 / Cross References': 'Cross References',
+    '关联记录 / Cross References': 'Cross References',
+    '分区 / Zone': 'Zone',
+    '原因分析 / Cause Analysis': 'Cause Analysis',
+    '口号 / Motto': 'Motto',
+    '处置与整改 / Action': 'Action Taken',
+    '已确认 / Confirmed': 'Confirmed',
+    '摘要 / Summary': 'Summary',
+    '收容措施 / Containment Procedures': 'Containment Procedures',
+    '时间线 / Timeline': 'Timeline',
+    '明细 / Detail': 'Detail',
+    '未知事项 / Unknown': 'Unknown',
+    '未解问题 / Unresolved': 'Unresolved',
+    '本站备注 / Site Note': 'Site Note',
+    '正文 / Transcript': 'Transcript',
+    '状态 / Status': 'Status',
+    '组建目的 / Mandate': 'Mandate',
+    '结论 / Outcome': 'Outcome',
+    '职责边界 / Limits': 'Limits',
+    '能力记录 / Performance Record': 'Performance Record',
+    '行动原则 / Operating Principles': 'Operating Principles',
+    '要点 / Key Points': 'Key Points',
+    '风险要点 / Risk Notes': 'Risk Notes',
+    // 注释标签
+    '交接注': 'Handover Note',
+    '可见范围': 'Visible Scope',
+    '呈交人结语': "Submitter's Closing",
+    '呈交声明': 'Submission Statement',
+    '宣传栏 · 内容复核': 'Bulletin Board · Content Review',
+    '引用约束': 'Citation Constraint',
+    '归档判断': 'Filing Determination',
+    '收容判据': 'Containment Criteria',
+    '时间线声明': 'Timeline Statement',
+    '本会话可见范围': 'Visible in This Session',
+    '档案原则': 'Archive Principles',
+    '档案说明': 'Archive Note',
+    '档案附注 · 严肃部分': 'Archive Note · Serious Part',
+    '目录说明': 'Directory Note',
+    '结论': 'Conclusion',
+    '编制说明': 'Composition Note',
+    '议会批注': 'Council Annotation',
+    '证据等级提示': 'Evidence Tier Notice',
+    '证据限制': 'Evidence Limits',
+    '说明': 'Note',
+    '起源结论': 'Origin Conclusion',
+    '针对 AREA-372 的行动 · 未发动': 'Operations Against AREA-372 · Not Executed',
+    '阅读提示': 'Reading Notice',
+    '附注': 'Annotation',
+    // 按钮与提示
+    '验证凭证 / VERIFY': 'VERIFY',
+    '以访客身份继续': 'Continue as Guest',
+    '进入设施概览 →': 'Enter Facility Overview →',
+    '查看 TUC 分队档案 →': 'View TUC Records →',
+    '查阅报告 →': 'Open Report →',
+    '公开名册': 'Public Roster',
+    '上次会话': 'Last session',
+    '输入新凭证可切换身份。': 'Enter new credentials to switch identity.',
+    '部分岗位凭证不在公开名册中，须使用标准岗位代号。': 'Some credentials are not on the public roster and require the standard post code.',
+    '留空并以访客身份继续时，仅开放公开档案层。': 'Continuing as a guest opens only the public archive tier.',
+    '需 ': 'Requires ',
+    '更新公告': 'Update Log',
+    '致谢名单': 'Acknowledgements',
+    '设置': 'Settings',
+    '界面语言': 'Interface Language',
+    '切换后将重新载入页面。': 'The page will reload after switching.',
+    '当前': 'CURRENT',
+    '中文': 'Chinese',
+    '查看全部身份': 'View All Identities',
+    '输入人员代号，或留空以访客身份继续': 'Enter personnel code, or leave blank to continue as guest',
+    '全部身份': 'All Identities',
+    '内部通讯': 'Secure Relay',
+    '主管通讯': 'Director Relay',
+    // 首页指标与导航副标签
+    '终端主页': 'Terminal',
+    '设施总览': 'Facility',
+    '在押项目': 'CONTAINED',
+    '登记条目': 'REGISTERED',
+    '事件可读': 'INCIDENTS READABLE',
+    '设施总述': 'Facility Overview',
+    '重大事件': 'MAJOR INCIDENTS',
+    '特遣分队档案': 'Task Force Records',
+    '无检索结果': 'No results',
+    '加载中': 'LOADING',
+  };
+
+  let _dictKeys = null;
+  function dictKeys() {
+    if (!_dictKeys) _dictKeys = Object.keys(UI_DICT).sort((x, y) => y.length - x.length); // 长串优先
+    return _dictKeys;
+  }
+
+  function tr(s) {
+    if (!s) return s;
+    const whole = s.trim();
+    let out = s;
+    for (const k of dictKeys()) {
+      // 一到两字的词只允许“整串命中”——否则会把中文句子从中间切碎
+      // （例如「目前」被换成 CURRENT、「状态」被换成 STATUS）
+      if (k.length <= 2) {
+        if (whole === k) return UI_DICT[k];
+        continue;
+      }
+      if (out.indexOf(k) >= 0) out = out.split(k).join(UI_DICT[k]);
+    }
+    return out;
+  }
+
+  /* 对整个子树做文案替换（文本节点 + 常见属性） */
+  function localize(root) {
+    try {
+      if (!root || !AREA.getLang || AREA.getLang() !== 'en') return;
+      _localize(root);
+    } catch (e) { /* 本地化失败不应影响页面渲染 */ }
+  }
+
+  function _localize(root) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    const nodes = [];
+    let n;
+    while ((n = walker.nextNode())) nodes.push(n);
+    nodes.forEach(node => {
+      const v = node.nodeValue;
+      if (!v || !/[\u4e00-\u9fff]/.test(v)) return;
+      const t = tr(v);
+      if (t !== v) node.nodeValue = t;
+    });
+    const attrs = ['placeholder', 'title', 'aria-label', 'alt'];
+    root.querySelectorAll('[placeholder],[title],[aria-label],[alt]').forEach(el => {
+      attrs.forEach(at => {
+        const v = el.getAttribute(at);
+        if (!v || !/[\u4e00-\u9fff]/.test(v)) return;
+        const t = tr(v);
+        if (t !== v) el.setAttribute(at, t);
+      });
+    });
+  }
+
+  /* ---------- 阵营徽章（几何 SVG，继承 currentColor） ---------- */
+  const FACTION_ICONS = {
+    scp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5L10.2 6.6 12 9.7l1.8-3.1zM20.5 12l-3.1-1.8-3.1 1.8 3.1 1.8zM12 20.5l-1.8-3.1 1.8-3.1 1.8 3.1zM3.5 12l3.1-1.8 3.1 1.8-3.1 1.8z"/></svg>',
+    goc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.2 2.6 14.8 0 17M12 3.5c-2.6 2.2-2.6 14.8 0 17"/></svg>',
+    uiu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3l7 2.8v5.4c0 4.8-2.9 7.4-7 9.3-4.1-1.9-7-4.5-7-9.3V5.8z"/><path d="M8 12.5h8M12 12.5v2.6M8.8 16.2l3.2-1.1 3.2 1.1"/></svg>',
+    ci: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5l2.4 3.6-2.9 2.9 2.9 2.9-2.4 3.6"/></svg>',
+    sh: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M13 11c1-2 3-1.5 4 .5s-.5 5-3.5 5.5-6-.5-6-4.5 2.5-8 7-7.5"/></svg>',
+    cotsk: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 17.5l2.2-7 3.4 2.6L12 6l2.4 7.1L17.8 10.5l2.2 7z"/><path d="M5 20h14"/></svg>',
+    ar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.6M12 18.8v2.6M2.6 12h2.6M18.8 12h2.6M5.4 5.4l1.9 1.9M16.7 16.7l1.9 1.9M18.6 5.4l-1.9 1.9M7.3 16.7l-1.9 1.9"/></svg>',
+    grup: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 2.8l2.8 6 6.4.7-4.8 4.3 1.3 6.4L12 17l-5.7 3.2 1.3-6.4-4.8-4.3 6.4-.7z"/></svg>',
+    skp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 2.5l6.5 6L12 21.5 5.5 8.5z"/><path d="M5.5 8.5h13M12 2.5v19M8.7 8.5l3.3 6 3.3-6"/></svg>',
+    unreg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3.5a8.5 8.5 0 0 1 7.6 11M12 20.5a8.5 8.5 0 0 1-7.6-11"/><path d="M9.8 9.2a2.2 2.2 0 0 1 4.2.3c0 1.4-1.6 1.8-1.6 3v.6"/><circle cx="12" cy="16.3" r=".5" fill="currentColor"/></svg>'
+  };
+  function factionIcon(id) {
+    return '<span class="f-ico">' + (FACTION_ICONS[id] || FACTION_ICONS.unreg) + '</span>';
+  }
+
+  /* 从指标文本里提取一个 0~100 的数值用于条形图；提取不到返回 null */
+  function metricVal(v) {
+    const s = String(v).trim();
+    let m = s.match(/^(\d+)\s*\/\s*(\d+)/);
+    if (m) return Math.round((+m[1] / +m[2]) * 100);
+    m = s.match(/^(\d+)/);
+    if (m && s.length <= 8) return Math.min(100, +m[1]);
+    return null;
+  }
+
   const LOCK_SVG = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2" y="5" width="8" height="6"/><path d="M4 5V3.5a2 2 0 014 0V5"/></svg>';
 
   /* ---------- 路由（多页版用真实 URL，单文件版用 hash） ---------- */
@@ -96,9 +290,9 @@
             <path d="M4.5 2H2v8h8V7.5"/><path d="M7 1h4v4"/><path d="M11 1L5.5 6.5"/></svg>
           ${esc(wiki.zh)}
         </a>
-        <div class="tier"><span class="dot"></span>${esc(sess.displayEn || sess.display)}</div>
+        <div class="tier">${factionIcon(sess.faction || 'unreg')}<span class="dot"></span>${esc(sess.displayEn || sess.display)}</div>
         <b>${esc(ownLabel())}</b> · ${esc(sess.deptEn || sess.dept)}<br>
-        BUILD 372.1.0
+        BUILD 372.1.11
       </div>`;
     document.body.appendChild(side);
 
@@ -116,7 +310,8 @@
       'chat-director': ['09', 'DIRECTOR RELAY', '主管通讯'],
       'o5-panel': ['09', 'COUNCIL CONSOLE', '议会控制台'],
       'chief-egg': ['09', 'LOUD CHIEF', '安全主管大声说话'],
-      tab: ['09', 'FACTION RELAY', '阵营档案']
+      tab: ['09', 'FACTION RELAY', '阵营档案'],
+      script: ['09', 'SCREENPLAY', '剧本']
     };
     const m = PAGE_META[page] || ['--', 'TERMINAL', '终端'];
 
@@ -133,6 +328,11 @@
         <span class="te">${esc(m[2])}</span>
       </div>
       <div class="top-spacer"></div>
+      <div class="top-tools">
+        <button type="button" class="top-tool" id="noticeBtn" title="更新公告" aria-label="更新公告">?</button>
+        <button type="button" class="top-tool" id="creditBtn" title="致谢名单" aria-label="致谢名单">谢</button>
+        ${AREA.hasGrant() ? `<button type="button" class="top-tool set-btn" id="settingsBtn" title="设置" aria-label="设置">☼</button>` : ''}
+      </div>
       <a class="top-search" href="search.html">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
           <circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/></svg>
@@ -162,49 +362,183 @@
       else location.href = 'index.html';
     });
 
-    mountCorners();
+    mountTools();
+    mountChrome();
+  }
+
+  /* ============================================================
+     阅读进度条 · 回到顶部 · 键盘快捷键
+     ============================================================ */
+  function mountChrome() {
+    if (document.querySelector('.readbar')) return;
+
+    const bar = document.createElement('div');
+    bar.className = 'readbar';
+    document.body.appendChild(bar);
+
+    const top = document.createElement('button');
+    top.type = 'button';
+    top.className = 'totop';
+    top.textContent = '↑';
+    top.title = '回到顶部';
+    top.setAttribute('aria-label', '回到顶部');
+    document.body.appendChild(top);
+    top.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    const onScroll = () => {
+      const y = window.scrollY || document.documentElement.scrollTop || 0;
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = h > 40 ? Math.min(1, y / h) : 0;
+      bar.style.width = (pct * 100).toFixed(1) + '%';
+      bar.classList.toggle('on', y > 60);
+      top.classList.toggle('on', y > 620);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    onScroll();
+
+    document.addEventListener('keydown', e => {
+      if (e.defaultPrevented) return;
+      const t = e.target;
+      const typing = t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable);
+      const slash = e.key === '/' && !typing && !e.ctrlKey && !e.metaKey && !e.altKey;
+      const cmdK = (e.ctrlKey || e.metaKey) && !e.altKey && String(e.key).toLowerCase() === 'k';
+      if (slash || cmdK) {
+        e.preventDefault();
+        location.href = 'search.html';
+      }
+    });
   }
 
   /* ============================================================
      左上角更新公告 / 右上角致谢名单
      ============================================================ */
-  function mountCorners() {
-    const mk = (cls, label, title, handler) => {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'corner-btn ' + cls;
-      b.title = title;
-      b.setAttribute('aria-label', title);
-      b.innerHTML = `<span class="cb-glyph">${esc(label)}</span>`;
-      b.addEventListener('click', handler);
-      document.body.appendChild(b);
-      return b;
+  /* ============================================================
+     世界观选择器（开屏左下角）
+     基金会 — 普通版本 ︿
+     ============================================================ */
+  function initDomSelect() {
+    const root = document.getElementById('domSelect');
+    const list = document.getElementById('domselList');
+    const modeEl = document.getElementById('domselMode');
+    const head = root && root.querySelector('.domsel-head');
+    if (!root || !list || !head) return;
+
+    const grant = AREA.hasGrant();
+
+    /* 世界观选项。locked 项需要 director grant 才可见。 */
+    const ITEMS = [
+      { id: 'normal', name: '普通版本', tag: 'STANDARD' },
+      { id: '5k', name: '5K', tag: 'ALT-CANON', is5k: true, soon: '敬请期待' },
+      { id: 'script', name: '剧本', tag: 'SCREENPLAY', locked: true }
+    ];
+
+    const visible = ITEMS.filter(it => !it.locked || grant);
+
+    list.innerHTML = visible.map(it => {
+      const cls = `domsel-item ${it.is5k ? 'is-5k' : ''} ${it.soon ? 'is-locked' : ''} ${it.id === 'normal' ? 'on' : ''}`;
+      const body = `<span class="di-name">${esc(it.name)}</span>` +
+        (it.soon ? `<span class="di-soon">（${esc(it.soon)}）</span>` : '') +
+        `<span class="di-tag">${esc(it.tag)}</span>`;
+      // 剧本项用真链接，即使脚本出错也能靠浏览器原生跳转
+      if (it.id === 'script') {
+        return `<a class="${cls}" href="script.html" data-id="script">${body}</a>`;
+      }
+      return `<button type="button" class="${cls}" data-id="${it.id}" ${it.soon ? 'disabled' : ''}>${body}</button>`;
+    }).join('');
+
+    function close() { list.hidden = true; root.classList.remove('open'); }
+    function open()  { list.hidden = false; root.classList.add('open'); }
+
+    head.addEventListener('click', e => {
+      e.stopPropagation();
+      list.hidden ? open() : close();
+    });
+    document.addEventListener('click', e => {
+      if (!root.contains(e.target)) close();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') close();
+    });
+
+    list.querySelectorAll('.domsel-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        list.querySelectorAll('.domsel-item').forEach(x => x.classList.remove('on'));
+        btn.classList.add('on');
+        if (modeEl) modeEl.textContent = btn.querySelector('.di-name').textContent;
+        if (id === 'script') return;   // 交给 <a> 原生跳转，不拦默认行为
+        close();
+      });
+    });
+  }
+
+  function mountTools() {
+    const bind = (id, handler) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('click', handler);
     };
 
-    mk('corner-help', '?', '更新公告', async () => {
+    bind('noticeBtn', async () => {
       try {
         const d = await load('notice');
-        const n = d.announce;
-        modal('更新公告 / UPDATE LOG', n.title, n.badge + ' · ' + n.subtitle, `
-          <div style="display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;
-                      font-family:var(--f-mono);font-size:9px;letter-spacing:.2em;
-                      color:var(--dim-2);margin-bottom:18px">
-            <span style="color:var(--eng)">${esc(n.version)}</span>
-            <span>${esc(n.date)}</span>
+        const a = d.announce;
+        const vers = (a && Array.isArray(a.versions) && a.versions.length) ? a.versions : [a];
+        const head = vers[0];
+        const body = vers.map((n, i) => `
+          ${i ? '<div class="ver-sep">历史版本</div>' : ''}
+          <div class="ver-meta">
+            <span class="vm-ver">${esc(n.version)}</span>
+            <span class="vm-date">${esc(n.date)}</span>
           </div>
           <p class="mtext" style="margin:0 0 24px">${md(n.lead)}</p>
-          ${n.sections.map(sec => `
+          ${(n.sections || []).map(sec => `
             <div class="mlabel">${esc(sec.h)}</div>
-            <ul class="bullets">${sec.items.map(i => `<li>${md(i)}</li>`).join('')}</ul>
+            <ul class="bullets">${sec.items.map(x => `<li>${md(x)}</li>`).join('')}</ul>
           `).join('')}
           <div class="note" style="margin-top:26px"><span class="lbl">说明</span>${esc(n.footer)}</div>
-        `, 'var(--eng)');
+        `).join('');
+        modal('更新公告 / UPDATE LOG', head.title, head.badge + ' · ' + head.subtitle, body, 'var(--eng)');
       } catch (e) {
         modal('更新公告', '更新公告读取失败', '', `<div class="locked-note">${esc(e && e.message)}</div>`);
       }
     });
 
-    mk('corner-credit', '谢', '致谢名单', async () => {
+    bind('settingsBtn', () => {
+      if (!AREA.hasGrant()) return;   // 内测门禁：非授权会话不得进入语言设置
+      const cur = AREA.getLang();
+      modal('设置 / SETTINGS', '界面语言', 'LANGUAGE / 界面语言', `
+        <div class="lang-list">
+          <button type="button" class="lang-opt ${cur === 'zh' ? 'on' : ''}" data-lang="zh">
+            <span class="lo-code">中文</span>
+            <span class="lo-en">CHINESE</span>
+            ${cur === 'zh' ? '<span class="lo-cur">当前</span>' : ''}
+          </button>
+          <button type="button" class="lang-opt ${cur === 'en' ? 'on' : ''}" data-lang="en">
+            <span class="lo-code">English</span>
+            <span class="lo-en">ENGLISH</span>
+            ${cur === 'en' ? '<span class="lo-cur">CURRENT</span>' : ''}
+          </button>
+        </div>
+        <div class="note" style="margin-top:22px">
+          <span class="lbl">说明</span>
+          切换后将重新载入页面。界面与已翻译的档案会切换语言；部分长档案的英文译本仍在补全中，未翻译的部分会暂时保留中文原文。
+        </div>
+      `, 'var(--eng)');
+
+      document.querySelectorAll('.lang-opt').forEach(b => {
+        b.addEventListener('click', () => {
+          if (!AREA.hasGrant()) { closeModal(); return; }
+          const l = b.dataset.lang;
+          if (l === cur) { closeModal(); return; }
+          AREA.setLang(l);
+          closeModal();
+          location.reload();
+        });
+      });
+    });
+
+    bind('creditBtn', async () => {
       try {
         const d = await load('notice');
         const c = d.credits;
@@ -260,6 +594,7 @@
     card.style.setProperty('--accent', accent || 'var(--accent)');
     m.classList.add('open');
     m.scrollTop = 0;
+    localize(m);
   }
   function closeModal() {
     const m = $('#modal');
@@ -388,7 +723,7 @@
           <div class="poster-grid">
             ${posters.map(p => `
               <div class="poster" data-poster="${p[0]}" data-name="${esc(p[1])}">
-                <img src="${p[0]}" alt="${esc(p[1])}" loading="lazy">
+                <img src="${p[0]}" alt="${esc(p[1])}" loading="lazy" decoding="async">
                 <div class="pcap"><b>${esc(p[1])}</b><span>${esc(p[2])}</span></div>
               </div>`).join('')}
           </div>
@@ -426,7 +761,7 @@
     $$('.poster').forEach(p => {
       p.addEventListener('click', () => {
         modal('部门形象 / POSTER', p.dataset.name, '', `
-          <img src="${p.dataset.poster}" alt="" style="width:100%;border:1px solid var(--line);margin-bottom:18px">
+          <img src="${p.dataset.poster}" alt="" loading="lazy" decoding="async" style="width:100%;border:1px solid var(--line);margin-bottom:18px">
           <p class="sm dim">AREA-372 内部宣传材料。宣传口径与事故记录不一致，引用时须注明来源为宣传栏，不得作为设施可靠性证据。</p>
         `);
       });
@@ -1078,7 +1413,7 @@
 
         <div style="display:flex;align-items:center;gap:24px;border:1px solid var(--line);padding:22px 24px;margin-bottom:32px;background:rgba(191,31,44,.035);flex-wrap:wrap">
           <figure style="margin:0;flex:0 0 auto;width:230px">
-            <img src="${esc(d.emblem.brand)}" alt="Finale Plan" style="width:100%;display:block;border:1px solid #2c2c32">
+            <img src="${esc(d.emblem.brand)}" alt="Finale Plan" loading="lazy" decoding="async" style="width:100%;display:block;border:1px solid #2c2c32">
             <figcaption class="tiny dim2" style="margin-top:7px;letter-spacing:.14em">证据附件 · 白底印刷件扫描</figcaption>
           </figure>
           <div style="min-width:0;flex:1">
@@ -1133,7 +1468,7 @@
         <section class="sec">
           <div class="sec-h"><span class="no">04</span><h2>标志</h2><span class="en">Emblem</span></div>
           <div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap">
-            <img src="${esc(d.emblem.image)}" alt="emblem" style="width:200px;background:#fff;padding:12px;flex:0 0 auto">
+            <img src="${esc(d.emblem.image)}" alt="emblem" loading="lazy" decoding="async" style="width:200px;background:#fff;padding:12px;flex:0 0 auto">
             <div style="flex:1;min-width:240px">
               <p class="mtext">${esc(d.emblem.body)}</p>
               <p class="mtext" style="margin-top:12px;color:var(--accent)">${esc(d.emblem.meaning)}</p>
@@ -1416,11 +1751,19 @@
 
         <section class="sec">
           <div class="sec-h"><span class="no">03</span><h2>站点实时指标</h2><span class="en">Metrics</span></div>
-          <dl class="dl">
-            ${d.metrics.map(m => `<div class="dl-row">
-              <dt><b>${esc(m.k)}</b></dt>
-              <dd style="${m.tone === 'warn' ? 'color:var(--warn)' : ''}">${esc(m.v)}</dd></div>`).join('')}
-          </dl>
+          <div class="metrics">
+            ${d.metrics.map(m => {
+              const pct = metricVal(m.v);
+              const warn = m.tone === 'warn';
+              return `<div class="m-row">
+                <div class="m-k">${esc(m.k)}</div>
+                ${pct == null
+                  ? `<div class="m-chip ${warn ? 'warn' : ''}">${esc(m.v)}</div>`
+                  : `<div class="m-bar"><i class="${warn ? 'warn' : ''}" style="width:${pct}%"></i></div>
+                     <div class="m-v ${warn ? 'warn' : ''}">${esc(m.v)}</div>`}
+              </div>`;
+            }).join('')}
+          </div>
         </section>
 
         <section class="sec">
@@ -1464,6 +1807,71 @@
   };
 
   /* ---------- CHIEF EGG ---------- */
+  /* ---------- SCRIPT ---------- */
+  PAGES.script = async function () {
+    if (!AREA.hasGrant()) {
+      $('#app').innerHTML = gate({
+        title: 'ACCESS DENIED', cn: '该目录不对当前会话开放',
+        msg: '剧本目录属不公开内容，未纳入站点正式档案编号体系。',
+        file: 'AREA-372/SCR/00', need: '授权指令'
+      });
+      return;
+    }
+    applyAccent('eng');
+
+    const items = [
+      { no: '01', t: '5K 剧本', sub: 'FIVE-K · ALT-CANON', state: '待撰写', live: true },
+      { no: '02', t: '未添加', sub: 'EMPTY SLOT', state: '' },
+      { no: '03', t: '未添加', sub: 'EMPTY SLOT', state: '' },
+      { no: '04', t: '未添加', sub: 'EMPTY SLOT', state: '' }
+    ];
+
+    const filled = items.filter(x => x.live).length;
+
+    $('#app').innerHTML = `
+      <div class="wrap">
+        <div class="phead">
+          <div class="crumb">AREA-372 <i>/</i> SCREENPLAY <i>/</i> 剧本</div>
+          <h1>剧本</h1>
+          <div class="h1-cn">SCREENPLAY ARCHIVE · ${filled} / ${items.length}</div>
+          <p class="lead">影像与广播脚本的存放目录。条目正文尚未接入，当前仅登记标题与编号。</p>
+          <div class="phead-bar"></div>
+        </div>
+
+        <div class="sc-list">
+          ${items.map(it => it.live ? `
+            <button type="button" class="sc-card" data-id="5k">
+              <span class="sc-no">${it.no}</span>
+              <span class="sc-main">
+                <span class="sc-t">${esc(it.t)}</span>
+                <span class="sc-sub">${esc(it.sub)}</span>
+              </span>
+              <span class="sc-state">${esc(it.state)}</span>
+            </button>
+          ` : `
+            <div class="sc-card is-empty">
+              <span class="sc-no">${it.no}</span>
+              <span class="sc-main">
+                <span class="sc-t">${esc(it.t)}</span>
+                <span class="sc-sub">${esc(it.sub)}</span>
+              </span>
+              <span class="sc-state"></span>
+            </div>
+          `).join('')}
+        </div>
+      </div>`;
+
+    const btn = $('.sc-card[data-id="5k"]');
+    if (btn) btn.addEventListener('click', () => {
+      modal('剧本 / SCREENPLAY', '5K 剧本', 'FIVE-K · ALT-CANON', `
+        <div class="mlabel">当前状态</div>
+        <p class="mtext" style="margin:0 0 18px">提纲与世界观设定已完成，正文尚未写入本目录。</p>
+        <div class="mlabel">说明</div>
+        <p class="mtext" style="margin:0">该条目在正文接入前不提供阅读。此处的占位卡片是为了先把目录结构定下来。</p>
+      `, 'var(--eng)');
+    });
+  };
+
   PAGES['chief-egg'] = async function () {
     if (SESS.id !== 'security' && !SESS.grant) {
       $('#app').innerHTML = gate({
@@ -1504,7 +1912,7 @@
 
     $('#eggRow').addEventListener('click', () => {
       modal('目录条目 / SEC-02', '安全主管大声说话', 'BROADCAST CAPTURE · 来源不明', `
-        <img src="assets/img/chief-loud.webp" alt="安全主管大声说话"
+        <img src="assets/img/chief-loud.webp" alt="安全主管大声说话" loading="lazy" decoding="async"
              style="width:100%;border:1px solid var(--line);display:block">
         <div style="margin-top:26px;font-size:15px;line-height:2.1;color:var(--fg)">
           你找到彩蛋了！居然是红帽大声说话😱😱😱<br>
@@ -1654,7 +2062,7 @@
     $('#app').innerHTML = `
       <div class="wrap">
         <div class="phead">
-          <div class="crumb">${esc(faction.abbr || '—')} <i>/</i> ${esc(faction.en)} <i>/</i> ${esc(tabData.zh)}</div>
+          <div class="crumb">${factionIcon(faction.id)}${esc(faction.abbr || '—')} <i>/</i> ${esc(faction.en)} <i>/</i> ${esc(tabData.zh)}</div>
           <h1>${esc(tabData.zh)}</h1>
           <div class="h1-cn">${esc(tabData.sub || tabData.en || '')}</div>
           <p class="lead">${esc(faction.tagline || '')}</p>
@@ -1856,7 +2264,7 @@
   function footer() {
     const wiki = SITE.site.wiki;
     return `<div class="foot">
-      <div>AREA-372 · TAKAL UNDERGROUND COMPLEX · BUILD 372.1.0 · SESSION ${esc(SESS.displayEn || SESS.display)} · ${esc(ownLabel())}</div>
+      <div>AREA-372 · TAKAL UNDERGROUND COMPLEX · BUILD 372.1.11 · SESSION ${esc(SESS.displayEn || SESS.display)} · ${esc(ownLabel())}</div>
       <div class="fc">
         本页面为基于 SCP 基金会设定的原创同人作品，非官方站点。SCP 基金会设定内容遵循
         <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.zh" target="_blank" rel="noopener">CC BY-SA 3.0</a>
@@ -1892,6 +2300,8 @@
     if (page === 'index') {
       AREA.consoleInit(null);
       await AREA.boot();
+      localize(document.body);
+      initDomSelect();
       const form = $('#authForm');
       const inp = $('#authInput');
       if (form) {
@@ -1929,7 +2339,7 @@
         body.innerHTML = order.filter(fid => groups[fid]).map(fid => {
           const f = fmeta[fid] || { zh: '未登记', abbr: '—' };
           return `<div class="roster-group">
-            <div class="rg-head"><span class="rg-abbr">${esc(f.abbr || '—')}</span>${esc(f.zh)}</div>
+            <div class="rg-head">${factionIcon(fid)}<span class="rg-abbr">${esc(f.abbr || '—')}</span>${esc(f.zh)}</div>
             ${groups[fid].map((acc, i) => {
               const lv = acc.clearanceLabel || ('L-' + acc.clearance);
               return `<button type="button" class="roster-item" data-f="${esc(fid)}" data-i="${i}">
@@ -2060,6 +2470,9 @@
         </div></div>`;
       }
     }
+
+    /* 多页版真正的渲染收尾：统一做一次界面文案本地化 */
+    localize(document.body);
   }
 
   /* ============================================================
@@ -2197,6 +2610,7 @@
 
     window.scrollTo(0, 0);
     document.body.classList.remove('nav-open');
+    localize(document.body);
   }
 
   if (document.readyState === 'loading') {
