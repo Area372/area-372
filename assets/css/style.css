@@ -1961,3 +1961,103 @@ img.ldr-mark {
   transition: opacity 420ms ease, transform 560ms ease;
   transition-delay: 120ms;
 }
+
+/* --- 致谢名单 --- */
+.cred-list { margin: 26px 0 4px; border-top: 1px solid var(--line); }
+.cred-row {
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 4px 20px;
+  align-items: start;
+  padding: 24px 2px;
+  border-bottom: 1px solid var(--line);
+}
+.cred-avatar {
+  width: 74px; height: 74px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+.cred-body { min-width: 0; }
+.cred-top {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  justify-content: space-between; gap: 10px 18px;
+}
+.cred-name {
+  font-family: var(--f-display); font-size: 21px; letter-spacing: .04em;
+  color: var(--fg);
+}
+.cred-role {
+  font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .16em;
+  color: var(--eng); text-transform: uppercase;
+  margin-top: 8px;
+}
+.cred-duties {
+  margin: 12px 0 0; padding: 0; list-style: none;
+  display: grid; gap: 6px;
+}
+.cred-duties li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 13px; line-height: 1.6; color: var(--dim-1);
+}
+.cred-duties li::before {
+  content: '·'; position: absolute; left: 4px; top: 0;
+  color: var(--eng); font-weight: 700;
+}
+.cred-fac {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 14px; padding-top: 12px;
+  border-top: 1px dashed var(--line);
+}
+.cf-mark {
+  width: 62px; height: 62px; object-fit: contain;
+  opacity: 1;
+  border: 1px solid var(--line);
+  padding: 4px;
+  background: rgba(255,255,255,.03);
+}
+.cf-name {
+  font-family: var(--f-display); font-size: 15px; letter-spacing: .14em;
+  color: var(--fg);
+}
+.cl-dash { color: var(--eng); opacity: .8; }
+
+/* B 站入口：加大、描边、悬停填充，避免不明显 */
+.cred-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.cred-link {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 9px 16px;
+  border: 1px solid var(--eng);
+  background: rgba(240,165,0,.07);
+  text-decoration: none;
+  transition: background .2s var(--ease), color .2s var(--ease);
+}
+.cred-link:hover { background: var(--eng); }
+.cred-link:hover .cl-lbl,
+.cred-link:hover .cl-txt { color: #0b0b0b; }
+.cl-lbl {
+  font-family: var(--f-mono); font-size: 9.5px; letter-spacing: .2em;
+  color: var(--eng); text-transform: uppercase;
+}
+.cl-txt { font-size: 13.5px; color: var(--fg); letter-spacing: .02em; }
+@media (max-width: 620px) {
+  .cred-row { grid-template-columns: 1fr; gap: 14px; }
+  .cred-avatar { width: 62px; height: 62px; }
+  .cf-mark { width: 52px; height: 52px; }
+}
+
+/* --- 开发者模式标注 --- */
+.dev-tag {
+  display: inline-flex; align-items: center; gap: 9px;
+  margin-top: 20px; padding: 9px 14px;
+  border: 1px solid rgba(240,165,0,.45);
+  background: rgba(240,165,0,.06);
+}
+.dt-dot {
+  width: 5px; height: 5px; background: var(--eng);
+  box-shadow: 0 0 8px rgba(240,165,0,.75);
+}
+.dt-txt {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: .18em;
+  color: var(--eng);
+}

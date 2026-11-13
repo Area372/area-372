@@ -26,7 +26,7 @@ const AREA = (function () {
 
   function getLang() {
     // 内测门禁：英文模式仅对 director grant 授权者开放，其他人强制中文
-    if (!hasGrant()) return 'zh';
+    if (!hasAnyGrant()) return 'zh';
     if (_lang) return _lang;
     let v = 'zh';
     try { v = localStorage.getItem(LKEY) || 'zh'; } catch (e) {}
@@ -35,7 +35,7 @@ const AREA = (function () {
   }
 
   function setLang(l) {
-    if (!hasGrant()) { _lang = 'zh'; return; }   // 内测门禁：仅授权会话可切换语言
+    if (!hasAnyGrant()) { _lang = 'zh'; return; }   // 内测门禁：仅授权会话可切换语言
 
     _lang = (l === 'en') ? 'en' : 'zh';
     try { localStorage.setItem(LKEY, _lang); } catch (e) {}
@@ -127,7 +127,8 @@ const AREA = (function () {
   /* ---------- 永久授权（director grant） ----------
      独立于会话的本地标记：登出、换身份、重开浏览器都不会丢失，
      只有清除站点数据才会重置。 */
-  const GKEY = 'area372.grant';
+  const GKEY = 'area372.grant';        // 内部授权：director grant
+  const LKEY2 = 'area372.luozi';       // 开发者认证：落子
 
   function hasGrant() {
     try { if (localStorage.getItem(GKEY) === '1') return true; } catch (e) {}
@@ -143,6 +144,31 @@ const AREA = (function () {
   function clearGrant() {
     _grantMem = false;
     try { localStorage.removeItem(GKEY); } catch (e) {}
+  }
+
+  /* 落子：与内部授权并列的第二条永久授权通道 */
+  let _luoziMem = false;
+  function hasLuozi() {
+    try { if (localStorage.getItem(LKEY2) === '1') return true; } catch (e) {}
+    return _luoziMem;
+  }
+  function setLuozi() {
+    _luoziMem = true;
+    try { localStorage.setItem(LKEY2, '1'); } catch (e) {}
+  }
+  function clearLuozi() {
+    _luoziMem = false;
+    try { localStorage.removeItem(LKEY2); } catch (e) {}
+  }
+
+  /* 任一永久授权生效即视为「已授权」——语言开关、剧本目录等沿用同一判据 */
+  function hasAnyGrant() { return hasGrant() || hasLuozi(); }
+
+  /* 当前会话对应的授权类型：'director' | 'luozi' | null */
+  function grantKind() {
+    if (hasGrant()) return 'director';
+    if (hasLuozi()) return 'luozi';
+    return null;
   }
 
   function clearSession() {
@@ -194,6 +220,27 @@ const AREA = (function () {
         { id: 'chief-egg', zh: '安全主管大声说话', en: 'LOUD CHIEF', code: '13', href: 'chief-egg.html' }
       ],
       note: '万能授权。全部档案、全部阵营标签页、全部加密内容对本会话开放。该授权不可撤销，除非清除站点数据。'
+    });
+  }
+
+  /* 开发者认证会话：落子 */
+  function luoziSession(cfg) {
+    return setSession({
+      id: '__luozi__',
+      display: '落子', displayEn: 'LUOZI',
+      dept: '开发者认证', deptEn: 'DEVELOPER ACCESS',
+      clearance: 6, clearanceLabel: '∞',
+      loadout: 'luozi', accent: 'eng',
+      grant: true, permanent: true,
+      faction: 'unreg',
+      tabs: [
+        { id: 'roster', zh: '全部身份', en: 'ALL IDENTITIES', code: '10', href: 'tab.html?id=roster' },
+        { id: 'o5-panel', zh: '议会控制台', en: 'COUNCIL CONSOLE', code: '09', href: 'o5-panel.html' },
+        { id: 'chat-isa', zh: '内部通讯', en: 'SECURE RELAY', code: '11', href: 'chat-isa.html' },
+        { id: 'chat-director', zh: '主管通讯', en: 'DIRECTOR RELAY', code: '12', href: 'chat-director.html' },
+        { id: 'chief-egg', zh: '安全主管大声说话', en: 'LOUD CHIEF', code: '13', href: 'chief-egg.html' }
+      ],
+      note: '开发者认证。全部档案、全部阵营标签页、全部加密内容对本会话开放。该认证不可撤销，除非清除站点数据。'
     });
   }
 
@@ -370,6 +417,16 @@ const AREA = (function () {
         '> 它会看着你。'
       ]
     },
+    luozi: {
+      title: 'DEVELOPER ACCESS', sub: 'LUOZI / PERMANENT',
+      log: [
+        '> 校验开发者认证 …… <b>通过</b>',
+        '> 解除全部等级限制 …… <b>完成</b>',
+        '> 开放全部阵营标签页 …… <b>完成</b>',
+        '> 开放加密卷宗 …… <b>完成</b>',
+        '> 授权有效期 …… <b>永久</b>'
+      ]
+    },
     grant: {
       title: 'DIRECTOR GRANT', sub: 'UNRESTRICTED / PERMANENT',
       log: [
@@ -475,12 +532,25 @@ const AREA = (function () {
   }
 
   const GPASS = '114514';
+  const LPASS = '100399';      // 落子：开发者认证口令
 
   async function submitAuth(raw, pass) {
     const cfg = await site();
+    const code = String(raw || '').trim().toLowerCase().replace(/\s+/g, ' ');
+
+    /* 开发者认证：落子 */
+    if (code === '落子') {
+      if (!hasLuozi()) {
+        const need = (cfg && cfg.site && cfg.site.luoziPass) || LPASS;
+        if (String(pass == null ? '' : pass) !== need) {
+          return { needPass: true, bad: pass != null };
+        }
+      }
+      setLuozi();
+      return luoziSession(cfg);
+    }
 
     /* 万能授权口令：除口令本身，还需要二级密码 */
-    const code = String(raw || '').trim().toLowerCase().replace(/\s+/g, ' ');
     if (code === 'director grant') {
       if (!hasGrant()) {
         const need = (cfg && cfg.site && cfg.site.grantPass) || GPASS;
@@ -681,6 +751,7 @@ const AREA = (function () {
     site, getSession, setSession, clearSession, hasSession,
     getLang, setLang,
     hasGrant, setGrant, clearGrant, grantSession, commitPermanent,
+    hasLuozi, setLuozi, clearLuozi, hasAnyGrant, grantKind, luoziSession,
     boot, submitAuth, runScene,
     fxInit, sweep, jitter, toast, consoleInit,
     resolve, guestSession, commit

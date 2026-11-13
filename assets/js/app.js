@@ -292,7 +292,7 @@
         </a>
         <div class="tier">${factionIcon(sess.faction || 'unreg')}<span class="dot"></span>${esc(sess.displayEn || sess.display)}</div>
         <b>${esc(ownLabel())}</b> · ${esc(sess.deptEn || sess.dept)}<br>
-        BUILD 372.1.19
+        BUILD 372.1.26
       </div>`;
     document.body.appendChild(side);
 
@@ -331,7 +331,7 @@
       <div class="top-tools">
         <button type="button" class="top-tool" id="noticeBtn" title="更新公告" aria-label="更新公告">?</button>
         <button type="button" class="top-tool" id="creditBtn" title="致谢名单" aria-label="致谢名单">谢</button>
-        ${AREA.hasGrant() ? `<button type="button" class="top-tool set-btn" id="settingsBtn" title="设置" aria-label="设置">☼</button>` : ''}
+        ${AREA.hasAnyGrant() ? `<button type="button" class="top-tool set-btn" id="settingsBtn" title="设置" aria-label="设置">☼</button>` : ''}
       </div>
       <a class="top-search" href="search.html">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -358,6 +358,7 @@
     const lg = $('#logoutBtn');
     if (lg) lg.addEventListener('click', () => {
       AREA.clearSession();
+      if (SESS.grant) { AREA.clearGrant(); AREA.clearLuozi(); }   // 授权会话登出即解除授权
       if (window.__SINGLE__) { location.hash = '#index'; location.reload(); }
       else location.href = 'index.html';
     });
@@ -424,13 +425,13 @@
     const head = root && root.querySelector('.domsel-head');
     if (!root || !list || !head) return;
 
-    const grant = AREA.hasGrant();
+    const grant = AREA.hasAnyGrant();
 
     /* 世界观选项。locked 项需要 director grant 才可见。 */
     const ITEMS = [
       { id: 'normal', name: '普通版本', tag: 'STANDARD' },
       { id: '5k', name: '5K', tag: 'ALT-CANON', is5k: true, soon: '敬请期待' },
-      { id: 'script', name: '剧本', tag: 'SCREENPLAY', locked: true }
+      { id: 'script', name: '剧本', tag: 'SCREENPLAY', locked: true, soon: '正在维护中……' }
     ];
 
     const visible = ITEMS.filter(it => !it.locked || grant);
@@ -440,10 +441,6 @@
       const body = `<span class="di-name">${esc(it.name)}</span>` +
         (it.soon ? `<span class="di-soon">（${esc(it.soon)}）</span>` : '') +
         `<span class="di-tag">${esc(it.tag)}</span>`;
-      // 剧本项用真链接，即使脚本出错也能靠浏览器原生跳转
-      if (it.id === 'script') {
-        return `<a class="${cls}" href="script.html" data-id="script">${body}</a>`;
-      }
       return `<button type="button" class="${cls}" data-id="${it.id}" ${it.soon ? 'disabled' : ''}>${body}</button>`;
     }).join('');
 
@@ -467,7 +464,7 @@
         list.querySelectorAll('.domsel-item').forEach(x => x.classList.remove('on'));
         btn.classList.add('on');
         if (modeEl) modeEl.textContent = btn.querySelector('.di-name').textContent;
-        if (id === 'script') return;   // 交给 <a> 原生跳转，不拦默认行为
+        if (id === 'script') return;   // 维护中，不跳转
         close();
       });
     });
@@ -505,7 +502,7 @@
     });
 
     bind('settingsBtn', () => {
-      if (!AREA.hasGrant()) return;   // 内测门禁：非授权会话不得进入语言设置
+      if (!AREA.hasAnyGrant()) return;   // 内测门禁：非授权会话不得进入语言设置
       const cur = AREA.getLang();
       modal('设置 / SETTINGS', '界面语言', 'LANGUAGE / 界面语言', `
         <div class="lang-list">
@@ -520,6 +517,10 @@
             ${cur === 'en' ? '<span class="lo-cur">CURRENT</span>' : ''}
           </button>
         </div>
+        <div class="dev-tag">
+          <span class="dt-dot"></span>
+          <span class="dt-txt">此选项为开发者模式</span>
+        </div>
         <div class="note" style="margin-top:22px">
           <span class="lbl">说明</span>
           切换后将重新载入页面。界面与已翻译的档案会切换语言；部分长档案的英文译本仍在补全中，未翻译的部分会暂时保留中文原文。
@@ -528,7 +529,7 @@
 
       document.querySelectorAll('.lang-opt').forEach(b => {
         b.addEventListener('click', () => {
-          if (!AREA.hasGrant()) { closeModal(); return; }
+          if (!AREA.hasAnyGrant()) { closeModal(); return; }
           const l = b.dataset.lang;
           if (l === cur) { closeModal(); return; }
           AREA.setLang(l);
@@ -545,6 +546,33 @@
         modal('致谢 / ACKNOWLEDGEMENTS', c.title, c.badge, `
           <p class="mtext" style="margin:0 0 20px">${esc(c.lead)}</p>
           ${c.body.map(t => `<p class="mtext" style="margin:0 0 .95em">${esc(t)}</p>`).join('')}
+          ${(c.members || []).length ? `
+          <div class="cred-list">
+            ${c.members.map(m => `
+              <div class="cred-row">
+                ${m.avatar ? `<img class="cred-avatar" src="${esc(m.avatar)}" alt="${esc(m.name)}" loading="lazy" decoding="async">` : ''}
+                <div class="cred-body">
+                  <div class="cred-top">
+                    <div class="cred-name">${esc(m.name)}</div>
+                    ${(m.links || []).length ? `<div class="cred-links">
+                      ${m.links.map(l => `<a class="cred-link" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">
+                        <span class="cl-lbl">${esc(l.label || 'LINK')}</span>
+                        <span class="cl-dash">—</span>
+                        <span class="cl-txt">${esc(l.text || l.url)}</span>
+                      </a>`).join('')}
+                    </div>` : ''}
+                  </div>
+                  <div class="cred-role">${esc(m.role || '')}</div>
+                  ${(m.duties || []).length ? `<ul class="cred-duties">
+                    ${m.duties.map(t => `<li>${esc(t)}</li>`).join('')}
+                  </ul>` : ''}
+                  ${m.facility ? `<div class="cred-fac">
+                    <img class="cf-mark" src="${esc(m.facility)}" alt="${esc(m.facilityName || '')}" loading="lazy" decoding="async">
+                    <span class="cf-name">${esc(m.facilityName || '')}</span>
+                  </div>` : ''}
+                </div>
+              </div>`).join('')}
+          </div>` : ''}
           <div class="note" style="margin-top:24px"><span class="lbl">说明</span>${esc(c.note)}</div>
         `, 'var(--adm)');
       } catch (e) {
@@ -1814,7 +1842,7 @@
   function renderScriptSolo(sess) {
     let lv = (sess && (sess.clearanceLabel || ('L-' + sess.clearance))) || 'L-∞';
     if (lv && lv[0] !== 'L') lv = 'L-' + lv;
-    const ok = AREA.hasGrant();
+    const ok = AREA.hasAnyGrant();
 
     document.body.className = 'solo-page';
 
@@ -2295,7 +2323,7 @@
   function footer() {
     const wiki = SITE.site.wiki;
     return `<div class="foot">
-      <div>AREA-372 · TAKAL UNDERGROUND COMPLEX · BUILD 372.1.19 · SESSION ${esc(SESS.displayEn || SESS.display)} · ${esc(ownLabel())}</div>
+      <div>AREA-372 · TAKAL UNDERGROUND COMPLEX · BUILD 372.1.26 · SESSION ${esc(SESS.displayEn || SESS.display)} · ${esc(ownLabel())}</div>
       <div class="fc">
         本页面为基于 SCP 基金会设定的原创同人作品，非官方站点。SCP 基金会设定内容遵循
         <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.zh" target="_blank" rel="noopener">CC BY-SA 3.0</a>
@@ -2336,6 +2364,7 @@
       const form = $('#authForm');
       const inp = $('#authInput');
       let passMode = false;
+      let pendingCode = '';   // 第二步提交时要带回的原始凭证
 
       function showPassHint(bad) {
         let h = document.getElementById('passHint');
@@ -2355,17 +2384,19 @@
           e.preventDefault();
           const val = inp ? inp.value : '';
           const sess = passMode
-            ? await AREA.submitAuth('director grant', val)
+            ? await AREA.submitAuth(pendingCode, val)
             : await AREA.submitAuth(val);
 
           if (sess && sess.needPass) {
             passMode = true;
+            if (!pendingCode) pendingCode = val;   // 只在第一步记下凭证
             if (inp) { inp.value = ''; inp.placeholder = '输入二级口令'; inp.focus(); }
             showPassHint(!!sess.bad);
             return;
           }
 
           passMode = false;
+          pendingCode = '';
           if (inp) inp.blur();
           await AREA.runScene(sess, 'home.html');
         });
@@ -2426,7 +2457,7 @@
       function syncUnlock() {
         if (!unlock) return;
         let g = false;
-        try { g = AREA.hasGrant(); } catch (e) { g = false; }
+        try { g = AREA.hasAnyGrant(); } catch (e) { g = false; }
         if (g) unlock.removeAttribute('hidden');
         else unlock.setAttribute('hidden', '');
       }
@@ -2604,7 +2635,7 @@
         if (sess && sess.needPass) {
           const p = window.prompt('该凭证需要二级口令：');
           if (p === null) return;
-          return enter('director grant', p);
+          return enter(raw, p);
         }
         if (inp) inp.blur();
         await AREA.runScene(sess, null);

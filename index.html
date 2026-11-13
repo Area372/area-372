@@ -123,8 +123,8 @@
   }, 7000);
 })();
 </script>
-<script src="assets/js/core.js?v=372.1.19"></script>
-<script src="assets/js/app.js?v=372.1.19"></script>
+<script src="assets/js/core.js?v=372.1.26"></script>
+<script src="assets/js/app.js?v=372.1.26"></script>
 <script>
   (function () {
     try {
@@ -139,7 +139,8 @@
 
     // 永久授权：只要本地存在授权标记，身份框里就显示向上箭头（同步判断，不等脚本）
     try {
-      if (localStorage.getItem('area372.grant') === '1') {
+      if (localStorage.getItem('area372.grant') === '1' ||
+          localStorage.getItem('area372.luozi') === '1') {
         var u = document.getElementById('authUnlock');
         if (u) u.hidden = false;
       }
