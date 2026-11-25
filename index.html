@@ -84,7 +84,7 @@
           <input id="authInput" type="text" placeholder="输入人员代号，或留空以访客身份继续"
                  autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="人员代号">
           <button type="button" class="auth-unlock" id="authUnlock"
-                  title="查看全部身份" aria-label="查看全部身份" hidden>▲</button>
+                  title="查看全部身份" aria-label="查看全部身份">▲</button>
           <span class="auth-cursor"></span>
         </div>
 
@@ -103,6 +103,7 @@
 
         <div class="auth-hint">
           <b>公开名册</b>：清洁工 / 工程师 / 修理工 / 科研人员<br>
+          点输入框右侧 <b>▲</b> 可展开全部身份登记，任选其一即以该身份接入。<br>
           部分岗位凭证不在公开名册中，须使用标准岗位代号。<br>
           留空并以访客身份继续时，仅开放公开档案层。
           <div class="auth-accounts" id="sessionNote"></div>
@@ -137,13 +138,10 @@
       if (el) el.innerHTML = '上次会话：<span>' + s.display + ' · ' + lv + '</span>　输入新凭证可切换身份。';
     } catch (e) {}
 
-    // 永久授权：只要本地存在授权标记，身份框里就显示向上箭头（同步判断，不等脚本）
+    // 公开名册：全部访客都显示向上箭头（同步判断，不等脚本）
     try {
-      if (localStorage.getItem('area372.grant') === '1' ||
-          localStorage.getItem('area372.luozi') === '1') {
-        var u = document.getElementById('authUnlock');
-        if (u) u.hidden = false;
-      }
+      var u = document.getElementById('authUnlock');
+      if (u) u.hidden = false;
     } catch (e) {}
   })();
 </script>

@@ -2455,11 +2455,9 @@
       }
 
       function syncUnlock() {
+        /* 公开名册：全部身份列表对所有访客开放（原为 director grant 专属） */
         if (!unlock) return;
-        let g = false;
-        try { g = AREA.hasAnyGrant(); } catch (e) { g = false; }
-        if (g) unlock.removeAttribute('hidden');
-        else unlock.setAttribute('hidden', '');
+        unlock.removeAttribute('hidden');
       }
 
       if (unlock && panel) {

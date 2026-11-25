@@ -2128,7 +2128,7 @@ img.ldr-mark {
           <input id="authInput" type="text" placeholder="输入人员代号，或留空以访客身份继续"
                  autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="人员代号">
           <button type="button" class="auth-unlock" id="authUnlock"
-                  title="查看全部身份" aria-label="查看全部身份" hidden>▲</button>
+                  title="查看全部身份" aria-label="查看全部身份">▲</button>
           <span class="auth-cursor"></span>
         </div>
 
@@ -2147,6 +2147,7 @@ img.ldr-mark {
 
         <div class="auth-hint">
           <b>公开名册</b>：清洁工 / 工程师 / 修理工 / 科研人员<br>
+          点输入框右侧 <b>▲</b> 可展开全部身份登记，任选其一即以该身份接入。<br>
           部分岗位凭证不在公开名册中，须使用标准岗位代号。<br>
           留空并以访客身份继续时，仅开放公开档案层。
           <div class="auth-accounts" id="sessionNote"></div>
@@ -7455,11 +7456,9 @@ const AREA = (function () {
       }
 
       function syncUnlock() {
+        /* 公开名册：全部身份列表对所有访客开放（原为 director grant 专属） */
         if (!unlock) return;
-        let g = false;
-        try { g = AREA.hasAnyGrant(); } catch (e) { g = false; }
-        if (g) unlock.removeAttribute('hidden');
-        else unlock.setAttribute('hidden', '');
+        unlock.removeAttribute('hidden');
       }
 
       if (unlock && panel) {
